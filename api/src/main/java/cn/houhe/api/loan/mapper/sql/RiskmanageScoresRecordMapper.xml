@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.RiskmanageScoresRecordMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-13 11:48:40. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.RiskmanageScoresRecord" >
+		<id column="rsr_id" property="rsrId" jdbcType="INTEGER" />
+		<result column="creditinfo_id" property="creditinfoId" jdbcType="INTEGER" />
+		<result column="apply_time_score" property="applyTimeScore" jdbcType="INTEGER" />
+		<result column="wanted_limit_score" property="wantedLimitScore" jdbcType="INTEGER" />
+		<result column="wanted_period_score" property="wantedPeriodScore" jdbcType="INTEGER" />
+		<result column="wanted_repay_day_score" property="wantedRepayDayScore" jdbcType="INTEGER" />
+		<result column="buy_car_age_score" property="buyCarAgeScore" jdbcType="INTEGER" />
+		<result column="car_lisence_score" property="carLisenceScore" jdbcType="INTEGER" />
+		<result column="car_property_score" property="carPropertyScore" jdbcType="INTEGER" />
+		<result column="buy_date_above_score" property="buyDateAboveScore" jdbcType="INTEGER" />
+		<result column="buy_date_above_add_score" property="buyDateAboveAddScore" jdbcType="INTEGER" />
+		<result column="counts_score" property="countsScore" jdbcType="INTEGER" />
+		<result column="price_score" property="priceScore" jdbcType="INTEGER" />
+		<result column="car_insurance_amount_score" property="carInsuranceAmountScore" jdbcType="INTEGER" />
+		<result column="car_driven_score" property="carDrivenScore" jdbcType="INTEGER" />
+		<result column="house_area_score" property="houseAreaScore" jdbcType="INTEGER" />
+		<result column="house_appraisement_score" property="houseAppraisementScore" jdbcType="INTEGER" />
+		<result column="loan_amount_income_score" property="loanAmountIncomeScore" jdbcType="INTEGER" />
+		<result column="length_of_residence_score" property="lengthOfResidenceScore" jdbcType="INTEGER" />
+		<result column="is_allow_contact_score" property="isAllowContactScore" jdbcType="INTEGER" />
+		<result column="is_allow_record_score" property="isAllowRecordScore" jdbcType="INTEGER" />
+		<result column="is_allow_message_score" property="isAllowMessageScore" jdbcType="INTEGER" />
+		<result column="is_allow_location_score" property="isAllowLocationScore" jdbcType="INTEGER" />
+		<result column="br_stability_score" property="brStabilityScore" jdbcType="INTEGER" />
+		<result column="id_phone_locale_score" property="idPhoneLocaleScore" jdbcType="INTEGER" />
+		<result column="id_phone_name_score" property="idPhoneNameScore" jdbcType="INTEGER" />
+		<result column="phone_on_time_score" property="phoneOnTimeScore" jdbcType="INTEGER" />
+		<result column="bqs_score" property="bqsScore" jdbcType="INTEGER" />
+		<result column="phone_costs_score" property="phoneCostsScore" jdbcType="INTEGER" />
+		<result column="is500_score" property="is500Score" jdbcType="INTEGER" />
+		<result column="educationlevel_score" property="educationlevelScore" jdbcType="INTEGER" />
+		<result column="edudgcheck_score" property="edudgcheckScore" jdbcType="INTEGER" />
+		<result column="eduyear_score" property="eduyearScore" jdbcType="INTEGER" />
+		<result column="eduage_score" property="eduageScore" jdbcType="INTEGER" />
+		<result column="qqwxage_score" property="qqwxageScore" jdbcType="INTEGER" />
+		<result column="qqwxinage_score" property="qqwxinageScore" jdbcType="INTEGER" />
+		<result column="linkphone_score" property="linkphoneScore" jdbcType="INTEGER" />
+		<result column="workadd_score" property="workaddScore" jdbcType="INTEGER" />
+		<result column="workadd_home_score" property="workaddHomeScore" jdbcType="INTEGER" />
+		<result column="wkyear_score" property="wkyearScore" jdbcType="INTEGER" />
+		<result column="income_score" property="incomeScore" jdbcType="INTEGER" />
+		<result column="social_security_score" property="socialSecurityScore" jdbcType="INTEGER" />
+		<result column="accumulation_fund_score" property="accumulationFundScore" jdbcType="INTEGER" />
+		<result column="income_compare_score" property="incomeCompareScore" jdbcType="INTEGER" />
+		<result column="debit_score" property="debitScore" jdbcType="INTEGER" />
+		<result column="age_score" property="ageScore" jdbcType="INTEGER" />
+		<result column="age_man_older_score" property="ageManOlderScore" jdbcType="INTEGER" />
+		<result column="age_diff_five_score" property="ageDiffFiveScore" jdbcType="INTEGER" />
+		<result column="married_score" property="marriedScore" jdbcType="INTEGER" />
+		<result column="education_equal_score" property="educationEqualScore" jdbcType="INTEGER" />
+		<result column="wife_education_higher_score" property="wifeEducationHigherScore" jdbcType="INTEGER" />
+		<result column="wife_working_score" property="wifeWorkingScore" jdbcType="INTEGER" />
+		<result column="family_count_score" property="familyCountScore" jdbcType="INTEGER" />
+		<result column="country_origin_score" property="countryOriginScore" jdbcType="INTEGER" />
+		<result column="city_origin_age30_score" property="cityOriginAge30Score" jdbcType="INTEGER" />
+		<result column="boy_great_seven_score" property="boyGreatSevenScore" jdbcType="INTEGER" />
+		<result column="birth_age_score" property="birthAgeScore" jdbcType="INTEGER" />
+		<result column="boy_and_girl_score" property="boyAndGirlScore" jdbcType="INTEGER" />
+		<result column="age_subtract_score" property="ageSubtractScore" jdbcType="INTEGER" />
+		<result column="live_address_score" property="liveAddressScore" jdbcType="INTEGER" />
+		<result column="house_address_score" property="houseAddressScore" jdbcType="INTEGER" />
+		<result column="address_score" property="addressScore" jdbcType="INTEGER" />
+		<result column="live_time_score" property="liveTimeScore" jdbcType="INTEGER" />
+		<result column="pay_year_score" property="payYearScore" jdbcType="INTEGER" />
+		<result column="pay_income_rate_score" property="payIncomeRateScore" jdbcType="INTEGER" />
+		<result column="girl_degree_score" property="girlDegreeScore" jdbcType="INTEGER" />
+		<result column="op_auth_score" property="opAuthScore" jdbcType="INTEGER" />
+		<result column="credit_auth_score" property="creditAuthScore" jdbcType="INTEGER" />
+		<result column="al_auth_score" property="alAuthScore" jdbcType="INTEGER" />
+		<result column="created_on" property="createdOn" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-13 11:48:40. -->
+	<sql id="Base_Column_List" >
+		rsr_id, creditinfo_id, apply_time_score, wanted_limit_score, wanted_period_score, 
+		wanted_repay_day_score, buy_car_age_score, car_lisence_score, car_property_score, 
+		buy_date_above_score, buy_date_above_add_score, counts_score, price_score, car_insurance_amount_score, 
+		car_driven_score, house_area_score, house_appraisement_score, loan_amount_income_score, 
+		length_of_residence_score, is_allow_contact_score, is_allow_record_score, is_allow_message_score, 
+		is_allow_location_score, br_stability_score, id_phone_locale_score, id_phone_name_score, 
+		phone_on_time_score, bqs_score, phone_costs_score, is500_score, educationlevel_score, 
+		edudgcheck_score, eduyear_score, eduage_score, qqwxage_score, qqwxinage_score, linkphone_score, 
+		workadd_score, workadd_home_score, wkyear_score, income_score, social_security_score, 
+		accumulation_fund_score, income_compare_score, debit_score, age_score, age_man_older_score, 
+		age_diff_five_score, married_score, education_equal_score, wife_education_higher_score, 
+		wife_working_score, family_count_score, country_origin_score, city_origin_age30_score, 
+		boy_great_seven_score, birth_age_score, boy_and_girl_score, age_subtract_score, live_address_score, 
+		house_address_score, address_score, live_time_score, pay_year_score, pay_income_rate_score, 
+		girl_degree_score, op_auth_score, credit_auth_score, al_auth_score, created_on
+	</sql>
+
+	<!-- 按主键查询 2017-05-13 11:48:40. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from riskmanage_scores_record
+		where rsr_id = #{rsrId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-13 11:48:40. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from riskmanage_scores_record
+		where rsr_id = #{rsrId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-13 11:48:40. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.RiskmanageScoresRecord" >
+		<selectKey resultType="java.lang.Integer" keyProperty="rsrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into riskmanage_scores_record (creditinfo_id, apply_time_score, wanted_limit_score, 
+			wanted_period_score, wanted_repay_day_score, 
+			buy_car_age_score, car_lisence_score, car_property_score, 
+			buy_date_above_score, buy_date_above_add_score, 
+			counts_score, price_score, car_insurance_amount_score, 
+			car_driven_score, house_area_score, house_appraisement_score, 
+			loan_amount_income_score, length_of_residence_score, 
+			is_allow_contact_score, is_allow_record_score, 
+			is_allow_message_score, is_allow_location_score, 
+			br_stability_score, id_phone_locale_score, id_phone_name_score, 
+			phone_on_time_score, bqs_score, phone_costs_score, 
+			is500_score, educationlevel_score, edudgcheck_score, 
+			eduyear_score, eduage_score, qqwxage_score, 
+			qqwxinage_score, linkphone_score, workadd_score, 
+			workadd_home_score, wkyear_score, income_score, 
+			social_security_score, accumulation_fund_score, 
+			income_compare_score, debit_score, age_score, 
+			age_man_older_score, age_diff_five_score, married_score, 
+			education_equal_score, wife_education_higher_score, 
+			wife_working_score, family_count_score, country_origin_score, 
+			city_origin_age30_score, boy_great_seven_score, 
+			birth_age_score, boy_and_girl_score, age_subtract_score, 
+			live_address_score, house_address_score, address_score, 
+			live_time_score, pay_year_score, pay_income_rate_score, 
+			girl_degree_score, op_auth_score, credit_auth_score, 
+			al_auth_score, created_on)
+		values (#{creditinfoId,jdbcType=INTEGER}, #{applyTimeScore,jdbcType=INTEGER}, #{wantedLimitScore,jdbcType=INTEGER}, 
+			#{wantedPeriodScore,jdbcType=INTEGER}, #{wantedRepayDayScore,jdbcType=INTEGER}, 
+			#{buyCarAgeScore,jdbcType=INTEGER}, #{carLisenceScore,jdbcType=INTEGER}, #{carPropertyScore,jdbcType=INTEGER}, 
+			#{buyDateAboveScore,jdbcType=INTEGER}, #{buyDateAboveAddScore,jdbcType=INTEGER}, 
+			#{countsScore,jdbcType=INTEGER}, #{priceScore,jdbcType=INTEGER}, #{carInsuranceAmountScore,jdbcType=INTEGER}, 
+			#{carDrivenScore,jdbcType=INTEGER}, #{houseAreaScore,jdbcType=INTEGER}, #{houseAppraisementScore,jdbcType=INTEGER}, 
+			#{loanAmountIncomeScore,jdbcType=INTEGER}, #{lengthOfResidenceScore,jdbcType=INTEGER}, 
+			#{isAllowContactScore,jdbcType=INTEGER}, #{isAllowRecordScore,jdbcType=INTEGER}, 
+			#{isAllowMessageScore,jdbcType=INTEGER}, #{isAllowLocationScore,jdbcType=INTEGER}, 
+			#{brStabilityScore,jdbcType=INTEGER}, #{idPhoneLocaleScore,jdbcType=INTEGER}, #{idPhoneNameScore,jdbcType=INTEGER}, 
+			#{phoneOnTimeScore,jdbcType=INTEGER}, #{bqsScore,jdbcType=INTEGER}, #{phoneCostsScore,jdbcType=INTEGER}, 
+			#{is500Score,jdbcType=INTEGER}, #{educationlevelScore,jdbcType=INTEGER}, #{edudgcheckScore,jdbcType=INTEGER}, 
+			#{eduyearScore,jdbcType=INTEGER}, #{eduageScore,jdbcType=INTEGER}, #{qqwxageScore,jdbcType=INTEGER}, 
+			#{qqwxinageScore,jdbcType=INTEGER}, #{linkphoneScore,jdbcType=INTEGER}, #{workaddScore,jdbcType=INTEGER}, 
+			#{workaddHomeScore,jdbcType=INTEGER}, #{wkyearScore,jdbcType=INTEGER}, #{incomeScore,jdbcType=INTEGER}, 
+			#{socialSecurityScore,jdbcType=INTEGER}, #{accumulationFundScore,jdbcType=INTEGER}, 
+			#{incomeCompareScore,jdbcType=INTEGER}, #{debitScore,jdbcType=INTEGER}, #{ageScore,jdbcType=INTEGER}, 
+			#{ageManOlderScore,jdbcType=INTEGER}, #{ageDiffFiveScore,jdbcType=INTEGER}, #{marriedScore,jdbcType=INTEGER}, 
+			#{educationEqualScore,jdbcType=INTEGER}, #{wifeEducationHigherScore,jdbcType=INTEGER}, 
+			#{wifeWorkingScore,jdbcType=INTEGER}, #{familyCountScore,jdbcType=INTEGER}, #{countryOriginScore,jdbcType=INTEGER}, 
+			#{cityOriginAge30Score,jdbcType=INTEGER}, #{boyGreatSevenScore,jdbcType=INTEGER}, 
+			#{birthAgeScore,jdbcType=INTEGER}, #{boyAndGirlScore,jdbcType=INTEGER}, #{ageSubtractScore,jdbcType=INTEGER}, 
+			#{liveAddressScore,jdbcType=INTEGER}, #{houseAddressScore,jdbcType=INTEGER}, #{addressScore,jdbcType=INTEGER}, 
+			#{liveTimeScore,jdbcType=INTEGER}, #{payYearScore,jdbcType=INTEGER}, #{payIncomeRateScore,jdbcType=INTEGER}, 
+			#{girlDegreeScore,jdbcType=INTEGER}, #{opAuthScore,jdbcType=INTEGER}, #{creditAuthScore,jdbcType=INTEGER}, 
+			#{alAuthScore,jdbcType=INTEGER}, #{createdOn,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-13 11:48:40. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.RiskmanageScoresRecord" >
+		<selectKey resultType="java.lang.Integer" keyProperty="rsrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into riskmanage_scores_record
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="creditinfoId != null" >
+				creditinfo_id,
+			</if>
+			<if test="applyTimeScore != null" >
+				apply_time_score,
+			</if>
+			<if test="wantedLimitScore != null" >
+				wanted_limit_score,
+			</if>
+			<if test="wantedPeriodScore != null" >
+				wanted_period_score,
+			</if>
+			<if test="wantedRepayDayScore != null" >
+				wanted_repay_day_score,
+			</if>
+			<if test="buyCarAgeScore != null" >
+				buy_car_age_score,
+			</if>
+			<if test="carLisenceScore != null" >
+				car_lisence_score,
+			</if>
+			<if test="carPropertyScore != null" >
+				car_property_score,
+			</if>
+			<if test="buyDateAboveScore != null" >
+				buy_date_above_score,
+			</if>
+			<if test="buyDateAboveAddScore != null" >
+				buy_date_above_add_score,
+			</if>
+			<if test="countsScore != null" >
+				counts_score,
+			</if>
+			<if test="priceScore != null" >
+				price_score,
+			</if>
+			<if test="carInsuranceAmountScore != null" >
+				car_insurance_amount_score,
+			</if>
+			<if test="carDrivenScore != null" >
+				car_driven_score,
+			</if>
+			<if test="houseAreaScore != null" >
+				house_area_score,
+			</if>
+			<if test="houseAppraisementScore != null" >
+				house_appraisement_score,
+			</if>
+			<if test="loanAmountIncomeScore != null" >
+				loan_amount_income_score,
+			</if>
+			<if test="lengthOfResidenceScore != null" >
+				length_of_residence_score,
+			</if>
+			<if test="isAllowContactScore != null" >
+				is_allow_contact_score,
+			</if>
+			<if test="isAllowRecordScore != null" >
+				is_allow_record_score,
+			</if>
+			<if test="isAllowMessageScore != null" >
+				is_allow_message_score,
+			</if>
+			<if test="isAllowLocationScore != null" >
+				is_allow_location_score,
+			</if>
+			<if test="brStabilityScore != null" >
+				br_stability_score,
+			</if>
+			<if test="idPhoneLocaleScore != null" >
+				id_phone_locale_score,
+			</if>
+			<if test="idPhoneNameScore != null" >
+				id_phone_name_score,
+			</if>
+			<if test="phoneOnTimeScore != null" >
+				phone_on_time_score,
+			</if>
+			<if test="bqsScore != null" >
+				bqs_score,
+			</if>
+			<if test="phoneCostsScore != null" >
+				phone_costs_score,
+			</if>
+			<if test="is500Score != null" >
+				is500_score,
+			</if>
+			<if test="educationlevelScore != null" >
+				educationlevel_score,
+			</if>
+			<if test="edudgcheckScore != null" >
+				edudgcheck_score,
+			</if>
+			<if test="eduyearScore != null" >
+				eduyear_score,
+			</if>
+			<if test="eduageScore != null" >
+				eduage_score,
+			</if>
+			<if test="qqwxageScore != null" >
+				qqwxage_score,
+			</if>
+			<if test="qqwxinageScore != null" >
+				qqwxinage_score,
+			</if>
+			<if test="linkphoneScore != null" >
+				linkphone_score,
+			</if>
+			<if test="workaddScore != null" >
+				workadd_score,
+			</if>
+			<if test="workaddHomeScore != null" >
+				workadd_home_score,
+			</if>
+			<if test="wkyearScore != null" >
+				wkyear_score,
+			</if>
+			<if test="incomeScore != null" >
+				income_score,
+			</if>
+			<if test="socialSecurityScore != null" >
+				social_security_score,
+			</if>
+			<if test="accumulationFundScore != null" >
+				accumulation_fund_score,
+			</if>
+			<if test="incomeCompareScore != null" >
+				income_compare_score,
+			</if>
+			<if test="debitScore != null" >
+				debit_score,
+			</if>
+			<if test="ageScore != null" >
+				age_score,
+			</if>
+			<if test="ageManOlderScore != null" >
+				age_man_older_score,
+			</if>
+			<if test="ageDiffFiveScore != null" >
+				age_diff_five_score,
+			</if>
+			<if test="marriedScore != null" >
+				married_score,
+			</if>
+			<if test="educationEqualScore != null" >
+				education_equal_score,
+			</if>
+			<if test="wifeEducationHigherScore != null" >
+				wife_education_higher_score,
+			</if>
+			<if test="wifeWorkingScore != null" >
+				wife_working_score,
+			</if>
+			<if test="familyCountScore != null" >
+				family_count_score,
+			</if>
+			<if test="countryOriginScore != null" >
+				country_origin_score,
+			</if>
+			<if test="cityOriginAge30Score != null" >
+				city_origin_age30_score,
+			</if>
+			<if test="boyGreatSevenScore != null" >
+				boy_great_seven_score,
+			</if>
+			<if test="birthAgeScore != null" >
+				birth_age_score,
+			</if>
+			<if test="boyAndGirlScore != null" >
+				boy_and_girl_score,
+			</if>
+			<if test="ageSubtractScore != null" >
+				age_subtract_score,
+			</if>
+			<if test="liveAddressScore != null" >
+				live_address_score,
+			</if>
+			<if test="houseAddressScore != null" >
+				house_address_score,
+			</if>
+			<if test="addressScore != null" >
+				address_score,
+			</if>
+			<if test="liveTimeScore != null" >
+				live_time_score,
+			</if>
+			<if test="payYearScore != null" >
+				pay_year_score,
+			</if>
+			<if test="payIncomeRateScore != null" >
+				pay_income_rate_score,
+			</if>
+			<if test="girlDegreeScore != null" >
+				girl_degree_score,
+			</if>
+			<if test="opAuthScore != null" >
+				op_auth_score,
+			</if>
+			<if test="creditAuthScore != null" >
+				credit_auth_score,
+			</if>
+			<if test="alAuthScore != null" >
+				al_auth_score,
+			</if>
+			<if test="createdOn != null" >
+				created_on,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="creditinfoId != null" >
+				#{creditinfoId,jdbcType=INTEGER},
+			</if>
+			<if test="applyTimeScore != null" >
+				#{applyTimeScore,jdbcType=INTEGER},
+			</if>
+			<if test="wantedLimitScore != null" >
+				#{wantedLimitScore,jdbcType=INTEGER},
+			</if>
+			<if test="wantedPeriodScore != null" >
+				#{wantedPeriodScore,jdbcType=INTEGER},
+			</if>
+			<if test="wantedRepayDayScore != null" >
+				#{wantedRepayDayScore,jdbcType=INTEGER},
+			</if>
+			<if test="buyCarAgeScore != null" >
+				#{buyCarAgeScore,jdbcType=INTEGER},
+			</if>
+			<if test="carLisenceScore != null" >
+				#{carLisenceScore,jdbcType=INTEGER},
+			</if>
+			<if test="carPropertyScore != null" >
+				#{carPropertyScore,jdbcType=INTEGER},
+			</if>
+			<if test="buyDateAboveScore != null" >
+				#{buyDateAboveScore,jdbcType=INTEGER},
+			</if>
+			<if test="buyDateAboveAddScore != null" >
+				#{buyDateAboveAddScore,jdbcType=INTEGER},
+			</if>
+			<if test="countsScore != null" >
+				#{countsScore,jdbcType=INTEGER},
+			</if>
+			<if test="priceScore != null" >
+				#{priceScore,jdbcType=INTEGER},
+			</if>
+			<if test="carInsuranceAmountScore != null" >
+				#{carInsuranceAmountScore,jdbcType=INTEGER},
+			</if>
+			<if test="carDrivenScore != null" >
+				#{carDrivenScore,jdbcType=INTEGER},
+			</if>
+			<if test="houseAreaScore != null" >
+				#{houseAreaScore,jdbcType=INTEGER},
+			</if>
+			<if test="houseAppraisementScore != null" >
+				#{houseAppraisementScore,jdbcType=INTEGER},
+			</if>
+			<if test="loanAmountIncomeScore != null" >
+				#{loanAmountIncomeScore,jdbcType=INTEGER},
+			</if>
+			<if test="lengthOfResidenceScore != null" >
+				#{lengthOfResidenceScore,jdbcType=INTEGER},
+			</if>
+			<if test="isAllowContactScore != null" >
+				#{isAllowContactScore,jdbcType=INTEGER},
+			</if>
+			<if test="isAllowRecordScore != null" >
+				#{isAllowRecordScore,jdbcType=INTEGER},
+			</if>
+			<if test="isAllowMessageScore != null" >
+				#{isAllowMessageScore,jdbcType=INTEGER},
+			</if>
+			<if test="isAllowLocationScore != null" >
+				#{isAllowLocationScore,jdbcType=INTEGER},
+			</if>
+			<if test="brStabilityScore != null" >
+				#{brStabilityScore,jdbcType=INTEGER},
+			</if>
+			<if test="idPhoneLocaleScore != null" >
+				#{idPhoneLocaleScore,jdbcType=INTEGER},
+			</if>
+			<if test="idPhoneNameScore != null" >
+				#{idPhoneNameScore,jdbcType=INTEGER},
+			</if>
+			<if test="phoneOnTimeScore != null" >
+				#{phoneOnTimeScore,jdbcType=INTEGER},
+			</if>
+			<if test="bqsScore != null" >
+				#{bqsScore,jdbcType=INTEGER},
+			</if>
+			<if test="phoneCostsScore != null" >
+				#{phoneCostsScore,jdbcType=INTEGER},
+			</if>
+			<if test="is500Score != null" >
+				#{is500Score,jdbcType=INTEGER},
+			</if>
+			<if test="educationlevelScore != null" >
+				#{educationlevelScore,jdbcType=INTEGER},
+			</if>
+			<if test="edudgcheckScore != null" >
+				#{edudgcheckScore,jdbcType=INTEGER},
+			</if>
+			<if test="eduyearScore != null" >
+				#{eduyearScore,jdbcType=INTEGER},
+			</if>
+			<if test="eduageScore != null" >
+				#{eduageScore,jdbcType=INTEGER},
+			</if>
+			<if test="qqwxageScore != null" >
+				#{qqwxageScore,jdbcType=INTEGER},
+			</if>
+			<if test="qqwxinageScore != null" >
+				#{qqwxinageScore,jdbcType=INTEGER},
+			</if>
+			<if test="linkphoneScore != null" >
+				#{linkphoneScore,jdbcType=INTEGER},
+			</if>
+			<if test="workaddScore != null" >
+				#{workaddScore,jdbcType=INTEGER},
+			</if>
+			<if test="workaddHomeScore != null" >
+				#{workaddHomeScore,jdbcType=INTEGER},
+			</if>
+			<if test="wkyearScore != null" >
+				#{wkyearScore,jdbcType=INTEGER},
+			</if>
+			<if test="incomeScore != null" >
+				#{incomeScore,jdbcType=INTEGER},
+			</if>
+			<if test="socialSecurityScore != null" >
+				#{socialSecurityScore,jdbcType=INTEGER},
+			</if>
+			<if test="accumulationFundScore != null" >
+				#{accumulationFundScore,jdbcType=INTEGER},
+			</if>
+			<if test="incomeCompareScore != null" >
+				#{incomeCompareScore,jdbcType=INTEGER},
+			</if>
+			<if test="debitScore != null" >
+				#{debitScore,jdbcType=INTEGER},
+			</if>
+			<if test="ageScore != null" >
+				#{ageScore,jdbcType=INTEGER},
+			</if>
+			<if test="ageManOlderScore != null" >
+				#{ageManOlderScore,jdbcType=INTEGER},
+			</if>
+			<if test="ageDiffFiveScore != null" >
+				#{ageDiffFiveScore,jdbcType=INTEGER},
+			</if>
+			<if test="marriedScore != null" >
+				#{marriedScore,jdbcType=INTEGER},
+			</if>
+			<if test="educationEqualScore != null" >
+				#{educationEqualScore,jdbcType=INTEGER},
+			</if>
+			<if test="wifeEducationHigherScore != null" >
+				#{wifeEducationHigherScore,jdbcType=INTEGER},
+			</if>
+			<if test="wifeWorkingScore != null" >
+				#{wifeWorkingScore,jdbcType=INTEGER},
+			</if>
+			<if test="familyCountScore != null" >
+				#{familyCountScore,jdbcType=INTEGER},
+			</if>
+			<if test="countryOriginScore != null" >
+				#{countryOriginScore,jdbcType=INTEGER},
+			</if>
+			<if test="cityOriginAge30Score != null" >
+				#{cityOriginAge30Score,jdbcType=INTEGER},
+			</if>
+			<if test="boyGreatSevenScore != null" >
+				#{boyGreatSevenScore,jdbcType=INTEGER},
+			</if>
+			<if test="birthAgeScore != null" >
+				#{birthAgeScore,jdbcType=INTEGER},
+			</if>
+			<if test="boyAndGirlScore != null" >
+				#{boyAndGirlScore,jdbcType=INTEGER},
+			</if>
+			<if test="ageSubtractScore != null" >
+				#{ageSubtractScore,jdbcType=INTEGER},
+			</if>
+			<if test="liveAddressScore != null" >
+				#{liveAddressScore,jdbcType=INTEGER},
+			</if>
+			<if test="houseAddressScore != null" >
+				#{houseAddressScore,jdbcType=INTEGER},
+			</if>
+			<if test="addressScore != null" >
+				#{addressScore,jdbcType=INTEGER},
+			</if>
+			<if test="liveTimeScore != null" >
+				#{liveTimeScore,jdbcType=INTEGER},
+			</if>
+			<if test="payYearScore != null" >
+				#{payYearScore,jdbcType=INTEGER},
+			</if>
+			<if test="payIncomeRateScore != null" >
+				#{payIncomeRateScore,jdbcType=INTEGER},
+			</if>
+			<if test="girlDegreeScore != null" >
+				#{girlDegreeScore,jdbcType=INTEGER},
+			</if>
+			<if test="opAuthScore != null" >
+				#{opAuthScore,jdbcType=INTEGER},
+			</if>
+			<if test="creditAuthScore != null" >
+				#{creditAuthScore,jdbcType=INTEGER},
+			</if>
+			<if test="alAuthScore != null" >
+				#{alAuthScore,jdbcType=INTEGER},
+			</if>
+			<if test="createdOn != null" >
+				#{createdOn,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-13 11:48:40. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.RiskmanageScoresRecord" >
+		update riskmanage_scores_record
+		<set >
+			<if test="creditinfoId != null" >
+				creditinfo_id = #{creditinfoId,jdbcType=INTEGER},
+			</if>
+			<if test="applyTimeScore != null" >
+				apply_time_score = #{applyTimeScore,jdbcType=INTEGER},
+			</if>
+			<if test="wantedLimitScore != null" >
+				wanted_limit_score = #{wantedLimitScore,jdbcType=INTEGER},
+			</if>
+			<if test="wantedPeriodScore != null" >
+				wanted_period_score = #{wantedPeriodScore,jdbcType=INTEGER},
+			</if>
+			<if test="wantedRepayDayScore != null" >
+				wanted_repay_day_score = #{wantedRepayDayScore,jdbcType=INTEGER},
+			</if>
+			<if test="buyCarAgeScore != null" >
+				buy_car_age_score = #{buyCarAgeScore,jdbcType=INTEGER},
+			</if>
+			<if test="carLisenceScore != null" >
+				car_lisence_score = #{carLisenceScore,jdbcType=INTEGER},
+			</if>
+			<if test="carPropertyScore != null" >
+				car_property_score = #{carPropertyScore,jdbcType=INTEGER},
+			</if>
+			<if test="buyDateAboveScore != null" >
+				buy_date_above_score = #{buyDateAboveScore,jdbcType=INTEGER},
+			</if>
+			<if test="buyDateAboveAddScore != null" >
+				buy_date_above_add_score = #{buyDateAboveAddScore,jdbcType=INTEGER},
+			</if>
+			<if test="countsScore != null" >
+				counts_score = #{countsScore,jdbcType=INTEGER},
+			</if>
+			<if test="priceScore != null" >
+				price_score = #{priceScore,jdbcType=INTEGER},
+			</if>
+			<if test="carInsuranceAmountScore != null" >
+				car_insurance_amount_score = #{carInsuranceAmountScore,jdbcType=INTEGER},
+			</if>
+			<if test="carDrivenScore != null" >
+				car_driven_score = #{carDrivenScore,jdbcType=INTEGER},
+			</if>
+			<if test="houseAreaScore != null" >
+				house_area_score = #{houseAreaScore,jdbcType=INTEGER},
+			</if>
+			<if test="houseAppraisementScore != null" >
+				house_appraisement_score = #{houseAppraisementScore,jdbcType=INTEGER},
+			</if>
+			<if test="loanAmountIncomeScore != null" >
+				loan_amount_income_score = #{loanAmountIncomeScore,jdbcType=INTEGER},
+			</if>
+			<if test="lengthOfResidenceScore != null" >
+				length_of_residence_score = #{lengthOfResidenceScore,jdbcType=INTEGER},
+			</if>
+			<if test="isAllowContactScore != null" >
+				is_allow_contact_score = #{isAllowContactScore,jdbcType=INTEGER},
+			</if>
+			<if test="isAllowRecordScore != null" >
+				is_allow_record_score = #{isAllowRecordScore,jdbcType=INTEGER},
+			</if>
+			<if test="isAllowMessageScore != null" >
+				is_allow_message_score = #{isAllowMessageScore,jdbcType=INTEGER},
+			</if>
+			<if test="isAllowLocationScore != null" >
+				is_allow_location_score = #{isAllowLocationScore,jdbcType=INTEGER},
+			</if>
+			<if test="brStabilityScore != null" >
+				br_stability_score = #{brStabilityScore,jdbcType=INTEGER},
+			</if>
+			<if test="idPhoneLocaleScore != null" >
+				id_phone_locale_score = #{idPhoneLocaleScore,jdbcType=INTEGER},
+			</if>
+			<if test="idPhoneNameScore != null" >
+				id_phone_name_score = #{idPhoneNameScore,jdbcType=INTEGER},
+			</if>
+			<if test="phoneOnTimeScore != null" >
+				phone_on_time_score = #{phoneOnTimeScore,jdbcType=INTEGER},
+			</if>
+			<if test="bqsScore != null" >
+				bqs_score = #{bqsScore,jdbcType=INTEGER},
+			</if>
+			<if test="phoneCostsScore != null" >
+				phone_costs_score = #{phoneCostsScore,jdbcType=INTEGER},
+			</if>
+			<if test="is500Score != null" >
+				is500_score = #{is500Score,jdbcType=INTEGER},
+			</if>
+			<if test="educationlevelScore != null" >
+				educationlevel_score = #{educationlevelScore,jdbcType=INTEGER},
+			</if>
+			<if test="edudgcheckScore != null" >
+				edudgcheck_score = #{edudgcheckScore,jdbcType=INTEGER},
+			</if>
+			<if test="eduyearScore != null" >
+				eduyear_score = #{eduyearScore,jdbcType=INTEGER},
+			</if>
+			<if test="eduageScore != null" >
+				eduage_score = #{eduageScore,jdbcType=INTEGER},
+			</if>
+			<if test="qqwxageScore != null" >
+				qqwxage_score = #{qqwxageScore,jdbcType=INTEGER},
+			</if>
+			<if test="qqwxinageScore != null" >
+				qqwxinage_score = #{qqwxinageScore,jdbcType=INTEGER},
+			</if>
+			<if test="linkphoneScore != null" >
+				linkphone_score = #{linkphoneScore,jdbcType=INTEGER},
+			</if>
+			<if test="workaddScore != null" >
+				workadd_score = #{workaddScore,jdbcType=INTEGER},
+			</if>
+			<if test="workaddHomeScore != null" >
+				workadd_home_score = #{workaddHomeScore,jdbcType=INTEGER},
+			</if>
+			<if test="wkyearScore != null" >
+				wkyear_score = #{wkyearScore,jdbcType=INTEGER},
+			</if>
+			<if test="incomeScore != null" >
+				income_score = #{incomeScore,jdbcType=INTEGER},
+			</if>
+			<if test="socialSecurityScore != null" >
+				social_security_score = #{socialSecurityScore,jdbcType=INTEGER},
+			</if>
+			<if test="accumulationFundScore != null" >
+				accumulation_fund_score = #{accumulationFundScore,jdbcType=INTEGER},
+			</if>
+			<if test="incomeCompareScore != null" >
+				income_compare_score = #{incomeCompareScore,jdbcType=INTEGER},
+			</if>
+			<if test="debitScore != null" >
+				debit_score = #{debitScore,jdbcType=INTEGER},
+			</if>
+			<if test="ageScore != null" >
+				age_score = #{ageScore,jdbcType=INTEGER},
+			</if>
+			<if test="ageManOlderScore != null" >
+				age_man_older_score = #{ageManOlderScore,jdbcType=INTEGER},
+			</if>
+			<if test="ageDiffFiveScore != null" >
+				age_diff_five_score = #{ageDiffFiveScore,jdbcType=INTEGER},
+			</if>
+			<if test="marriedScore != null" >
+				married_score = #{marriedScore,jdbcType=INTEGER},
+			</if>
+			<if test="educationEqualScore != null" >
+				education_equal_score = #{educationEqualScore,jdbcType=INTEGER},
+			</if>
+			<if test="wifeEducationHigherScore != null" >
+				wife_education_higher_score = #{wifeEducationHigherScore,jdbcType=INTEGER},
+			</if>
+			<if test="wifeWorkingScore != null" >
+				wife_working_score = #{wifeWorkingScore,jdbcType=INTEGER},
+			</if>
+			<if test="familyCountScore != null" >
+				family_count_score = #{familyCountScore,jdbcType=INTEGER},
+			</if>
+			<if test="countryOriginScore != null" >
+				country_origin_score = #{countryOriginScore,jdbcType=INTEGER},
+			</if>
+			<if test="cityOriginAge30Score != null" >
+				city_origin_age30_score = #{cityOriginAge30Score,jdbcType=INTEGER},
+			</if>
+			<if test="boyGreatSevenScore != null" >
+				boy_great_seven_score = #{boyGreatSevenScore,jdbcType=INTEGER},
+			</if>
+			<if test="birthAgeScore != null" >
+				birth_age_score = #{birthAgeScore,jdbcType=INTEGER},
+			</if>
+			<if test="boyAndGirlScore != null" >
+				boy_and_girl_score = #{boyAndGirlScore,jdbcType=INTEGER},
+			</if>
+			<if test="ageSubtractScore != null" >
+				age_subtract_score = #{ageSubtractScore,jdbcType=INTEGER},
+			</if>
+			<if test="liveAddressScore != null" >
+				live_address_score = #{liveAddressScore,jdbcType=INTEGER},
+			</if>
+			<if test="houseAddressScore != null" >
+				house_address_score = #{houseAddressScore,jdbcType=INTEGER},
+			</if>
+			<if test="addressScore != null" >
+				address_score = #{addressScore,jdbcType=INTEGER},
+			</if>
+			<if test="liveTimeScore != null" >
+				live_time_score = #{liveTimeScore,jdbcType=INTEGER},
+			</if>
+			<if test="payYearScore != null" >
+				pay_year_score = #{payYearScore,jdbcType=INTEGER},
+			</if>
+			<if test="payIncomeRateScore != null" >
+				pay_income_rate_score = #{payIncomeRateScore,jdbcType=INTEGER},
+			</if>
+			<if test="girlDegreeScore != null" >
+				girl_degree_score = #{girlDegreeScore,jdbcType=INTEGER},
+			</if>
+			<if test="opAuthScore != null" >
+				op_auth_score = #{opAuthScore,jdbcType=INTEGER},
+			</if>
+			<if test="creditAuthScore != null" >
+				credit_auth_score = #{creditAuthScore,jdbcType=INTEGER},
+			</if>
+			<if test="alAuthScore != null" >
+				al_auth_score = #{alAuthScore,jdbcType=INTEGER},
+			</if>
+			<if test="createdOn != null" >
+				created_on = #{createdOn,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where rsr_id = #{rsrId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-13 11:48:40. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.RiskmanageScoresRecord" >
+		update riskmanage_scores_record
+		set creditinfo_id = #{creditinfoId,jdbcType=INTEGER},
+			apply_time_score = #{applyTimeScore,jdbcType=INTEGER},
+			wanted_limit_score = #{wantedLimitScore,jdbcType=INTEGER},
+			wanted_period_score = #{wantedPeriodScore,jdbcType=INTEGER},
+			wanted_repay_day_score = #{wantedRepayDayScore,jdbcType=INTEGER},
+			buy_car_age_score = #{buyCarAgeScore,jdbcType=INTEGER},
+			car_lisence_score = #{carLisenceScore,jdbcType=INTEGER},
+			car_property_score = #{carPropertyScore,jdbcType=INTEGER},
+			buy_date_above_score = #{buyDateAboveScore,jdbcType=INTEGER},
+			buy_date_above_add_score = #{buyDateAboveAddScore,jdbcType=INTEGER},
+			counts_score = #{countsScore,jdbcType=INTEGER},
+			price_score = #{priceScore,jdbcType=INTEGER},
+			car_insurance_amount_score = #{carInsuranceAmountScore,jdbcType=INTEGER},
+			car_driven_score = #{carDrivenScore,jdbcType=INTEGER},
+			house_area_score = #{houseAreaScore,jdbcType=INTEGER},
+			house_appraisement_score = #{houseAppraisementScore,jdbcType=INTEGER},
+			loan_amount_income_score = #{loanAmountIncomeScore,jdbcType=INTEGER},
+			length_of_residence_score = #{lengthOfResidenceScore,jdbcType=INTEGER},
+			is_allow_contact_score = #{isAllowContactScore,jdbcType=INTEGER},
+			is_allow_record_score = #{isAllowRecordScore,jdbcType=INTEGER},
+			is_allow_message_score = #{isAllowMessageScore,jdbcType=INTEGER},
+			is_allow_location_score = #{isAllowLocationScore,jdbcType=INTEGER},
+			br_stability_score = #{brStabilityScore,jdbcType=INTEGER},
+			id_phone_locale_score = #{idPhoneLocaleScore,jdbcType=INTEGER},
+			id_phone_name_score = #{idPhoneNameScore,jdbcType=INTEGER},
+			phone_on_time_score = #{phoneOnTimeScore,jdbcType=INTEGER},
+			bqs_score = #{bqsScore,jdbcType=INTEGER},
+			phone_costs_score = #{phoneCostsScore,jdbcType=INTEGER},
+			is500_score = #{is500Score,jdbcType=INTEGER},
+			educationlevel_score = #{educationlevelScore,jdbcType=INTEGER},
+			edudgcheck_score = #{edudgcheckScore,jdbcType=INTEGER},
+			eduyear_score = #{eduyearScore,jdbcType=INTEGER},
+			eduage_score = #{eduageScore,jdbcType=INTEGER},
+			qqwxage_score = #{qqwxageScore,jdbcType=INTEGER},
+			qqwxinage_score = #{qqwxinageScore,jdbcType=INTEGER},
+			linkphone_score = #{linkphoneScore,jdbcType=INTEGER},
+			workadd_score = #{workaddScore,jdbcType=INTEGER},
+			workadd_home_score = #{workaddHomeScore,jdbcType=INTEGER},
+			wkyear_score = #{wkyearScore,jdbcType=INTEGER},
+			income_score = #{incomeScore,jdbcType=INTEGER},
+			social_security_score = #{socialSecurityScore,jdbcType=INTEGER},
+			accumulation_fund_score = #{accumulationFundScore,jdbcType=INTEGER},
+			income_compare_score = #{incomeCompareScore,jdbcType=INTEGER},
+			debit_score = #{debitScore,jdbcType=INTEGER},
+			age_score = #{ageScore,jdbcType=INTEGER},
+			age_man_older_score = #{ageManOlderScore,jdbcType=INTEGER},
+			age_diff_five_score = #{ageDiffFiveScore,jdbcType=INTEGER},
+			married_score = #{marriedScore,jdbcType=INTEGER},
+			education_equal_score = #{educationEqualScore,jdbcType=INTEGER},
+			wife_education_higher_score = #{wifeEducationHigherScore,jdbcType=INTEGER},
+			wife_working_score = #{wifeWorkingScore,jdbcType=INTEGER},
+			family_count_score = #{familyCountScore,jdbcType=INTEGER},
+			country_origin_score = #{countryOriginScore,jdbcType=INTEGER},
+			city_origin_age30_score = #{cityOriginAge30Score,jdbcType=INTEGER},
+			boy_great_seven_score = #{boyGreatSevenScore,jdbcType=INTEGER},
+			birth_age_score = #{birthAgeScore,jdbcType=INTEGER},
+			boy_and_girl_score = #{boyAndGirlScore,jdbcType=INTEGER},
+			age_subtract_score = #{ageSubtractScore,jdbcType=INTEGER},
+			live_address_score = #{liveAddressScore,jdbcType=INTEGER},
+			house_address_score = #{houseAddressScore,jdbcType=INTEGER},
+			address_score = #{addressScore,jdbcType=INTEGER},
+			live_time_score = #{liveTimeScore,jdbcType=INTEGER},
+			pay_year_score = #{payYearScore,jdbcType=INTEGER},
+			pay_income_rate_score = #{payIncomeRateScore,jdbcType=INTEGER},
+			girl_degree_score = #{girlDegreeScore,jdbcType=INTEGER},
+			op_auth_score = #{opAuthScore,jdbcType=INTEGER},
+			credit_auth_score = #{creditAuthScore,jdbcType=INTEGER},
+			al_auth_score = #{alAuthScore,jdbcType=INTEGER},
+			created_on = #{createdOn,jdbcType=TIMESTAMP}
+		where rsr_id = #{rsrId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-13 11:48:40. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from riskmanage_scores_record
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

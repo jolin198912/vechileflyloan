@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.user.mapper.ResourceExtMapper">
+    <!--查询所有，使用resultMap返回结果集，将数据组装成树形结构  -->
+    <select id="findResourceAll" resultMap="resource_map">
+		select * from resource where parent_id=0
+	</select>
+    <!-- 返回结果集 -->
+    <resultMap type="cn.houhe.api.user.entity.ResourceExt" id="resource_map">
+        <id column="res_id" property="res_id"/>
+        <result column="is_single" property="isSingle"/>
+        <result column="res_code" property="resCode"/>
+        <result column="res_name" property="resName"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+        <collection property="childList" column="res_id" ofType="cn.houhe.api.user.entity.ResourceExt" javaType="java.util.List"
+                    select="findResourceByparentId"></collection>
+    </resultMap>
+
+    <!-- 根据父键查询 -->
+    <select id="findResourceByparentId" parameterType="INTEGER" resultMap="resource_map">
+       select * from resource where parent_id=#{res_id}
+	</select>
+
+</mapper>

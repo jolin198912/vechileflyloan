@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.LoanPayMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-05 09:36:25. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.LoanPay" >
+		<id column="lp_id" property="lpId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="loan_limit" property="loanLimit" jdbcType="DECIMAL" />
+		<result column="pay_platform" property="payPlatform" jdbcType="VARCHAR" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+		<result column="receive_bank_cardno" property="receiveBankCardno" jdbcType="VARCHAR" />
+		<result column="receive_bank" property="receiveBank" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="paytime" property="paytime" jdbcType="TIMESTAMP" />
+		<result column="number" property="number" jdbcType="VARCHAR" />
+		<result column="flownumber" property="flownumber" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-05 09:36:25. -->
+	<sql id="Base_Column_List" >
+		lp_id, loan_record_id, amount, loan_limit, pay_platform, member_id, username, user_mobile, 
+		receive_bank_cardno, receive_bank, status, paytime, number, flownumber, createdon, 
+		remark
+	</sql>
+
+	<!-- 按主键查询 2017-05-05 09:36:25. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from loan_pay
+		where lp_id = #{lpId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-05 09:36:25. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from loan_pay
+		where lp_id = #{lpId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-05 09:36:25. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.LoanPay" >
+		insert into loan_pay (lp_id, loan_record_id, amount, 
+			loan_limit, pay_platform, member_id, 
+			username, user_mobile, receive_bank_cardno, 
+			receive_bank, status, paytime, 
+			number, flownumber, createdon, 
+			remark)
+		values (#{lpId,jdbcType=INTEGER}, #{loanRecordId,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, 
+			#{loanLimit,jdbcType=DECIMAL}, #{payPlatform,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, 
+			#{username,jdbcType=VARCHAR}, #{userMobile,jdbcType=VARCHAR}, #{receiveBankCardno,jdbcType=VARCHAR}, 
+			#{receiveBank,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{paytime,jdbcType=TIMESTAMP}, 
+			#{number,jdbcType=VARCHAR}, #{flownumber,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}, 
+			#{remark,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-05 09:36:25. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.LoanPay" >
+		insert into loan_pay
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="lpId != null" >
+				lp_id,
+			</if>
+			<if test="loanRecordId != null" >
+				loan_record_id,
+			</if>
+			<if test="amount != null" >
+				amount,
+			</if>
+			<if test="loanLimit != null" >
+				loan_limit,
+			</if>
+			<if test="payPlatform != null" >
+				pay_platform,
+			</if>
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="username != null" >
+				username,
+			</if>
+			<if test="userMobile != null" >
+				user_mobile,
+			</if>
+			<if test="receiveBankCardno != null" >
+				receive_bank_cardno,
+			</if>
+			<if test="receiveBank != null" >
+				receive_bank,
+			</if>
+			<if test="status != null" >
+				status,
+			</if>
+			<if test="paytime != null" >
+				paytime,
+			</if>
+			<if test="number != null" >
+				number,
+			</if>
+			<if test="flownumber != null" >
+				flownumber,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="lpId != null" >
+				#{lpId,jdbcType=INTEGER},
+			</if>
+			<if test="loanRecordId != null" >
+				#{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="amount != null" >
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="loanLimit != null" >
+				#{loanLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="payPlatform != null" >
+				#{payPlatform,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="username != null" >
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="userMobile != null" >
+				#{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveBankCardno != null" >
+				#{receiveBankCardno,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveBank != null" >
+				#{receiveBank,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null" >
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="paytime != null" >
+				#{paytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="number != null" >
+				#{number,jdbcType=VARCHAR},
+			</if>
+			<if test="flownumber != null" >
+				#{flownumber,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-05 09:36:25. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.LoanPay" >
+		update loan_pay
+		<set >
+			<if test="loanRecordId != null" >
+				loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="amount != null" >
+				amount = #{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="loanLimit != null" >
+				loan_limit = #{loanLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="payPlatform != null" >
+				pay_platform = #{payPlatform,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="username != null" >
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="userMobile != null" >
+				user_mobile = #{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveBankCardno != null" >
+				receive_bank_cardno = #{receiveBankCardno,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveBank != null" >
+				receive_bank = #{receiveBank,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null" >
+				status = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="paytime != null" >
+				paytime = #{paytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="number != null" >
+				number = #{number,jdbcType=VARCHAR},
+			</if>
+			<if test="flownumber != null" >
+				flownumber = #{flownumber,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where lp_id = #{lpId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-05 09:36:25. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.LoanPay" >
+		update loan_pay
+		set loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			amount = #{amount,jdbcType=DECIMAL},
+			loan_limit = #{loanLimit,jdbcType=DECIMAL},
+			pay_platform = #{payPlatform,jdbcType=VARCHAR},
+			member_id = #{memberId,jdbcType=INTEGER},
+			username = #{username,jdbcType=VARCHAR},
+			user_mobile = #{userMobile,jdbcType=VARCHAR},
+			receive_bank_cardno = #{receiveBankCardno,jdbcType=VARCHAR},
+			receive_bank = #{receiveBank,jdbcType=VARCHAR},
+			status = #{status,jdbcType=TINYINT},
+			paytime = #{paytime,jdbcType=TIMESTAMP},
+			number = #{number,jdbcType=VARCHAR},
+			flownumber = #{flownumber,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR}
+		where lp_id = #{lpId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-05 09:36:25. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from loan_pay
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

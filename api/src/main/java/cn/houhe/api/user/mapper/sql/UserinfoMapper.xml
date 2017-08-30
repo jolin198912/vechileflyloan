@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.user.mapper.UserinfoMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 13:50:02. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.user.entity.Userinfo" >
+		<id column="usid" property="usid" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="phone" property="phone" jdbcType="VARCHAR" />
+		<result column="department" property="department" jdbcType="VARCHAR" />
+		<result column="is_disabled" property="isDisabled" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="createdby" property="createdby" jdbcType="VARCHAR" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+		<result column="modifiedby" property="modifiedby" jdbcType="VARCHAR" />
+		<result column="usertypeid" property="usertypeid" jdbcType="SMALLINT" />
+		<result column="efficient_level" property="efficientLevel" jdbcType="TINYINT" />
+		<result column="is_boss" property="isBoss" jdbcType="TINYINT" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 13:50:02. -->
+	<sql id="Base_Column_List" >
+		usid, username, password, name, phone, department, is_disabled, createdon, createdby, 
+		modifiedon, modifiedby, usertypeid, efficient_level, is_boss
+	</sql>
+
+	<!-- 按主键查询 2017-03-30 13:50:02. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from userinfo
+		where usid = #{usid,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-03-30 13:50:02. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from userinfo
+		where usid = #{usid,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-03-30 13:50:02. -->
+	<insert id="insert" parameterType="cn.houhe.api.user.entity.Userinfo" >
+		<selectKey resultType="java.lang.Integer" keyProperty="usid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into userinfo (username, password, name, 
+			phone, department, is_disabled, 
+			createdon, createdby, modifiedon, 
+			modifiedby, usertypeid, efficient_level, 
+			is_boss)
+		values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+			#{phone,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{isDisabled,jdbcType=TINYINT}, 
+			#{createdon,jdbcType=TIMESTAMP}, #{createdby,jdbcType=VARCHAR}, #{modifiedon,jdbcType=TIMESTAMP}, 
+			#{modifiedby,jdbcType=VARCHAR}, #{usertypeid,jdbcType=SMALLINT}, #{efficientLevel,jdbcType=TINYINT}, 
+			#{isBoss,jdbcType=TINYINT})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-03-30 13:50:02. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.user.entity.Userinfo" >
+		<selectKey resultType="java.lang.Integer" keyProperty="usid" order="AFTER" >
+			 SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into userinfo
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="username != null" >
+				username,
+			</if>
+			<if test="password != null" >
+				password,
+			</if>
+			<if test="name != null" >
+				name,
+			</if>
+			<if test="phone != null" >
+				phone,
+			</if>
+			<if test="department != null" >
+				department,
+			</if>
+			<if test="isDisabled != null" >
+				is_disabled,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="createdby != null" >
+				createdby,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby,
+			</if>
+			<if test="usertypeid != null" >
+				usertypeid,
+			</if>
+			<if test="efficientLevel != null" >
+				efficient_level,
+			</if>
+			<if test="isBoss != null" >
+				is_boss,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="username != null" >
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null" >
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null" >
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null" >
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="department != null" >
+				#{department,jdbcType=VARCHAR},
+			</if>
+			<if test="isDisabled != null" >
+				#{isDisabled,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null" >
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				#{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="usertypeid != null" >
+				#{usertypeid,jdbcType=SMALLINT},
+			</if>
+			<if test="efficientLevel != null" >
+				#{efficientLevel,jdbcType=TINYINT},
+			</if>
+			<if test="isBoss != null" >
+				#{isBoss,jdbcType=TINYINT},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-03-30 13:50:02. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.user.entity.Userinfo" >
+		update userinfo
+		<set >
+			<if test="username != null" >
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null" >
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null" >
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="phone != null" >
+				phone = #{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="department != null" >
+				department = #{department,jdbcType=VARCHAR},
+			</if>
+			<if test="isDisabled != null" >
+				is_disabled = #{isDisabled,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null" >
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="usertypeid != null" >
+				usertypeid = #{usertypeid,jdbcType=SMALLINT},
+			</if>
+			<if test="efficientLevel != null" >
+				efficient_level = #{efficientLevel,jdbcType=TINYINT},
+			</if>
+			<if test="isBoss != null" >
+				is_boss = #{isBoss,jdbcType=TINYINT},
+			</if>
+		</set>
+		where usid = #{usid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-03-30 13:50:02. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.user.entity.Userinfo" >
+		update userinfo
+		set username = #{username,jdbcType=VARCHAR},
+			password = #{password,jdbcType=VARCHAR},
+			name = #{name,jdbcType=VARCHAR},
+			phone = #{phone,jdbcType=VARCHAR},
+			department = #{department,jdbcType=VARCHAR},
+			is_disabled = #{isDisabled,jdbcType=TINYINT},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			createdby = #{createdby,jdbcType=VARCHAR},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			usertypeid = #{usertypeid,jdbcType=SMALLINT},
+			efficient_level = #{efficientLevel,jdbcType=TINYINT},
+			is_boss = #{isBoss,jdbcType=TINYINT}
+		where usid = #{usid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-03-30 13:50:02. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from userinfo
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

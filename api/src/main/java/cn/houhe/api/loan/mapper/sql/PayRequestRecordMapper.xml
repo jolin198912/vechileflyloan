@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.PayRequestRecordMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-03 15:31:46. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.PayRequestRecord" >
+		<id column="pr_id" property="prId" jdbcType="INTEGER" />
+		<result column="busines_code" property="businesCode" jdbcType="VARCHAR" />
+		<result column="object_id" property="objectId" jdbcType="VARCHAR" />
+		<result column="object_type" property="objectType" jdbcType="TINYINT" />
+		<result column="amount" property="amount" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="request_param" property="requestParam" jdbcType="VARCHAR" />
+		<result column="request_date" property="requestDate" jdbcType="TIMESTAMP" />
+		<result column="flownumber" property="flownumber" jdbcType="VARCHAR" />
+		<result column="response_param" property="responseParam" jdbcType="VARCHAR" />
+		<result column="response_date" property="responseDate" jdbcType="TIMESTAMP" />
+		<result column="result_msg" property="resultMsg" jdbcType="VARCHAR" />
+		<result column="result_code" property="resultCode" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-03 15:31:46. -->
+	<sql id="Base_Column_List" >
+		pr_id, busines_code, object_id, object_type, amount, status, request_param, request_date, 
+		flownumber, response_param, response_date, result_msg, result_code
+	</sql>
+
+	<!-- 按主键查询 2017-05-03 15:31:46. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from pay_request_record
+		where pr_id = #{prId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-03 15:31:46. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from pay_request_record
+		where pr_id = #{prId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-03 15:31:46. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.PayRequestRecord" >
+		insert into pay_request_record (pr_id, busines_code, object_id, 
+			object_type, amount, status, 
+			request_param, request_date, flownumber, 
+			response_param, response_date, result_msg, 
+			result_code)
+		values (#{prId,jdbcType=INTEGER}, #{businesCode,jdbcType=VARCHAR}, #{objectId,jdbcType=VARCHAR}, 
+			#{objectType,jdbcType=TINYINT}, #{amount,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+			#{requestParam,jdbcType=VARCHAR}, #{requestDate,jdbcType=TIMESTAMP}, #{flownumber,jdbcType=VARCHAR}, 
+			#{responseParam,jdbcType=VARCHAR}, #{responseDate,jdbcType=TIMESTAMP}, #{resultMsg,jdbcType=VARCHAR}, 
+			#{resultCode,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-03 15:31:46. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.PayRequestRecord" >
+		insert into pay_request_record
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="prId != null" >
+				pr_id,
+			</if>
+			<if test="businesCode != null" >
+				busines_code,
+			</if>
+			<if test="objectId != null" >
+				object_id,
+			</if>
+			<if test="objectType != null" >
+				object_type,
+			</if>
+			<if test="amount != null" >
+				amount,
+			</if>
+			<if test="status != null" >
+				status,
+			</if>
+			<if test="requestParam != null" >
+				request_param,
+			</if>
+			<if test="requestDate != null" >
+				request_date,
+			</if>
+			<if test="flownumber != null" >
+				flownumber,
+			</if>
+			<if test="responseParam != null" >
+				response_param,
+			</if>
+			<if test="responseDate != null" >
+				response_date,
+			</if>
+			<if test="resultMsg != null" >
+				result_msg,
+			</if>
+			<if test="resultCode != null" >
+				result_code,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="prId != null" >
+				#{prId,jdbcType=INTEGER},
+			</if>
+			<if test="businesCode != null" >
+				#{businesCode,jdbcType=VARCHAR},
+			</if>
+			<if test="objectId != null" >
+				#{objectId,jdbcType=VARCHAR},
+			</if>
+			<if test="objectType != null" >
+				#{objectType,jdbcType=TINYINT},
+			</if>
+			<if test="amount != null" >
+				#{amount,jdbcType=INTEGER},
+			</if>
+			<if test="status != null" >
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="requestParam != null" >
+				#{requestParam,jdbcType=VARCHAR},
+			</if>
+			<if test="requestDate != null" >
+				#{requestDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="flownumber != null" >
+				#{flownumber,jdbcType=VARCHAR},
+			</if>
+			<if test="responseParam != null" >
+				#{responseParam,jdbcType=VARCHAR},
+			</if>
+			<if test="responseDate != null" >
+				#{responseDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="resultMsg != null" >
+				#{resultMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="resultCode != null" >
+				#{resultCode,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-03 15:31:46. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.PayRequestRecord" >
+		update pay_request_record
+		<set >
+			<if test="businesCode != null" >
+				busines_code = #{businesCode,jdbcType=VARCHAR},
+			</if>
+			<if test="objectId != null" >
+				object_id = #{objectId,jdbcType=VARCHAR},
+			</if>
+			<if test="objectType != null" >
+				object_type = #{objectType,jdbcType=TINYINT},
+			</if>
+			<if test="amount != null" >
+				amount = #{amount,jdbcType=INTEGER},
+			</if>
+			<if test="status != null" >
+				status = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="requestParam != null" >
+				request_param = #{requestParam,jdbcType=VARCHAR},
+			</if>
+			<if test="requestDate != null" >
+				request_date = #{requestDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="flownumber != null" >
+				flownumber = #{flownumber,jdbcType=VARCHAR},
+			</if>
+			<if test="responseParam != null" >
+				response_param = #{responseParam,jdbcType=VARCHAR},
+			</if>
+			<if test="responseDate != null" >
+				response_date = #{responseDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="resultMsg != null" >
+				result_msg = #{resultMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="resultCode != null" >
+				result_code = #{resultCode,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where pr_id = #{prId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-03 15:31:46. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.PayRequestRecord" >
+		update pay_request_record
+		set busines_code = #{businesCode,jdbcType=VARCHAR},
+			object_id = #{objectId,jdbcType=VARCHAR},
+			object_type = #{objectType,jdbcType=TINYINT},
+			amount = #{amount,jdbcType=INTEGER},
+			status = #{status,jdbcType=TINYINT},
+			request_param = #{requestParam,jdbcType=VARCHAR},
+			request_date = #{requestDate,jdbcType=TIMESTAMP},
+			flownumber = #{flownumber,jdbcType=VARCHAR},
+			response_param = #{responseParam,jdbcType=VARCHAR},
+			response_date = #{responseDate,jdbcType=TIMESTAMP},
+			result_msg = #{resultMsg,jdbcType=VARCHAR},
+			result_code = #{resultCode,jdbcType=VARCHAR}
+		where pr_id = #{prId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-03 15:31:46. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from pay_request_record
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

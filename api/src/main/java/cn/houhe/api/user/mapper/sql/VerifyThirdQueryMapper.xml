@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.user.mapper.VerifyThirdQueryMapper" >
+	<!-- 实体类 - 数据库映射 2017-06-07 10:58:25. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.user.entity.VerifyThirdQuery" >
+		<id column="qid" property="qid" jdbcType="INTEGER" />
+		<result column="real_name" property="realName" jdbcType="VARCHAR" />
+		<result column="idcard_no" property="idcardNo" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="userinfo_id" property="userinfoId" jdbcType="INTEGER" />
+		<result column="tongdun" property="tongdun" jdbcType="VARCHAR" />
+		<result column="baiqishi" property="baiqishi" jdbcType="VARCHAR" />
+		<result column="bairong" property="bairong" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-06-07 10:58:25. -->
+	<sql id="Base_Column_List" >
+		qid, real_name, idcard_no, mobile, userinfo_id, tongdun, baiqishi, bairong, createdon
+	</sql>
+
+	<!-- 按主键查询 2017-06-07 10:58:25. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from verify_third_query
+		where qid = #{qid,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-06-07 10:58:25. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from verify_third_query
+		where qid = #{qid,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-06-07 10:58:25. -->
+	<insert id="insert" parameterType="cn.houhe.api.user.entity.VerifyThirdQuery" >
+		<selectKey resultType="java.lang.Integer" keyProperty="qid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into verify_third_query (real_name, idcard_no, mobile, 
+			userinfo_id, tongdun, baiqishi, 
+			bairong, createdon)
+		values (#{realName,jdbcType=VARCHAR}, #{idcardNo,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+			#{userinfoId,jdbcType=INTEGER}, #{tongdun,jdbcType=VARCHAR}, #{baiqishi,jdbcType=VARCHAR}, 
+			#{bairong,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-06-07 10:58:25. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.user.entity.VerifyThirdQuery" >
+		<selectKey resultType="java.lang.Integer" keyProperty="qid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into verify_third_query
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="realName != null" >
+				real_name,
+			</if>
+			<if test="idcardNo != null" >
+				idcard_no,
+			</if>
+			<if test="mobile != null" >
+				mobile,
+			</if>
+			<if test="userinfoId != null" >
+				userinfo_id,
+			</if>
+			<if test="tongdun != null" >
+				tongdun,
+			</if>
+			<if test="baiqishi != null" >
+				baiqishi,
+			</if>
+			<if test="bairong != null" >
+				bairong,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="realName != null" >
+				#{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="idcardNo != null" >
+				#{idcardNo,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null" >
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="userinfoId != null" >
+				#{userinfoId,jdbcType=INTEGER},
+			</if>
+			<if test="tongdun != null" >
+				#{tongdun,jdbcType=VARCHAR},
+			</if>
+			<if test="baiqishi != null" >
+				#{baiqishi,jdbcType=VARCHAR},
+			</if>
+			<if test="bairong != null" >
+				#{bairong,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-06-07 10:58:25. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.user.entity.VerifyThirdQuery" >
+		update verify_third_query
+		<set >
+			<if test="realName != null" >
+				real_name = #{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="idcardNo != null" >
+				idcard_no = #{idcardNo,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null" >
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="userinfoId != null" >
+				userinfo_id = #{userinfoId,jdbcType=INTEGER},
+			</if>
+			<if test="tongdun != null" >
+				tongdun = #{tongdun,jdbcType=VARCHAR},
+			</if>
+			<if test="baiqishi != null" >
+				baiqishi = #{baiqishi,jdbcType=VARCHAR},
+			</if>
+			<if test="bairong != null" >
+				bairong = #{bairong,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where qid = #{qid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-06-07 10:58:25. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.user.entity.VerifyThirdQuery" >
+		update verify_third_query
+		set real_name = #{realName,jdbcType=VARCHAR},
+			idcard_no = #{idcardNo,jdbcType=VARCHAR},
+			mobile = #{mobile,jdbcType=VARCHAR},
+			userinfo_id = #{userinfoId,jdbcType=INTEGER},
+			tongdun = #{tongdun,jdbcType=VARCHAR},
+			baiqishi = #{baiqishi,jdbcType=VARCHAR},
+			bairong = #{bairong,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP}
+		where qid = #{qid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-06-07 10:58:25. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from verify_third_query
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

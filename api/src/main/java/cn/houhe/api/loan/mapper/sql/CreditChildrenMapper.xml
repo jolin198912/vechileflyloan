@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.CreditChildrenMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-12 11:34:16. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.CreditChildren" >
+		<id column="ccd_id" property="ccdId" jdbcType="INTEGER" />
+		<result column="birth" property="birth" jdbcType="TIMESTAMP" />
+		<result column="credit_apply_id" property="creditApplyId" jdbcType="INTEGER" />
+		<result column="sex" property="sex" jdbcType="TINYINT" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-12 11:34:16. -->
+	<sql id="Base_Column_List" >
+		ccd_id, birth, credit_apply_id, sex
+	</sql>
+
+	<!-- 按主键查询 2017-05-12 11:34:16. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from credit_children
+		where ccd_id = #{ccdId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-12 11:34:16. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from credit_children
+		where ccd_id = #{ccdId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-12 11:34:16. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.CreditChildren" >
+		<selectKey resultType="java.lang.Integer" keyProperty="ccdId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into credit_children (birth, credit_apply_id, sex
+			)
+		values (#{birth,jdbcType=TIMESTAMP}, #{creditApplyId,jdbcType=INTEGER}, #{sex,jdbcType=TINYINT}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-12 11:34:16. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.CreditChildren" >
+		<selectKey resultType="java.lang.Integer" keyProperty="ccdId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into credit_children
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="birth != null" >
+				birth,
+			</if>
+			<if test="creditApplyId != null" >
+				credit_apply_id,
+			</if>
+			<if test="sex != null" >
+				sex,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="birth != null" >
+				#{birth,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creditApplyId != null" >
+				#{creditApplyId,jdbcType=INTEGER},
+			</if>
+			<if test="sex != null" >
+				#{sex,jdbcType=TINYINT},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-12 11:34:16. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.CreditChildren" >
+		update credit_children
+		<set >
+			<if test="birth != null" >
+				birth = #{birth,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creditApplyId != null" >
+				credit_apply_id = #{creditApplyId,jdbcType=INTEGER},
+			</if>
+			<if test="sex != null" >
+				sex = #{sex,jdbcType=TINYINT},
+			</if>
+		</set>
+		where ccd_id = #{ccdId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-12 11:34:16. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.CreditChildren" >
+		update credit_children
+		set birth = #{birth,jdbcType=TIMESTAMP},
+			credit_apply_id = #{creditApplyId,jdbcType=INTEGER},
+			sex = #{sex,jdbcType=TINYINT}
+		where ccd_id = #{ccdId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-12 11:34:16. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from credit_children
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

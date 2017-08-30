@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.user.mapper.UserinfoExtMapper">
+    <!-- 实体类 - 数据库映射 2017-03-30 13:50:02. -->
+    <resultMap id="BaseResultMap" type="cn.houhe.api.user.entity.Userinfo">
+        <id column="usid" property="usid" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+        <result column="is_disabled" property="isDisabled" jdbcType="TINYINT"/>
+        <result column="createdon" property="createdon" jdbcType="TIMESTAMP"/>
+        <result column="createdby" property="createdby" jdbcType="VARCHAR"/>
+        <result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP"/>
+        <result column="modifiedby" property="modifiedby" jdbcType="VARCHAR"/>
+        <result column="usertypeid" property="usertypeid" jdbcType="SMALLINT"/>
+        <result column="efficient_level" property="efficientLevel" jdbcType="TINYINT"/>
+        <result column="is_boss" property="isBoss" jdbcType="TINYINT"/>
+    </resultMap>
+    <!-- 实体类 - 数据库映射 2017-03-30 13:50:02. -->
+    <resultMap id="selectForUserMap" type="cn.houhe.api.user.web.bo.UserModel">
+        <id column="usid" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="account" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="efficient_level" property="efficient" jdbcType="TINYINT"/>
+        <result column="is_boss" property="isboss" jdbcType="TINYINT"/>
+        <collection property="roles" javaType="java.util.List" ofType="cn.houhe.api.user.web.bo.RoleModel">
+            <id column="r_id" property="id" jdbcType="INTEGER"/>
+            <result column="r_name" property="name" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <!--登录之后返回的用户对象，包括角色、以及角色拥有的权限集合-->
+    <resultMap id="findByUidMap" type="cn.houhe.api.user.web.bo.LoginModel">
+        <id column="usid" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="account" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="efficient_level" property="efficient" jdbcType="TINYINT"/>
+        <result column="is_boss" property="isboss" jdbcType="TINYINT"/>
+        <collection property="roles" javaType="java.util.List" ofType="cn.houhe.api.user.web.bo.RoleModel">
+            <id column="role_id" property="id" jdbcType="INTEGER"/>
+            <result column="role_name" property="name" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="reslist" javaType="java.util.List" ofType="cn.houhe.api.user.web.bo.ResModel">
+            <id column="res_id" property="res_id" jdbcType="INTEGER"/>
+            <result column="parent_id" property="parent_id" jdbcType="INTEGER"/>
+            <result column="res_code" property="res_code" jdbcType="VARCHAR"/>
+            <result column="res_name" property="res_name" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="findByAccountAndPwdMap" type="cn.houhe.api.user.web.bo.UserModel">
+        <id column="usid" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="account" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="department" property="department" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="efficient_level" property="efficient" jdbcType="TINYINT"/>
+        <result column="is_boss" property="isboss" jdbcType="TINYINT"/>
+    </resultMap>
+
+
+    <!-- 用于 SELECT 语句的所有字段  2017-03-30 13:50:02. -->
+    <sql id="Base_Column_List">
+		usid, username, password, name, phone, department, is_disabled, createdon, createdby, 
+		modifiedon, modifiedby, usertypeid, efficient_level, is_boss
+	</sql>
+
+    <!-- 按主键查询 2017-03-30 13:50:02. -->
+    <select id="selectForUserCount" resultType="java.lang.Integer">
+        select
+        COUNT(1)
+        from
+        userinfo u
+        <where>
+            <if test="dto.phone != null">
+                and phone like CONCAT('%',#{dto.phone},'%')
+            </if>
+            <if test="dto.account != null">
+                and username like CONCAT('%',#{dto.account},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectForUser" resultMap="selectForUserMap">
+        select
+        u.usid,
+        u.username,
+        u.`name`,
+        u.phone,
+        u.department,
+        u.is_disabled
+        as status,
+        u.is_boss,
+        u.efficient_level,
+        u.createdon,
+        GROUP_CONCAT(r.`name`) as r_name,
+        GROUP_CONCAT(r.roleid) as r_id
+        from
+        userinfo u
+        left join user_role u_r on u.usid = u_r.us_id
+        left join role r on r.roleid = u_r.role_id
+        <where>
+            <if test="dto.phone != null">
+                and phone like CONCAT('%',#{dto.phone},'%')
+            </if>
+            <if test="dto.account != null">
+                and username like CONCAT('%',#{dto.account},'%')
+            </if>
+        </where>
+        group by u.usid
+        ORDER BY u.createdon DESC
+        limit #{page},#{rows}
+    </select>
+
+    <select id="findByUid" resultMap="findByUidMap" parameterType="java.lang.Integer">
+        SELECT
+        *
+        FROM
+        (
+        SELECT
+        u.usid,
+        u.username,
+        u.`name`,
+        u.phone,
+        u.department,
+        u.is_disabled as status,
+        u.is_boss,
+        u.createdon,
+        u_r.role_id,
+        r.`name` AS role_name
+        FROM
+        userinfo u
+        LEFT JOIN user_role u_r ON u.usid = u_r.us_id
+        LEFT JOIN role r ON u_r.role_id = r.roleid
+        WHERE
+        u.usid = #{uid,jdbcType=INTEGER}
+        ) AS A,
+        (
+        SELECT DISTINCT
+        E.res_id,
+        E.parent_id,
+        E.res_code,
+        E.res_name
+        FROM
+        resource AS E
+        WHERE
+        res_id IN (
+        SELECT
+        D.res_id
+        FROM
+        role_access AS D
+        WHERE
+        role_id IN (
+        SELECT
+        role_id
+        FROM
+        user_role AS C
+        WHERE
+        C.us_id = #{uid,jdbcType=INTEGER}
+        )
+        )
+        ) AS B
+	</select>
+
+    <select id="findByAccountAndPwd" resultMap="findByAccountAndPwdMap">
+      SELECT
+                u.usid,
+                u.username,
+                u.`password`,
+                u.`name`,
+                u.phone,
+                u.department,
+                u.is_disabled as status,
+                u.is_boss
+            FROM
+                userinfo u
+            WHERE
+                username = #{account,jdbcType=VARCHAR}
+            AND `password` = #{pwd,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 插入 - 仅保存给定实体类中非null的字段 2017-03-30 13:50:02. -->
+    <insert id="addRolesToUser">
+        insert into user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                us_id,
+            </if>
+            <if test="rid != null">
+                role_id
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="rid != null">
+                #{rid,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </insert>
+
+    <!-- 按主键删除 2017-03-30 13:50:02. -->
+    <delete id="deleteUserRole" parameterType="java.lang.Integer">
+        delete from user_role
+        where us_id = #{usid,jdbcType=INTEGER}
+    </delete>
+
+    <select id="getAuditPerson" resultType="map">
+      SELECT DISTINCT
+          us.`usid`,
+          us.`username`,
+          us.`name`
+        FROM
+          houhe_system_user.`resource` res
+          JOIN houhe_system_user.`role_access` ra
+            ON res.`res_id` = ra.`res_id`
+          JOIN houhe_system_user.user_role ur
+            ON ur.`role_id` = ra.`role_id`
+          JOIN houhe_system_user.`userinfo` us
+            ON us.`usid` = ur.`us_id`
+        WHERE res.`res_code` = #{resCode}
+         AND us.`is_disabled` = 0
+    </select>
+
+    <select id="selectUserInfoByMobile" resultType="map">
+        SELECT
+        u.username,
+        u.password,
+        u.name,
+        u.phone,
+        u.department
+        FROM userinfo u
+        WHERE phone = #{account} AND is_disabled = 0 AND is_boss = 1
+    </select>
+    <select id="findByURole" resultMap="findByUidMap" parameterType="java.lang.Integer">
+       select u.usid,u.username,u.name,u.phone,u.department,u.is_disabled as status,u.is_boss,u.createdon ,r.roleid as role_id,r.name as role_name from userinfo u
+        left join user_role ur
+        on u.usid=ur.us_id
+        left join role r
+        on r.roleid=ur.role_id
+        where u.usid=#{uid,jdbcType=INTEGER}
+    </select>
+
+    <select id="findByUpdatePwd" resultMap="findByUidMap" parameterType="java.lang.Integer">
+        select u.usid,u.username,u.password,u.name,u.phone,u.department,u.is_disabled as status,u.is_boss,u.createdon from userinfo u
+        where u.usid=#{uid,jdbcType=INTEGER}
+    </select>
+
+    <!-- 用户名校验 -->
+    <select id="userNameCheck" resultMap="findByAccountAndPwdMap">
+        SELECT
+        u.usid,
+        u.username,
+        u.`password`,
+        u.`name`,
+        u.phone,
+        u.department,
+        u.is_disabled as status,
+        u.is_boss
+        FROM
+        userinfo u
+        WHERE
+        u.username = #{account,jdbcType=VARCHAR}
+    </select>
+</mapper>

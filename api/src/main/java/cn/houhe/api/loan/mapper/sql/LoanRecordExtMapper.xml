@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.LoanRecordExtMapper" >
+
+	<!-- 实体类 - 数据库映射 2017-05-04 14:46:37. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.LoanRecord" >
+		<id column="loan_id" property="loanId" jdbcType="INTEGER" />
+		<result column="loan_limit" property="loanLimit" jdbcType="DECIMAL" />
+		<result column="bill_day" property="billDay" jdbcType="SMALLINT" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+		<result column="loan_number" property="loanNumber" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="idcardno" property="idcardno" jdbcType="VARCHAR" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+		<result column="mem_situation_type" property="memSituationType" jdbcType="TINYINT" />
+		<result column="lending_time" property="lendingTime" jdbcType="TIMESTAMP" />
+		<result column="time" property="time" jdbcType="SMALLINT" />
+		<result column="loan_type" property="loanType" jdbcType="TINYINT" />
+		<result column="repay_state" property="repayState" jdbcType="TINYINT" />
+		<result column="lp_id" property="lpId" jdbcType="SMALLINT" />
+		<result column="late_fee_rate" property="lateFeeRate" jdbcType="DECIMAL" />
+		<result column="face_similarity" property="faceSimilarity" jdbcType="DECIMAL" />
+		<result column="rate" property="rate" jdbcType="DECIMAL" />
+		<result column="current_pay_amount" property="currentPayAmount" jdbcType="DECIMAL" />
+		<result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+		<result column="apply_state" property="applyState" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="pay_status" property="payStatus" jdbcType="TINYINT" />
+		<result column="pay_result" property="payResult" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-04 14:46:37. -->
+	<sql id="Base_Column_List" >
+		loan_id, loan_limit, bill_day, start_time, end_time, user_mobile, loan_number, username,
+		idcardno, member_id, apply_time, mem_situation_type, lending_time, time, loan_type,
+		repay_state, lp_id, late_fee_rate, face_similarity, rate, current_pay_amount, pay_amount,
+		apply_state, createdon, remark, pay_status, pay_result
+	</sql>
+
+	<sql id="state">
+		<if test="dto.state != null">
+			<if test="dto.state ==0"><!--待审核-->
+				and lr.apply_state in (1,2)
+			</if>
+			<if test="dto.state ==1"><!--已通过-->
+				and lr.apply_state in (4,6)
+			</if>
+			<if test="dto.state ==2"><!--未通过-->
+				and lr.apply_state in (3,5,7)
+			</if>
+		</if>
+	</sql>
+	
+	<sql id="queryParam">
+		<if test="dto.apid != null ">
+			and (la.plan_fap_id = #{dto.apid} or la.plan_sap_id = #{dto.apid})
+		</if>
+		<if test="dto.name !=null ">
+			and lr.username like concat('%',#{dto.name},'%')
+		</if>
+		<if test="dto.start!=null">
+			and (la.first_audit_time > #{dto.start} or la.second_audit_time > #{dto.start})
+		</if>
+		<if test="dto.end!=null">
+			and (la.first_audit_time &lt; #{dto.end} or la.second_audit_time &lt; #{dto.end})
+		</if>
+		<if test="dto.memtype!=null">
+			and lr.mem_situation_type = #{dto.memtype}
+		</if>
+		<include refid="state"/>
+	</sql>
+	<select id="selectLoanApplyListCount" resultType="java.lang.Integer">
+		SELECT count(1) FROM houhe_loan.loan_record lr
+		LEFT JOIN houhe_loan.creditinfo ci ON ci.member_id = lr.member_id
+		LEFT JOIN loan_audit la ON lr.loan_id = la.loan_record_id
+		WHERE 1=1
+		<include refid="queryParam"/>
+	</select>
+	<select id="selectLoanApplyList" resultType="cn.houhe.api.loan.entity.bo.LoanList">
+		SELECT lr.loan_id as loanId,lr.username AS name,lr.user_mobile AS mobile,ci.loan_limit_total AS loanLimitTotal,
+         lr.loan_limit AS loanLimit,la.first_audit_person AS fap,
+		la.first_audit_time AS fapTime,
+		la.second_audit_person AS sap,
+		la.second_audit_time AS sapTime,
+		ci.delay_debit_times AS delayCount,
+		 lr.apply_time AS applyTime,
+		 lr.apply_state as applyState,lr.mem_situation_type AS memSituationType
+		<if test="dto.state == 1 ">
+			, lp.amount, lp.pay_platform AS payPlat,lp.status,lp.paytime
+		</if>
+		FROM houhe_loan.loan_record lr
+		LEFT JOIN houhe_loan.creditinfo ci ON ci.member_id = lr.member_id
+		LEFT JOIN loan_audit la ON lr.loan_id = la.loan_record_id
+		<if test="dto.state ==1 ">
+			LEFT JOIN houhe_loan.loan_pay lp ON lr.loan_id = lp.loan_record_id
+		</if>
+		WHERE 1=1
+		<!-- 由于需求更改，将下面的refid替换，2017-08-30 Ocean -->
+		<!--  <include refid="queryParam"/>-->
+		<!-- order by lr.createdon desc -->
+		<if test="dto.apid != null ">
+			and (la.plan_fap_id = #{dto.apid} or la.plan_sap_id = #{dto.apid})
+		</if>
+		<if test="dto.name !=null ">
+			and lr.username like concat('%',#{dto.name},'%')
+		</if>
+		<if test="dto.start!=null">
+			and (la.first_audit_time > #{dto.start} or la.second_audit_time > #{dto.start})
+		</if>
+		<if test="dto.end!=null">
+			and (la.first_audit_time &lt; #{dto.end} or la.second_audit_time &lt; #{dto.end})
+		</if>
+		<if test="dto.memtype!=null">
+			and lr.mem_situation_type = #{dto.memtype}
+		</if>		
+		<if test="dto.state ==0"><!--待审核-->
+			and lr.apply_state in (1,2)
+			order by lr.apply_time desc
+		</if>
+		<if test="dto.state ==1"><!--已通过-->
+			and lr.apply_state in (4,6)
+			order by la.second_audit_time desc
+		</if>
+		<if test="dto.state ==2"><!--未通过-->
+			and lr.apply_state in (3,5,7)
+			order by la.second_audit_time desc
+		</if>
+		limit #{startRow},#{pageSize}
+	</select>
+    <select id="getLoanApplyInfo" resultType="cn.houhe.api.loan.entity.bo.LoanRecordInfoObject">
+        SELECT lr.loan_id AS loanId, lr.loan_limit AS loanLimit,lr.start_time AS START,
+        lr.end_time AS END,lr.rate, lr.apply_state AS applyState,lr.apply_time AS applyTime,
+        lr.member_id AS memberId,lr.user_mobile AS mobile,lr.username AS name,
+        lr.time as time,lr.loan_type as loantype,
+         ci.delay_debit_times AS dbt,ha.remark,
+         lbc.receive_bank AS rbank,lbc.receive_bank_cardno AS rbcardno,lr.face_similarity AS fs,
+         (
+        SELECT url
+        FROM houhe_member.member_pic_resources mpr
+        WHERE ca.ca_id = mpr.object_id AND mpr.object_type=2 AND mpr.pictype = 3 AND mpr.member_id = ca.member_id limit 1) AS creditFace,
+        (
+        select le.name from houhe_config.`level` le where le.level_id= mb.level_id limit 1) AS creditRating,
+        (
+        select le.name from houhe_config.`level` le where le.level_id= mb.pdl_level_id limit 1) AS pdlCreditRating,
+        (
+        SELECT url
+        FROM houhe_member.member_pic_resources mpr
+        WHERE lr.loan_id = mpr.object_id AND mpr.object_type=1 AND mpr.pictype = 3 AND mpr.member_id = ca.member_id limit 1) AS loanFace
+        FROM houhe_loan.loan_record lr
+       LEFT JOIN houhe_loan.creditinfo ci ON lr.member_id = ci.member_id
+       LEFT JOIN houhe_member.member mb ON mb.memid=lr.member_id
+       LEFT JOIN houhe_loan.credit_apply ca ON ca.member_id = lr.member_id
+       LEFT JOIN houhe_loan.loan_bank_card lbc ON lr.loan_id = lbc.loan_record_id
+       LEFT JOIN houhe_loan.loan_audit ha ON ha.loan_record_id=lr.loan_id
+        WHERE lr.loan_id =#{lrid}
+    </select>
+	<select id="getLoanTotalMoney" resultType="java.lang.Integer">
+		SELECT sum(lp.amount) FROM houhe_loan.loan_record lr
+		JOIN houhe_loan.creditinfo ci ON ci.member_id = lr.member_id
+		JOIN loan_audit la ON lr.loan_id = la.loan_record_id
+		JOIN houhe_loan.loan_pay lp ON lr.loan_id = lp.loan_record_id
+		WHERE 1=1
+		<include refid="queryParam"/>
+	</select>
+
+	<!--获取借款详情-->
+    <select id="getInfoByid" parameterType="java.lang.Integer" resultType="cn.houhe.api.loan.entity.bo.LoanRecordInfoAPP">
+		select a.loan_id as loanId,a.loan_limit as loanLimit,a.start_time as starttime,a.end_time as endtime,a.apply_state as applyState,a.repay_state as repayState,a.pay_status as payStatus,a.loan_type as loanType,a.time as time,a.bill_day as bill_day,b.repay_bank_cardno as bankcardno,b.repay_bank as bank,
+           (select sum(c.principal) from houhe_loan.repayments_plan c where c.loan_record_id=a.loan_id and c.`status`=0) as lastPrincipal
+        from houhe_loan.loan_record a left join houhe_loan.loan_bank_card b on a.loan_id=b.loan_record_id where a.loan_id=#{loanid}
+	</select>
+
+	<select id="getDetailById" resultType="cn.houhe.api.loan.entity.bo.LoanRecordInfoAPP">
+         select a.loan_type as loanType,a.end_time as endtime,a.loan_limit as loanLimit,a.bill_day as bill_day,a.rate as rate,b.repay_bank_cardno as bankcardno,b.repay_bank as bank,b.repay_name as bankUserName
+         from houhe_loan.loan_record a left join houhe_loan.loan_bank_card b on a.loan_id=b.loan_record_id where a.loan_id=#{loanid}
+	</select>
+
+	<update id="updateAdvancefee">
+		update houhe_loan.loan_basic_fee a set a.advance_repay_fee=#{advancefee} where a.loan_record_id=#{loanId}
+	</update>
+
+
+	<select id="loanSum" resultType="hashmap">
+		SELECT
+		  (SELECT
+			ifnull(SUM(loan_limit),0)
+		  FROM
+			loan_record
+		  WHERE pay_status = 1 AND lending_time BETWEEN #{start} AND #{end}) AS loanSum,
+		  (SELECT
+			ifnull(SUM(amount),0)
+		  FROM
+			debit_rcd
+		  WHERE STATUS = 1 AND pay_time BETWEEN #{start} AND #{end}) AS repaySum,
+		  (SELECT
+			ifnull(SUM(principal),0)
+		  FROM
+			repayments_plan
+		  WHERE (
+			  STATUS IN (2, 3, 4)
+			  AND real_pay_date BETWEEN #{start} AND #{end}
+			)
+			OR (is_bad = 1
+			  AND bad_day BETWEEN #{start} AND #{end})) AS completeLoanSum
+		  FROM
+			DUAL
+	</select>
+
+	<select id="compLoanBadSum" resultType="hashmap">
+		SELECT
+		 ifnull((SELECT
+			IFNULL(SUM(principal),0)
+		  FROM
+			repayments_plan
+		  WHERE is_bad = 1
+			  AND bad_day BETWEEN #{start} AND #{end})/(SELECT
+			ifnull(SUM(principal),0)
+		  FROM
+			repayments_plan
+		  WHERE (
+			  STATUS IN (2, 3, 4)
+			  AND real_pay_date BETWEEN #{start} AND #{end}
+			)
+			OR (is_bad = 1
+			  AND bad_day BETWEEN #{start} AND #{end})),0) AS badLoan
+		  FROM
+			DUAL
+	</select>
+
+	<select id="loanBalance" resultType="hashmap">
+		SELECT
+		  (SELECT
+			IFNULL(SUM(principal),0)
+		  FROM
+			repayments_plan
+		  WHERE status in(0)) AS loan,
+		  (SELECT
+			IFNULL(SUM(real_total_pay),0)
+		  FROM
+			repayments_plan WHERE status in(0) ) AS repay
+		  FROM
+			DUAL
+	</select>
+
+
+	<select id="loanBadSum" resultType="hashmap">
+		SELECT bad/sumLoan AS bad,bad AS badSum,late/sumLoan AS late,late AS lateSum,sumLoan FROM (SELECT
+		(SELECT
+		IFNULL(SUM(principal),0)
+		FROM
+		repayments_plan
+		WHERE is_bad = 1
+		AND bad_day BETWEEN #{start} AND #{end}) AS bad,(SELECT
+		ifnull(SUM(principal),0)
+		FROM
+		repayments_plan
+		WHERE
+		delay_days > 0
+		AND pay_date BETWEEN #{start} AND #{end}
+		) AS late,(SELECT
+		ifnull(SUM(principal),0)
+		FROM
+		repayments_plan) AS sumLoan
+		FROM
+		DUAL)tmp
+	</select>
+
+	<select id="getFine" resultType="java.math.BigDecimal">
+			select sum(rp.late_fee) from repayments_plan rp where rp.loan_record_id=#{loanid}
+	</select>
+</mapper>

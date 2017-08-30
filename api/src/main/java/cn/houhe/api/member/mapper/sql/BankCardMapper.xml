@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.member.mapper.BankCardMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 10:12:39. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.member.entity.BankCard" >
+		<id column="bcid" property="bcid" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="cardholder" property="cardholder" jdbcType="VARCHAR" />
+		<result column="bankcardno" property="bankcardno" jdbcType="VARCHAR" />
+		<result column="collectingbank" property="collectingbank" jdbcType="VARCHAR" />
+		<result column="reservedmobileno" property="reservedmobileno" jdbcType="VARCHAR" />
+		<result column="defaultcollectingbank" property="defaultcollectingbank" jdbcType="TINYINT" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="defaultrefundbank" property="defaultrefundbank" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 10:12:39. -->
+	<sql id="Base_Column_List" >
+		bcid, member_id, cardholder, bankcardno, collectingbank, reservedmobileno, defaultcollectingbank, 
+		remark, defaultrefundbank, createdon
+	</sql>
+
+	<!-- 按主键查询 2017-03-30 10:12:39. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from bank_card
+		where bcid = #{bcid,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-03-30 10:12:39. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from bank_card
+		where bcid = #{bcid,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-03-30 10:12:39. -->
+	<insert id="insert" parameterType="cn.houhe.api.member.entity.BankCard" >
+		<selectKey resultType="java.lang.Integer" keyProperty="bcid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into bank_card (member_id, cardholder, bankcardno, 
+			collectingbank, reservedmobileno, defaultcollectingbank, 
+			remark, defaultrefundbank, createdon
+			)
+		values (#{memberId,jdbcType=INTEGER}, #{cardholder,jdbcType=VARCHAR}, #{bankcardno,jdbcType=VARCHAR}, 
+			#{collectingbank,jdbcType=VARCHAR}, #{reservedmobileno,jdbcType=VARCHAR}, #{defaultcollectingbank,jdbcType=TINYINT}, 
+			#{remark,jdbcType=VARCHAR}, #{defaultrefundbank,jdbcType=TINYINT}, #{createdon,jdbcType=TIMESTAMP}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-03-30 10:12:39. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.member.entity.BankCard" >
+		<selectKey resultType="java.lang.Integer" keyProperty="bcid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into bank_card
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="cardholder != null" >
+				cardholder,
+			</if>
+			<if test="bankcardno != null" >
+				bankcardno,
+			</if>
+			<if test="collectingbank != null" >
+				collectingbank,
+			</if>
+			<if test="reservedmobileno != null" >
+				reservedmobileno,
+			</if>
+			<if test="defaultcollectingbank != null" >
+				defaultcollectingbank,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="defaultrefundbank != null" >
+				defaultrefundbank,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="cardholder != null" >
+				#{cardholder,jdbcType=VARCHAR},
+			</if>
+			<if test="bankcardno != null" >
+				#{bankcardno,jdbcType=VARCHAR},
+			</if>
+			<if test="collectingbank != null" >
+				#{collectingbank,jdbcType=VARCHAR},
+			</if>
+			<if test="reservedmobileno != null" >
+				#{reservedmobileno,jdbcType=VARCHAR},
+			</if>
+			<if test="defaultcollectingbank != null" >
+				#{defaultcollectingbank,jdbcType=TINYINT},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="defaultrefundbank != null" >
+				#{defaultrefundbank,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-03-30 10:12:39. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.member.entity.BankCard" >
+		update bank_card
+		<set >
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="cardholder != null" >
+				cardholder = #{cardholder,jdbcType=VARCHAR},
+			</if>
+			<if test="bankcardno != null" >
+				bankcardno = #{bankcardno,jdbcType=VARCHAR},
+			</if>
+			<if test="collectingbank != null" >
+				collectingbank = #{collectingbank,jdbcType=VARCHAR},
+			</if>
+			<if test="reservedmobileno != null" >
+				reservedmobileno = #{reservedmobileno,jdbcType=VARCHAR},
+			</if>
+			<if test="defaultcollectingbank != null" >
+				defaultcollectingbank = #{defaultcollectingbank,jdbcType=TINYINT},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="defaultrefundbank != null" >
+				defaultrefundbank = #{defaultrefundbank,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where bcid = #{bcid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-03-30 10:12:39. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.member.entity.BankCard" >
+		update bank_card
+		set member_id = #{memberId,jdbcType=INTEGER},
+			cardholder = #{cardholder,jdbcType=VARCHAR},
+			bankcardno = #{bankcardno,jdbcType=VARCHAR},
+			collectingbank = #{collectingbank,jdbcType=VARCHAR},
+			reservedmobileno = #{reservedmobileno,jdbcType=VARCHAR},
+			defaultcollectingbank = #{defaultcollectingbank,jdbcType=TINYINT},
+			remark = #{remark,jdbcType=VARCHAR},
+			defaultrefundbank = #{defaultrefundbank,jdbcType=TINYINT},
+			createdon = #{createdon,jdbcType=TIMESTAMP}
+		where bcid = #{bcid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-03-30 10:12:39. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from bank_card
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

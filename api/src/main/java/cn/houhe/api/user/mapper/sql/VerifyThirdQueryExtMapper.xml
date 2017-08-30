@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.user.mapper.VerifyThirdQueryExtMapper" >
+    <select id="getCount" resultType="java.lang.Integer">
+        SELECT count(1) FROM  verify_third_query v
+        WHERE  1=1
+        <if test="dto.userId>0">
+            and v.userinfo_id=#{dto.userId}
+        </if>
+        <if test="dto.idcardNo!=null">
+            and v.idcard_no=#{dto.idcardNo}
+        </if>
+        <if test="dto.realName!=null">
+            and v.real_name=#{dto.realName}
+        </if>
+        <if test="dto.mobile!=null">
+            and v.mobile=#{dto.mobile}
+        </if>
+    </select>
+    <select id="getList" resultType="cn.houhe.api.user.entity.VerifyThirdQuery">
+        select v.userinfo_id as userinfoId,v.real_name as realName,v.idcard_no as idcardNo,v.mobile,v.tongdun,v.baiqishi,v.bairong,v.createdon from verify_third_query  v
+        WHERE  1=1
+        <if test="dto.userId>0">
+            and v.userinfo_id=#{dto.userId}
+        </if>
+        <if test="dto.idcardNo!=null">
+            and v.idcard_no=#{dto.idcardNo}
+        </if>
+        <if test="dto.realName!=null">
+            and v.real_name=#{dto.realName}
+        </if>
+        <if test="dto.mobile!=null">
+            and v.mobile=#{dto.mobile}
+        </if>
+        order by v.createdon desc
+        limit #{dto.page,jdbcType=INTEGER},#{dto.rows,jdbcType=INTEGER}
+    </select>
+    <select id="statics" resultType="java.util.HashMap">
+        select count(1) cnt,v.userinfo_id,u.username from verify_third_query v
+        left join userinfo u
+        on v.userinfo_id=u.usid
+        group by v.userinfo_id,u.username
+        ORDER BY v.createdon DESC
+        limit #{dto.page,jdbcType=INTEGER},#{dto.rows,jdbcType=INTEGER}
+    </select>
+    <select id="staticstotalcnt" resultType="java.lang.Integer">
+        select count(1) cnt from
+        (select v.userinfo_id from verify_third_query v group by v.userinfo_id) a
+    </select>
+    <select id="getlast" resultType="cn.houhe.api.user.entity.VerifyThirdQuery">
+        select  v.userinfo_id as userinfoId,v.real_name as realName,v.idcard_no as idcardNo,v.mobile,v.tongdun,v.baiqishi,v.bairong,v.createdon from verify_third_query v ORDER BY v.createdon desc limit 0,1;
+    </select>
+</mapper>

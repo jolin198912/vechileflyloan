@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.LevelMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-28 16:36:11. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.config.entity.Level" >
+		<id column="level_id" property="levelId" jdbcType="SMALLINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="min_score" property="minScore" jdbcType="SMALLINT" />
+		<result column="max_score" property="maxScore" jdbcType="SMALLINT" />
+		<result column="max_limit" property="maxLimit" jdbcType="DECIMAL" />
+		<result column="min_limit" property="minLimit" jdbcType="DECIMAL" />
+		<result column="installment_min_score" property="installmentMinScore" jdbcType="DECIMAL" />
+		<result column="installment_max_score" property="installmentMaxScore" jdbcType="DECIMAL" />
+		<result column="installment_max_limit" property="installmentMaxLimit" jdbcType="DECIMAL" />
+		<result column="installment_min_limit" property="installmentMinLimit" jdbcType="DECIMAL" />
+		<result column="createdby" property="createdby" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="modifiedby" property="modifiedby" jdbcType="VARCHAR" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-28 16:36:11. -->
+	<sql id="Base_Column_List" >
+		level_id, name, min_score, max_score, max_limit, min_limit, installment_min_score, 
+		installment_max_score, installment_max_limit, installment_min_limit, createdby, createdon, 
+		modifiedby, modifiedon
+	</sql>
+
+	<!-- 按主键查询 2017-04-28 16:36:11. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+		select 
+		<include refid="Base_Column_List" />
+		from level
+		where level_id = #{levelId,jdbcType=SMALLINT}
+	</select>
+
+	<!-- 按主键删除 2017-04-28 16:36:11. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+		delete from level
+		where level_id = #{levelId,jdbcType=SMALLINT}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-28 16:36:11. -->
+	<insert id="insert" parameterType="cn.houhe.api.config.entity.Level" >
+		<selectKey resultType="java.lang.Short" keyProperty="levelId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into level (name, min_score, max_score, 
+			max_limit, min_limit, installment_min_score, 
+			installment_max_score, installment_max_limit, 
+			installment_min_limit, createdby, createdon, 
+			modifiedby, modifiedon)
+		values (#{name,jdbcType=VARCHAR}, #{minScore,jdbcType=SMALLINT}, #{maxScore,jdbcType=SMALLINT}, 
+			#{maxLimit,jdbcType=DECIMAL}, #{minLimit,jdbcType=DECIMAL}, #{installmentMinScore,jdbcType=DECIMAL}, 
+			#{installmentMaxScore,jdbcType=DECIMAL}, #{installmentMaxLimit,jdbcType=DECIMAL}, 
+			#{installmentMinLimit,jdbcType=DECIMAL}, #{createdby,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}, 
+			#{modifiedby,jdbcType=VARCHAR}, #{modifiedon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-28 16:36:11. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.config.entity.Level" >
+		<selectKey resultType="java.lang.Short" keyProperty="levelId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into level
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="name != null" >
+				name,
+			</if>
+			<if test="minScore != null" >
+				min_score,
+			</if>
+			<if test="maxScore != null" >
+				max_score,
+			</if>
+			<if test="maxLimit != null" >
+				max_limit,
+			</if>
+			<if test="minLimit != null" >
+				min_limit,
+			</if>
+			<if test="installmentMinScore != null" >
+				installment_min_score,
+			</if>
+			<if test="installmentMaxScore != null" >
+				installment_max_score,
+			</if>
+			<if test="installmentMaxLimit != null" >
+				installment_max_limit,
+			</if>
+			<if test="installmentMinLimit != null" >
+				installment_min_limit,
+			</if>
+			<if test="createdby != null" >
+				createdby,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="name != null" >
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="minScore != null" >
+				#{minScore,jdbcType=SMALLINT},
+			</if>
+			<if test="maxScore != null" >
+				#{maxScore,jdbcType=SMALLINT},
+			</if>
+			<if test="maxLimit != null" >
+				#{maxLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="minLimit != null" >
+				#{minLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="installmentMinScore != null" >
+				#{installmentMinScore,jdbcType=DECIMAL},
+			</if>
+			<if test="installmentMaxScore != null" >
+				#{installmentMaxScore,jdbcType=DECIMAL},
+			</if>
+			<if test="installmentMaxLimit != null" >
+				#{installmentMaxLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="installmentMinLimit != null" >
+				#{installmentMinLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="createdby != null" >
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				#{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-28 16:36:11. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.config.entity.Level" >
+		update level
+		<set >
+			<if test="name != null" >
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="minScore != null" >
+				min_score = #{minScore,jdbcType=SMALLINT},
+			</if>
+			<if test="maxScore != null" >
+				max_score = #{maxScore,jdbcType=SMALLINT},
+			</if>
+			<if test="maxLimit != null" >
+				max_limit = #{maxLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="minLimit != null" >
+				min_limit = #{minLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="installmentMinScore != null" >
+				installment_min_score = #{installmentMinScore,jdbcType=DECIMAL},
+			</if>
+			<if test="installmentMaxScore != null" >
+				installment_max_score = #{installmentMaxScore,jdbcType=DECIMAL},
+			</if>
+			<if test="installmentMaxLimit != null" >
+				installment_max_limit = #{installmentMaxLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="installmentMinLimit != null" >
+				installment_min_limit = #{installmentMinLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="createdby != null" >
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where level_id = #{levelId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-28 16:36:11. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.config.entity.Level" >
+		update level
+		set name = #{name,jdbcType=VARCHAR},
+			min_score = #{minScore,jdbcType=SMALLINT},
+			max_score = #{maxScore,jdbcType=SMALLINT},
+			max_limit = #{maxLimit,jdbcType=DECIMAL},
+			min_limit = #{minLimit,jdbcType=DECIMAL},
+			installment_min_score = #{installmentMinScore,jdbcType=DECIMAL},
+			installment_max_score = #{installmentMaxScore,jdbcType=DECIMAL},
+			installment_max_limit = #{installmentMaxLimit,jdbcType=DECIMAL},
+			installment_min_limit = #{installmentMinLimit,jdbcType=DECIMAL},
+			createdby = #{createdby,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP}
+		where level_id = #{levelId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-28 16:36:11. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from level
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

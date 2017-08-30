@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.VerifyThirdResultMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-23 19:42:13. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.VerifyThirdResult" >
+		<id column="vtr_id" property="vtrId" jdbcType="INTEGER" />
+		<result column="credit_apply_id" property="creditApplyId" jdbcType="INTEGER" />
+		<result column="baiqishi_result" property="baiqishiResult" jdbcType="VARCHAR" />
+		<result column="tongdun_result" property="tongdunResult" jdbcType="VARCHAR" />
+		<result column="bairong_result" property="bairongResult" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-23 19:42:13. -->
+	<sql id="Base_Column_List" >
+		vtr_id, credit_apply_id, baiqishi_result, tongdun_result, bairong_result, createdon
+	</sql>
+
+	<!-- 按主键查询 2017-05-23 19:42:13. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from verify_third_result
+		where vtr_id = #{vtrId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-23 19:42:13. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from verify_third_result
+		where vtr_id = #{vtrId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-23 19:42:13. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.VerifyThirdResult" >
+		<selectKey resultType="java.lang.Integer" keyProperty="vtrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into verify_third_result (credit_apply_id, baiqishi_result, tongdun_result, 
+			bairong_result, createdon)
+		values (#{creditApplyId,jdbcType=INTEGER}, #{baiqishiResult,jdbcType=VARCHAR}, #{tongdunResult,jdbcType=VARCHAR}, 
+			#{bairongResult,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-23 19:42:13. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.VerifyThirdResult" >
+		<selectKey resultType="java.lang.Integer" keyProperty="vtrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into verify_third_result
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="creditApplyId != null" >
+				credit_apply_id,
+			</if>
+			<if test="baiqishiResult != null" >
+				baiqishi_result,
+			</if>
+			<if test="tongdunResult != null" >
+				tongdun_result,
+			</if>
+			<if test="bairongResult != null" >
+				bairong_result,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="creditApplyId != null" >
+				#{creditApplyId,jdbcType=INTEGER},
+			</if>
+			<if test="baiqishiResult != null" >
+				#{baiqishiResult,jdbcType=VARCHAR},
+			</if>
+			<if test="tongdunResult != null" >
+				#{tongdunResult,jdbcType=VARCHAR},
+			</if>
+			<if test="bairongResult != null" >
+				#{bairongResult,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-23 19:42:13. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.VerifyThirdResult" >
+		update verify_third_result
+		<set >
+			<if test="creditApplyId != null" >
+				credit_apply_id = #{creditApplyId,jdbcType=INTEGER},
+			</if>
+			<if test="baiqishiResult != null" >
+				baiqishi_result = #{baiqishiResult,jdbcType=VARCHAR},
+			</if>
+			<if test="tongdunResult != null" >
+				tongdun_result = #{tongdunResult,jdbcType=VARCHAR},
+			</if>
+			<if test="bairongResult != null" >
+				bairong_result = #{bairongResult,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where vtr_id = #{vtrId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-23 19:42:13. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.VerifyThirdResult" >
+		update verify_third_result
+		set credit_apply_id = #{creditApplyId,jdbcType=INTEGER},
+			baiqishi_result = #{baiqishiResult,jdbcType=VARCHAR},
+			tongdun_result = #{tongdunResult,jdbcType=VARCHAR},
+			bairong_result = #{bairongResult,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP}
+		where vtr_id = #{vtrId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-23 19:42:13. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from verify_third_result
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

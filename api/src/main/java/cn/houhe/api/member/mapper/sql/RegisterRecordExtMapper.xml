@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.member.mapper.RegisterRecordExtMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-14 11:59:03. -->
+	<resultMap id="RegisterRecordListMap" type="cn.houhe.api.member.entity.RegisterRecordExt" >
+		<id column="rr_id" property="rrId" jdbcType="INTEGER" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="id_code" property="idCode" jdbcType="VARCHAR" />
+		<result column="id_code_count" property="idCodeCount" jdbcType="SMALLINT" />
+		<result column="is_success" property="isSuccess" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-14 11:59:03. -->
+	<sql id="RegisterRecordList_Column_List" >
+		rr_id, mobile, id_code, id_code_count, is_success, createdon
+	</sql>
+
+	<!-- 未注册成功的用户列表 2017-04-14 11:59:03. -->
+	<select id="findPageData" resultMap="RegisterRecordListMap" >
+		select 
+		<include refid="RegisterRecordList_Column_List" />
+		from register_record
+		where is_success = 0
+		order by createdon desc
+		limit #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+	</select>
+
+	<select id="getCount" resultType="java.lang.Integer" parameterType="cn.houhe.api.member.entity.RegisterRecordExt">
+		select count(1)
+		from register_record
+		where is_success = 0
+		order by createdon desc
+	</select>
+
+	<insert id="insert" parameterType="cn.houhe.api.member.entity.RegisterRecordExt">
+		<selectKey resultType="java.lang.Integer" keyProperty="rrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into register_record
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="mobile != null" >
+				mobile,
+			</if>
+			<if test="idCode != null" >
+				id_code,
+			</if>
+			<if test="idCodeCount != null" >
+				id_code_count,
+			</if>
+			<if test="isSuccess != null" >
+				is_success,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="mobile != null" >
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="idCode != null" >
+				#{idCode,jdbcType=VARCHAR},
+			</if>
+			<if test="idCodeCount != null" >
+				#{idCodeCount,jdbcType=SMALLINT},
+			</if>
+			<if test="isSuccess != null" >
+				#{isSuccess,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="selectByMobile" resultMap="RegisterRecordListMap">
+		select
+		<include refid="RegisterRecordList_Column_List" />
+		from register_record
+		where mobile = #{mobile,jdbcType=VARCHAR} and is_success = 0
+	</select>
+
+	<select id="selectRecordByMobile" resultMap="RegisterRecordListMap">
+		SELECT
+		<include refid="RegisterRecordList_Column_List" />
+		FROM register_record
+		WHERE mobile = #{mobile,jdbcType=VARCHAR}
+	</select>
+</mapper>

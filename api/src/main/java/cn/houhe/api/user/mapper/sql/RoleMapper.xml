@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.user.mapper.RoleMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 13:50:02. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.user.entity.Role" >
+		<id column="roleid" property="roleid" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="createdby" property="createdby" jdbcType="VARCHAR" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+		<result column="modifiedby" property="modifiedby" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 13:50:02. -->
+	<sql id="Base_Column_List" >
+		roleid, name, remark, createdon, createdby, modifiedon, modifiedby
+	</sql>
+
+	<!-- 按主键查询 2017-03-30 13:50:02. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from role
+		where roleid = #{roleid,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-03-30 13:50:02. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from role
+		where roleid = #{roleid,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-03-30 13:50:02. -->
+	<insert id="insert" parameterType="cn.houhe.api.user.entity.Role" >
+		insert into role (roleid, name, remark, 
+			createdon, createdby, modifiedon, 
+			modifiedby)
+		values (#{roleid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+			#{createdon,jdbcType=TIMESTAMP}, #{createdby,jdbcType=VARCHAR}, #{modifiedon,jdbcType=TIMESTAMP}, 
+			#{modifiedby,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-03-30 13:50:02. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.user.entity.Role" >
+		insert into role
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="roleid != null" >
+				roleid,
+			</if>
+			<if test="name != null" >
+				name,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="createdby != null" >
+				createdby,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="roleid != null" >
+				#{roleid,jdbcType=INTEGER},
+			</if>
+			<if test="name != null" >
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null" >
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				#{modifiedby,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-03-30 13:50:02. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.user.entity.Role" >
+		update role
+		<set >
+			<if test="name != null" >
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null" >
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where roleid = #{roleid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-03-30 13:50:02. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.user.entity.Role" >
+		update role
+		set name = #{name,jdbcType=VARCHAR},
+			remark = #{remark,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			createdby = #{createdby,jdbcType=VARCHAR},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			modifiedby = #{modifiedby,jdbcType=VARCHAR}
+		where roleid = #{roleid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-03-30 13:50:02. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from role
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

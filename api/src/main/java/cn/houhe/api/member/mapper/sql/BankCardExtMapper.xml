@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.member.mapper.BankCardExtMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 10:12:39. -->
+	<resultMap id="BaseResultListExtMap" type="cn.houhe.api.member.entity.BankCard" >
+		<id column="bcid" property="bcid" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="cardholder" property="cardholder" jdbcType="VARCHAR" />
+		<result column="bankcardno" property="bankcardno" jdbcType="VARCHAR" />
+		<result column="collectingbank" property="collectingbank" jdbcType="VARCHAR" />
+		<result column="reservedmobileno" property="reservedmobileno" jdbcType="VARCHAR" />
+		<result column="defaultcollectingbank" property="defaultcollectingbank" jdbcType="TINYINT" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="defaultrefundbank" property="defaultrefundbank" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<resultMap id="BaseResultBkListExtMap" type="cn.houhe.api.member.entity.BankCardExt" >
+		<id column="bcid" property="bcid" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="cardholder" property="cardholder" jdbcType="VARCHAR" />
+		<result column="bankcardno" property="bankcardno" jdbcType="VARCHAR" />
+		<result column="collectingbank" property="collectingbank" jdbcType="VARCHAR" />
+		<result column="reservedmobileno" property="reservedmobileno" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="defaultbank" property="defaultbank" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="receivebankcardno" property="receivebankcardno" jdbcType="VARCHAR" />
+		<result column="repaybankcardno" property="repaybankcardno" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 10:12:39. -->
+	<sql id="Base_Column_Ext_List" >
+		bcid, member_id, cardholder, bankcardno, collectingbank, reservedmobileno, defaultcollectingbank, 
+		remark, defaultrefundbank, createdon
+	</sql>
+
+	<!-- 按主键查询 2017-03-30 10:12:39. -->
+	<select id="selectByMemberId" resultMap="BaseResultBkListExtMap" parameterType="java.lang.Integer" >
+		select
+		b_c.bcid,
+		b_c.member_id,
+		b_c.cardholder,
+		b_c.bankcardno,
+		b_c.collectingbank,
+		b_c.reservedmobileno,
+		b_c.remark,
+		b_c.defaultbank,
+		b_c.createdon
+		from houhe_member.bank_card b_c
+		where b_c.member_id = #{member_id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByBankCardNo" resultMap="BaseResultListExtMap" parameterType="java.lang.String" >
+		select
+		<include refid="Base_Column_Ext_List" />
+		from houhe_member.bank_card
+		where bankcardno = #{bankcardno,jdbcType=VARCHAR}
+	</select>
+
+	<!-- 获取会员银行卡相关信息 -->
+	<select id="getMerBankCardInfo" resultType="cn.houhe.api.member.entity.MerBankCardExt">
+		select
+		m.realname as realName,
+        m.mobileno as mobileNo,
+        m.idcardno as idCardNo
+        from houhe_member.member m
+        where m.memid = #{memberId}
+	</select>
+</mapper>

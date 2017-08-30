@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.user.mapper.RoleExtMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 13:50:02. -->
+	<resultMap id="selectForRoleMap" type="cn.houhe.api.user.web.bo.RoleResouDto" >
+		<id column="role_id" property="id" jdbcType="INTEGER" />
+		<result column="roleName" property="name" jdbcType="VARCHAR" />
+		<collection property="resList" javaType="java.util.List" ofType="cn.houhe.api.user.web.bo.ResDto">
+			<id column="res_id" property="res_id" jdbcType="INTEGER" />
+			<result column="parent_id" property="parent_id" jdbcType="INTEGER" />
+			<result column="res_name" property="res_name" jdbcType="VARCHAR" />
+			<result column="res_code" property="res_code" jdbcType="VARCHAR" />
+		</collection>
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 13:50:02. -->
+	<sql id="Base_Column_List" >
+		roleid, name, remark, createdon, createdby, modifiedon, modifiedby
+	</sql>
+
+	<!-- 按主键查询 2017-03-30 13:50:02. -->
+	<select id="selectForRole" resultMap="selectForRoleMap" parameterType="java.lang.Integer" >
+		SELECT
+		ro.`name` AS roleName,
+		ro.roleid as role_id ,
+		re.parent_id,
+		re.res_code,
+		re.res_id,
+		re.res_name
+		FROM
+		role ro
+		LEFT JOIN role_access r_a ON ro.roleid = r_a.role_id
+		LEFT JOIN resource re ON re.res_id = r_a.res_id
+		where ro.roleid = #{roleid,jdbcType=INTEGER}
+	</select>
+
+    <!-- 批量分配资源-->
+	<insert id="batchAssignRes" parameterType="java.util.List">
+		insert into role_access (role_id,res_id) values
+		<foreach collection="list" item="resource" index="index" separator=",">
+			(#{resource.roleid},#{resource.resId})
+		</foreach>
+	</insert>
+
+	<!-- 删除角色资源 -->
+	<delete id="deleteResource" parameterType="java.lang.Integer" >
+		delete from role_access
+		where role_id= #{roleid,jdbcType=INTEGER}
+	</delete>
+</mapper>

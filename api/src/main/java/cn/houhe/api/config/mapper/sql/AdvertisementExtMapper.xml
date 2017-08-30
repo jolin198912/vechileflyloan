@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.AdvertisementExtMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 10:04:06. -->
+	<resultMap id="AdvListMap" type="cn.houhe.api.config.entity.AdvertisementExt" >
+		<id column="ad_id" property="adId" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="sort" property="sort" jdbcType="TINYINT" />
+		<result column="type" property="type" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 10:04:06. -->
+	<sql id="AdvList_Column_List" >
+		ad_id, title, logo, url, content, status, sort, type, createdon
+	</sql>
+
+	<!-- 广告列表 -->
+	<select id="selectAdvList" resultMap="AdvListMap" >
+		select
+		<include refid="AdvList_Column_List" />
+		from advertisement
+		where status = 1
+		order by createdon desc
+	</select>
+
+	<!-- 上下架广告. -->
+	<update id="updateStatus" parameterType="cn.houhe.api.config.entity.AdvertisementExt" >
+		update advertisement
+		set status = #{status,jdbcType=TINYINT}
+		where ad_id = #{adId,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,6 @@
+#现金分期放款金额
+loanPay: "#{limit}*(1-#{loanRate}-#{withdrawRate}-#{quotaManageRate})"
+#pdl放款金额
+pdlLoanPay: "#{limit}*(1-(#{loanRate}/30*#{time}+#{withdrawRate}+#{quotaManageRate}))"
+pdlInterest: "#{limit}*#{loanRate}/30*#{time}"
+interest: "#{limit}*#{loanRate}*#{time}"

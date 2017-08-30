@@ -1,0 +1,93 @@
+credit:
+  - templateUrl: testaaaaaa
+    name: 用户注册协议
+    index: 1
+    templateId: yonghuxieyi20170810
+    param:
+          realname: "#realname"
+    signWord: "#sign"
+  - templateUrl: testaaaaaa
+    name: 征信授权
+    templateId: zhengxinshouquanxieyi20170810_1
+    param:
+      realname: "#realname"
+      realname_end: "#realname_end"
+      idcard: "#idcard"
+      year: "#year"
+      month: "#month"
+      day: "#day"
+    signWord: "#sign"
+    index: 2
+loan:
+  - templateUrl: repay20170526
+    name: 借款协议
+    signWord: "#sign"
+    platSignWord: "#signplatform"
+    templateId: jiekuanxieyi20170810_1
+    param:
+      amount: "#amount"
+      big_amount: "#big_amount"
+      foruse: "#foruse"
+      year_rate: "#year_rate"
+      loan_day: "#loan_day"
+      loan_end_day: "#loan_end_day"
+      realname: "#realname"
+      idcard: "#idcard"
+      address: "#address"
+      mobile: "#mobile"
+      username: "#username"
+      realname_line: "#realname_line"
+      year: "#year"
+      month: "#month"
+      day: "#day"
+      realname_end: "#realname_end"
+      year_end: "#year_end"
+      month_end: "#month_end"
+      day_end: "#day_end"
+      loan_no: "#loan_no"
+    index: 0
+  - templateUrl: testaaaaaa
+    name: 平台居间服务协议
+    templateId: platformxieyi20170810_1
+    index: 1
+    signWord: "#sign"
+    platSignWord: "#signplatform"
+    param:
+          realname: "#realname"
+          idcard: "#idcard"
+          address: "#address"
+          mobile: "#mobile"
+          loan_cycle: "#loan_cycle"
+          repay_day: "#repay_day"
+          repay_amount: "#repay_amount"
+          principal: "#principal"
+          interest: "#interest"
+          fee: "#fee"
+          realname_line: "#realname_line"
+          year: "#year"
+          month: "#month"
+          day: "#day"
+          realname_end: "#realname_end"
+          year_end: "#year_end"
+          month_end: "#month_end"
+          day_end: "#day_end"
+          loan_no: "#loan_no"
+  - templateUrl: testaaaaaa
+    name: 授权扣款委托书
+    templateId: shouquan_koukuanxieyi20170810
+    param:
+      realname: "#realname"
+      realanem_line: "#realanem_line"
+      idcard: "#idcard"
+      mobile: "#mobile"
+      card_username: "#card_username"
+      card_bk_name: "#card_bk_name"
+      card_no: "#card_no"
+      realname_end: "#realname_end"
+      year: "#year"
+      month: "#month"
+      day: "#day"
+    signWord: "#sign"
+    platSignWord: "#signplatform"
+    index: 0
+

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.member.mapper.MemberPicResourcesMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 10:12:39. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.member.entity.MemberPicResources" >
+		<id column="memresid" property="memresid" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="pictype" property="pictype" jdbcType="SMALLINT" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="object_type" property="objectType" jdbcType="TINYINT" />
+		<result column="object_id" property="objectId" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 10:12:39. -->
+	<sql id="Base_Column_List" >
+		memresid, member_id, pictype, url, object_type, object_id, remark, createdon, modifiedon
+	</sql>
+
+	<!-- 按主键查询 2017-03-30 10:12:39. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from member_pic_resources
+		where memresid = #{memresid,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-03-30 10:12:39. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from member_pic_resources
+		where memresid = #{memresid,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-03-30 10:12:39. -->
+	<insert id="insert" parameterType="cn.houhe.api.member.entity.MemberPicResources" >
+		<selectKey resultType="java.lang.Integer" keyProperty="memresid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into member_pic_resources (member_id, pictype, url, 
+			object_type, object_id, remark, 
+			createdon, modifiedon)
+		values (#{memberId,jdbcType=INTEGER}, #{pictype,jdbcType=SMALLINT}, #{url,jdbcType=VARCHAR}, 
+			#{objectType,jdbcType=TINYINT}, #{objectId,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+			#{createdon,jdbcType=TIMESTAMP}, #{modifiedon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-03-30 10:12:39. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.member.entity.MemberPicResources" >
+		<selectKey resultType="java.lang.Integer" keyProperty="memresid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into member_pic_resources
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="pictype != null" >
+				pictype,
+			</if>
+			<if test="url != null" >
+				url,
+			</if>
+			<if test="objectType != null" >
+				object_type,
+			</if>
+			<if test="objectId != null" >
+				object_id,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="pictype != null" >
+				#{pictype,jdbcType=SMALLINT},
+			</if>
+			<if test="url != null" >
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="objectType != null" >
+				#{objectType,jdbcType=TINYINT},
+			</if>
+			<if test="objectId != null" >
+				#{objectId,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-03-30 10:12:39. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.member.entity.MemberPicResources" >
+		update member_pic_resources
+		<set >
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="pictype != null" >
+				pictype = #{pictype,jdbcType=SMALLINT},
+			</if>
+			<if test="url != null" >
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="objectType != null" >
+				object_type = #{objectType,jdbcType=TINYINT},
+			</if>
+			<if test="objectId != null" >
+				object_id = #{objectId,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where memresid = #{memresid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-03-30 10:12:39. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.member.entity.MemberPicResources" >
+		update member_pic_resources
+		set member_id = #{memberId,jdbcType=INTEGER},
+			pictype = #{pictype,jdbcType=SMALLINT},
+			url = #{url,jdbcType=VARCHAR},
+			object_type = #{objectType,jdbcType=TINYINT},
+			object_id = #{objectId,jdbcType=INTEGER},
+			remark = #{remark,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP}
+		where memresid = #{memresid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-03-30 10:12:39. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from member_pic_resources
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

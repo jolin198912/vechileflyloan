@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.DebitRcdExtMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-05 09:44:17. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.DebitRcd" >
+		<id column="dr_id" property="drId" jdbcType="INTEGER" />
+		<result column="repayments_plan_id" property="repaymentsPlanId" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="number" property="number" jdbcType="VARCHAR" />
+		<result column="flownumber" property="flownumber" jdbcType="VARCHAR" />
+		<result column="repay_type" property="repayType" jdbcType="TINYINT" />
+		<result column="repayments_plan_ids" property="repaymentsPlanIds" jdbcType="VARCHAR" />
+		<result column="bank_no" property="bankNo" jdbcType="VARCHAR" />
+		<result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+		<result column="bank_user_name" property="bankUserName" jdbcType="VARCHAR" />
+		<result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+		<result column="late_fee" property="lateFee" jdbcType="DECIMAL" />
+		<result column="advance_repay_fee" property="advanceRepayFee" jdbcType="DECIMAL" />
+		<result column="pay_platform" property="payPlatform" jdbcType="VARCHAR" />
+		<result column="interest" property="interest" jdbcType="DECIMAL" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="debiton" property="debiton" jdbcType="TIMESTAMP" />
+		<result column="repay_amount" property="repayAmount" jdbcType="DECIMAL" />
+		<result column="pay_time" property="payTime" jdbcType="TIMESTAMP" />
+		<result column="plan_pay_time" property="planPayTime" jdbcType="DATE" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-05 09:44:17. -->
+	<sql id="Base_Column_List" >
+		dr_id, repayments_plan_id, member_id, number, flownumber, repay_type, repayments_plan_ids, bank_no, bank_name, bank_user_name,
+		user_mobile, late_fee, advance_repay_fee, pay_platform, interest, amount, debiton, 
+		repay_amount, pay_time, plan_pay_time, status, createdon, remark
+	</sql>
+
+	<!-- 插入还款记录 2017-05-05 16:56:38. -->
+	<insert id="insertDebitRcd" parameterType="cn.houhe.api.loan.entity.DebitRcd" >
+		insert into debit_rcd (repayments_plan_id,loan_record_id, member_id, number, flownumber,bank_no, bank_name, bank_user_name, user_mobile, late_fee, interest,debiton, repay_amount)
+		values (#{repaymentsPlanId,jdbcType=INTEGER},#{loanRecordId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER},
+		#{number,jdbcType=VARCHAR}, #{flownumber,jdbcType=VARCHAR}, #{bankNo,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR},
+		#{bankUserName,jdbcType=VARCHAR}, #{userMobile,jdbcType=VARCHAR}, #{lateFee,jdbcType=DECIMAL}, #{interest,jdbcType=DECIMAL},
+		#{debiton,jdbcType=TIMESTAMP}, #{repayAmount,jdbcType=DECIMAL})
+	</insert>
+	<select id="getLastItem" resultType="java.lang.String">
+		select rp.current_term from repayments_plan rp where rp.loan_record_id=#{loanid} order by rp.current_term desc limit 0,1
+	</select>
+</mapper>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.AdvertisementMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 10:04:06. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.config.entity.Advertisement" >
+		<id column="ad_id" property="adId" jdbcType="INTEGER" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="logo" property="logo" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="sort" property="sort" jdbcType="TINYINT" />
+		<result column="type" property="type" jdbcType="TINYINT" />
+		<result column="createdby" property="createdby" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="modifiedby" property="modifiedby" jdbcType="VARCHAR" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 10:04:06. -->
+	<sql id="Base_Column_List" >
+		ad_id, title, logo, url, content, status, sort, type, createdby, createdon, modifiedby, 
+		modifiedon
+	</sql>
+
+	<!-- 按主键查询 2017-03-30 10:04:06. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from advertisement
+		where ad_id = #{adId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-03-30 10:04:06. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from advertisement
+		where ad_id = #{adId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-03-30 10:04:06. -->
+	<insert id="insert" parameterType="cn.houhe.api.config.entity.Advertisement" >
+		<selectKey resultType="java.lang.Integer" keyProperty="adId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into advertisement (title, logo, url, 
+			content, status, sort, 
+			type, createdby, createdon, 
+			modifiedby, modifiedon)
+		values (#{title,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+			#{content,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{sort,jdbcType=TINYINT}, 
+			#{type,jdbcType=TINYINT}, #{createdby,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}, 
+			#{modifiedby,jdbcType=VARCHAR}, #{modifiedon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-03-30 10:04:06. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.config.entity.Advertisement" >
+		<selectKey resultType="java.lang.Integer" keyProperty="adId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into advertisement
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="title != null" >
+				title,
+			</if>
+			<if test="logo != null" >
+				logo,
+			</if>
+			<if test="url != null" >
+				url,
+			</if>
+			<if test="content != null" >
+				content,
+			</if>
+			<if test="status != null" >
+				status,
+			</if>
+			<if test="sort != null" >
+				sort,
+			</if>
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="createdby != null" >
+				createdby,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="title != null" >
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null" >
+				#{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null" >
+				#{url,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null" >
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null" >
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="sort != null" >
+				#{sort,jdbcType=TINYINT},
+			</if>
+			<if test="type != null" >
+				#{type,jdbcType=TINYINT},
+			</if>
+			<if test="createdby != null" >
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				#{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-03-30 10:04:06. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.config.entity.Advertisement" >
+		update advertisement
+		<set >
+			<if test="title != null" >
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="logo != null" >
+				logo = #{logo,jdbcType=VARCHAR},
+			</if>
+			<if test="url != null" >
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null" >
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null" >
+				status = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="sort != null" >
+				sort = #{sort,jdbcType=TINYINT},
+			</if>
+			<if test="type != null" >
+				type = #{type,jdbcType=TINYINT},
+			</if>
+			<if test="createdby != null" >
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ad_id = #{adId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-03-30 10:04:06. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.config.entity.Advertisement" >
+		update advertisement
+		set title = #{title,jdbcType=VARCHAR},
+			logo = #{logo,jdbcType=VARCHAR},
+			url = #{url,jdbcType=VARCHAR},
+			content = #{content,jdbcType=VARCHAR},
+			status = #{status,jdbcType=TINYINT},
+			sort = #{sort,jdbcType=TINYINT},
+			type = #{type,jdbcType=TINYINT},
+			createdby = #{createdby,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP}
+		where ad_id = #{adId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-03-30 10:04:06. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from advertisement
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

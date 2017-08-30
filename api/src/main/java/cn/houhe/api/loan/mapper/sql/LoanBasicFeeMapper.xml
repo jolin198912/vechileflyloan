@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.LoanBasicFeeMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-06 17:45:27. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.LoanBasicFee" >
+		<id column="lba_id" property="lbaId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="interest" property="interest" jdbcType="DECIMAL" />
+		<result column="loan_pay_fee" property="loanPayFee" jdbcType="DECIMAL" />
+		<result column="financing_fee" property="financingFee" jdbcType="DECIMAL" />
+		<result column="account_manage_fee" property="accountManageFee" jdbcType="DECIMAL" />
+		<result column="consultation_fee" property="consultationFee" jdbcType="DECIMAL" />
+		<result column="quota_manage_fee" property="quotaManageFee" jdbcType="DECIMAL" />
+		<result column="withdrawals_fee" property="withdrawalsFee" jdbcType="DECIMAL" />
+		<result column="advance_repay_fee" property="advanceRepayFee" jdbcType="DECIMAL" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-06 17:45:27. -->
+	<sql id="Base_Column_List" >
+		lba_id, loan_record_id, interest, loan_pay_fee, financing_fee, account_manage_fee, 
+		consultation_fee, quota_manage_fee, withdrawals_fee, advance_repay_fee, createdon, 
+		remark
+	</sql>
+
+	<!-- 按主键查询 2017-05-06 17:45:27. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from loan_basic_fee
+		where lba_id = #{lbaId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-06 17:45:27. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from loan_basic_fee
+		where lba_id = #{lbaId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-06 17:45:27. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.LoanBasicFee" >
+		insert into loan_basic_fee (lba_id, loan_record_id, interest, 
+			loan_pay_fee, financing_fee, account_manage_fee, 
+			consultation_fee, quota_manage_fee, withdrawals_fee, 
+			advance_repay_fee, createdon, remark
+			)
+		values (#{lbaId,jdbcType=INTEGER}, #{loanRecordId,jdbcType=INTEGER}, #{interest,jdbcType=DECIMAL}, 
+			#{loanPayFee,jdbcType=DECIMAL}, #{financingFee,jdbcType=DECIMAL}, #{accountManageFee,jdbcType=DECIMAL}, 
+			#{consultationFee,jdbcType=DECIMAL}, #{quotaManageFee,jdbcType=DECIMAL}, #{withdrawalsFee,jdbcType=DECIMAL}, 
+			#{advanceRepayFee,jdbcType=DECIMAL}, #{createdon,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-06 17:45:27. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.LoanBasicFee" >
+		insert into loan_basic_fee
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="lbaId != null" >
+				lba_id,
+			</if>
+			<if test="loanRecordId != null" >
+				loan_record_id,
+			</if>
+			<if test="interest != null" >
+				interest,
+			</if>
+			<if test="loanPayFee != null" >
+				loan_pay_fee,
+			</if>
+			<if test="financingFee != null" >
+				financing_fee,
+			</if>
+			<if test="accountManageFee != null" >
+				account_manage_fee,
+			</if>
+			<if test="consultationFee != null" >
+				consultation_fee,
+			</if>
+			<if test="quotaManageFee != null" >
+				quota_manage_fee,
+			</if>
+			<if test="withdrawalsFee != null" >
+				withdrawals_fee,
+			</if>
+			<if test="advanceRepayFee != null" >
+				advance_repay_fee,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="lbaId != null" >
+				#{lbaId,jdbcType=INTEGER},
+			</if>
+			<if test="loanRecordId != null" >
+				#{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="interest != null" >
+				#{interest,jdbcType=DECIMAL},
+			</if>
+			<if test="loanPayFee != null" >
+				#{loanPayFee,jdbcType=DECIMAL},
+			</if>
+			<if test="financingFee != null" >
+				#{financingFee,jdbcType=DECIMAL},
+			</if>
+			<if test="accountManageFee != null" >
+				#{accountManageFee,jdbcType=DECIMAL},
+			</if>
+			<if test="consultationFee != null" >
+				#{consultationFee,jdbcType=DECIMAL},
+			</if>
+			<if test="quotaManageFee != null" >
+				#{quotaManageFee,jdbcType=DECIMAL},
+			</if>
+			<if test="withdrawalsFee != null" >
+				#{withdrawalsFee,jdbcType=DECIMAL},
+			</if>
+			<if test="advanceRepayFee != null" >
+				#{advanceRepayFee,jdbcType=DECIMAL},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-06 17:45:27. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.LoanBasicFee" >
+		update loan_basic_fee
+		<set >
+			<if test="loanRecordId != null" >
+				loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="interest != null" >
+				interest = #{interest,jdbcType=DECIMAL},
+			</if>
+			<if test="loanPayFee != null" >
+				loan_pay_fee = #{loanPayFee,jdbcType=DECIMAL},
+			</if>
+			<if test="financingFee != null" >
+				financing_fee = #{financingFee,jdbcType=DECIMAL},
+			</if>
+			<if test="accountManageFee != null" >
+				account_manage_fee = #{accountManageFee,jdbcType=DECIMAL},
+			</if>
+			<if test="consultationFee != null" >
+				consultation_fee = #{consultationFee,jdbcType=DECIMAL},
+			</if>
+			<if test="quotaManageFee != null" >
+				quota_manage_fee = #{quotaManageFee,jdbcType=DECIMAL},
+			</if>
+			<if test="withdrawalsFee != null" >
+				withdrawals_fee = #{withdrawalsFee,jdbcType=DECIMAL},
+			</if>
+			<if test="advanceRepayFee != null" >
+				advance_repay_fee = #{advanceRepayFee,jdbcType=DECIMAL},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where lba_id = #{lbaId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-06 17:45:27. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.LoanBasicFee" >
+		update loan_basic_fee
+		set loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			interest = #{interest,jdbcType=DECIMAL},
+			loan_pay_fee = #{loanPayFee,jdbcType=DECIMAL},
+			financing_fee = #{financingFee,jdbcType=DECIMAL},
+			account_manage_fee = #{accountManageFee,jdbcType=DECIMAL},
+			consultation_fee = #{consultationFee,jdbcType=DECIMAL},
+			quota_manage_fee = #{quotaManageFee,jdbcType=DECIMAL},
+			withdrawals_fee = #{withdrawalsFee,jdbcType=DECIMAL},
+			advance_repay_fee = #{advanceRepayFee,jdbcType=DECIMAL},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR}
+		where lba_id = #{lbaId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-06 17:45:27. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from loan_basic_fee
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

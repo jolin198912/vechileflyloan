@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.LoanAuditMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-20 16:33:40. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.LoanAudit" >
+		<id column="la_id" property="laId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="credit_apply_id" property="creditApplyId" jdbcType="INTEGER" />
+		<result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+		<result column="first_audit_time" property="firstAuditTime" jdbcType="TIMESTAMP" />
+		<result column="first_audit_person" property="firstAuditPerson" jdbcType="VARCHAR" />
+		<result column="plan_first_audit_person" property="planFirstAuditPerson" jdbcType="VARCHAR" />
+		<result column="second_audit_person" property="secondAuditPerson" jdbcType="VARCHAR" />
+		<result column="plan_second_audit_person" property="planSecondAuditPerson" jdbcType="VARCHAR" />
+		<result column="plan_sap_id" property="planSapId" jdbcType="INTEGER" />
+		<result column="plan_fap_id" property="planFapId" jdbcType="INTEGER" />
+		<result column="second_audit_time" property="secondAuditTime" jdbcType="TIMESTAMP" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-20 16:33:40. -->
+	<sql id="Base_Column_List" >
+		la_id, loan_record_id, credit_apply_id, audit_time, first_audit_time, first_audit_person, 
+		plan_first_audit_person, second_audit_person, plan_second_audit_person, plan_sap_id, 
+		plan_fap_id, second_audit_time, createdon, remark
+	</sql>
+
+	<!-- 按主键查询 2017-04-20 16:33:40. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from loan_audit
+		where la_id = #{laId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-04-20 16:33:40. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from loan_audit
+		where la_id = #{laId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-20 16:33:40. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.LoanAudit" >
+		<selectKey resultType="java.lang.Integer" keyProperty="laId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into loan_audit (loan_record_id, credit_apply_id, audit_time, 
+			first_audit_time, first_audit_person, plan_first_audit_person, 
+			second_audit_person, plan_second_audit_person, 
+			plan_sap_id, plan_fap_id, second_audit_time, 
+			createdon, remark)
+		values (#{loanRecordId,jdbcType=INTEGER}, #{creditApplyId,jdbcType=INTEGER}, #{auditTime,jdbcType=TIMESTAMP}, 
+			#{firstAuditTime,jdbcType=TIMESTAMP}, #{firstAuditPerson,jdbcType=VARCHAR}, #{planFirstAuditPerson,jdbcType=VARCHAR}, 
+			#{secondAuditPerson,jdbcType=VARCHAR}, #{planSecondAuditPerson,jdbcType=VARCHAR}, 
+			#{planSapId,jdbcType=INTEGER}, #{planFapId,jdbcType=INTEGER}, #{secondAuditTime,jdbcType=TIMESTAMP}, 
+			#{createdon,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-20 16:33:40. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.LoanAudit" >
+		<selectKey resultType="java.lang.Integer" keyProperty="laId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into loan_audit
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				loan_record_id,
+			</if>
+			<if test="creditApplyId != null" >
+				credit_apply_id,
+			</if>
+			<if test="auditTime != null" >
+				audit_time,
+			</if>
+			<if test="firstAuditTime != null" >
+				first_audit_time,
+			</if>
+			<if test="firstAuditPerson != null" >
+				first_audit_person,
+			</if>
+			<if test="planFirstAuditPerson != null" >
+				plan_first_audit_person,
+			</if>
+			<if test="secondAuditPerson != null" >
+				second_audit_person,
+			</if>
+			<if test="planSecondAuditPerson != null" >
+				plan_second_audit_person,
+			</if>
+			<if test="planSapId != null" >
+				plan_sap_id,
+			</if>
+			<if test="planFapId != null" >
+				plan_fap_id,
+			</if>
+			<if test="secondAuditTime != null" >
+				second_audit_time,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				#{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="creditApplyId != null" >
+				#{creditApplyId,jdbcType=INTEGER},
+			</if>
+			<if test="auditTime != null" >
+				#{auditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="firstAuditTime != null" >
+				#{firstAuditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="firstAuditPerson != null" >
+				#{firstAuditPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="planFirstAuditPerson != null" >
+				#{planFirstAuditPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="secondAuditPerson != null" >
+				#{secondAuditPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="planSecondAuditPerson != null" >
+				#{planSecondAuditPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="planSapId != null" >
+				#{planSapId,jdbcType=INTEGER},
+			</if>
+			<if test="planFapId != null" >
+				#{planFapId,jdbcType=INTEGER},
+			</if>
+			<if test="secondAuditTime != null" >
+				#{secondAuditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-20 16:33:40. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.LoanAudit" >
+		update loan_audit
+		<set >
+			<if test="loanRecordId != null" >
+				loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="creditApplyId != null" >
+				credit_apply_id = #{creditApplyId,jdbcType=INTEGER},
+			</if>
+			<if test="auditTime != null" >
+				audit_time = #{auditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="firstAuditTime != null" >
+				first_audit_time = #{firstAuditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="firstAuditPerson != null" >
+				first_audit_person = #{firstAuditPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="planFirstAuditPerson != null" >
+				plan_first_audit_person = #{planFirstAuditPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="secondAuditPerson != null" >
+				second_audit_person = #{secondAuditPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="planSecondAuditPerson != null" >
+				plan_second_audit_person = #{planSecondAuditPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="planSapId != null" >
+				plan_sap_id = #{planSapId,jdbcType=INTEGER},
+			</if>
+			<if test="planFapId != null" >
+				plan_fap_id = #{planFapId,jdbcType=INTEGER},
+			</if>
+			<if test="secondAuditTime != null" >
+				second_audit_time = #{secondAuditTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where la_id = #{laId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-20 16:33:40. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.LoanAudit" >
+		update loan_audit
+		set loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			credit_apply_id = #{creditApplyId,jdbcType=INTEGER},
+			audit_time = #{auditTime,jdbcType=TIMESTAMP},
+			first_audit_time = #{firstAuditTime,jdbcType=TIMESTAMP},
+			first_audit_person = #{firstAuditPerson,jdbcType=VARCHAR},
+			plan_first_audit_person = #{planFirstAuditPerson,jdbcType=VARCHAR},
+			second_audit_person = #{secondAuditPerson,jdbcType=VARCHAR},
+			plan_second_audit_person = #{planSecondAuditPerson,jdbcType=VARCHAR},
+			plan_sap_id = #{planSapId,jdbcType=INTEGER},
+			plan_fap_id = #{planFapId,jdbcType=INTEGER},
+			second_audit_time = #{secondAuditTime,jdbcType=TIMESTAMP},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR}
+		where la_id = #{laId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-20 16:33:40. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from loan_audit
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

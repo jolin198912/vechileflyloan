@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.IssuesExtMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 10:04:06. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.config.entity.IssuesExt" >
+		<id column="iu_id" property="iuId" jdbcType="SMALLINT" />
+		<result column="issue_type_id" property="issueTypeId" jdbcType="SMALLINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="BaseResultMap2" type="cn.houhe.api.config.entity.IssuesExt" >
+		<id column="iu_id" property="iuId" jdbcType="SMALLINT" />
+		<result column="issue_type_id" property="issueTypeId" jdbcType="SMALLINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="solve_count" property="solveCount" jdbcType="INTEGER" />
+		<result column="unsolve_count" property="unsolveCount" jdbcType="INTEGER" />
+		<result column="is_enable" property="isEnable" jdbcType="TINYINT" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 10:04:06. -->
+	<sql id="Base_Column_List" >
+		iu_id, issue_type_id, title
+	</sql>
+
+	<sql id="Base_Column_List_2" >
+		iu_id, issue_type_id, title, content, solve_count, unsolve_count, is_enable
+	</sql>
+
+	<!-- 获取所有上架问题 -->
+	<select id="selectAll" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from issues
+		where is_enable = 1
+		order by issue_type_id,createdon desc
+	</select>
+
+	<resultMap id="BaseResultMap1" type="cn.houhe.api.config.entity.IssuesExt" >
+		<id column="iu_id" property="iuId" jdbcType="SMALLINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="name" property="typename" jdbcType="VARCHAR" />
+		<result column="solve_count" property="solveCount" jdbcType="INTEGER" />
+		<result column="unsolve_count" property="unsolveCount" jdbcType="INTEGER" />
+		<result column="is_enable" property="isEnable" jdbcType="TINYINT" />
+	</resultMap>
+	<!-- 获取所有问题(后台) -->
+	<select id="findPageData" resultMap="BaseResultMap1" parameterType="cn.houhe.api.config.entity.IssuesExt">
+		select a.iu_id,a.title,b.name,a.solve_count,a.unsolve_count,a.is_enable from issues a left join issue_type b on a.issue_type_id=b.it_id where b.is_del=0
+			<if test="issueTypeId != null and issueTypeId >0" >
+				 AND  a.issue_type_id = #{issueTypeId,jdbcType=SMALLINT}
+			</if>
+		order by a.createdon desc
+		limit #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+	</select>
+
+	<select id="getCount" resultType="java.lang.Integer" parameterType="cn.houhe.api.config.entity.IssuesExt">
+		select count(1) from issues a left join issue_type b on a.issue_type_id=b.it_id where b.is_del=0
+		<if test="issueTypeId != null and issueTypeId >0" >
+			AND  a.issue_type_id = #{issueTypeId,jdbcType=SMALLINT}
+		</if>
+		order by a.createdon desc
+	</select>
+
+	<update id="updateEanble" parameterType="cn.houhe.api.config.entity.IssuesExt" >
+		update issues
+		set
+		is_enable=#{isEnable,jdbcType=TINYINT}
+		where iu_id=#{iuId,jdbcType=SMALLINT}
+	</update>
+
+	<select id="selectIssuesFeedback" resultMap="BaseResultMap2">
+		select
+		<include refid="Base_Column_List_2" />
+		from issues
+		where is_enable = 1 and iu_id = #{iuId,jdbcType=SMALLINT}
+	</select>
+
+	<update id="updateIssuesFeedback" parameterType="cn.houhe.api.config.entity.IssuesExt" >
+		update issues
+		set
+		<if test="isSolve == 0" >
+			solve_count=#{solveCount,jdbcType=INTEGER}
+		</if>
+		<if test="isSolve == 1" >
+			unsolve_count=#{unsolveCount,jdbcType=INTEGER}
+		</if>
+		where iu_id=#{iuId,jdbcType=SMALLINT}
+	</update>
+	<!-- 获取分类问题(app) -->
+	<select id="findCatIssue" resultType="cn.houhe.api.config.web.bo.IssueAppDto" parameterType="cn.houhe.api.config.web.bo.IssueAppDto">
+    select isu.iu_id as iuId,isu.title as title,isu.issue_type_id as issueTypeId,isu.solve_count solveCount,isu.unsolve_count as unsolveCount from issues isu
+    where isu.issue_type_id=#{dto.issueTypeId} and isu.is_enable=1
+	limit #{dto.page},#{dto.rows}
+	</select>
+	<!-- 获取问题详情 -->
+	<select id="getDetials" resultType="cn.houhe.api.config.web.bo.IssueAppDto" parameterType="java.lang.Integer">
+		 select isu.iu_id as iuId,isu.title as title,isu.issue_type_id as issueTypeId,isu.solve_count solveCount,isu.unsolve_count as unsolveCount,isu.content as iuContent from issues isu
+    where isu.iu_id=#{iid} and  isu.is_enable=1
+	</select>
+</mapper>

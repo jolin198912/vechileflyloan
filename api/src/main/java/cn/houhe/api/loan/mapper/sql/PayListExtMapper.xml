@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.PayListExtMapper">
+    <select id="selectPayList" resultType="cn.houhe.api.loan.entity.bo.PayListObject">
+        select a.number,a.username,a.user_mobile,a.loan_limit,a.amount,a.pay_platform,a.paytime,a.`status` from houhe_loan.loan_pay a
+        where 1=1
+        <if test="dto.payplatform!=-1">
+            and a.pay_platform=#{dto.payplatform}
+        </if>
+        <if test="dto.orderstatus!=-1">
+            and a.`status` = #{dto.orderstatus}
+        </if>
+        <if test="dto.stratPayDate!=null">
+            and a.paytime>#{dto.stratPayDate}
+        </if>
+        <if test="dto.endPayDate!=null">
+            and a.paytime&lt;#{dto.endPayDate}
+        </if>
+        order by a.paytime desc
+        limit #{dto.page},#{dto.rows}
+    </select>
+
+    <select id="selectPayListCount" resultType="java.lang.Integer">
+        select count(1) from houhe_loan.loan_pay a
+        where 1=1
+        <if test="dto.payplatform!=-1">
+            and a.pay_platform=#{dto.payplatform}
+        </if>
+        <if test="dto.orderstatus!=-1">
+            and a.`status` = #{dto.orderstatus}
+        </if>
+        <if test="dto.stratPayDate!=null">
+            and a.paytime>#{dto.stratPayDate}
+        </if>
+        <if test="dto.endPayDate!=null">
+            and a.paytime&lt;#{dto.endPayDate}
+        </if>
+    </select>
+</mapper>

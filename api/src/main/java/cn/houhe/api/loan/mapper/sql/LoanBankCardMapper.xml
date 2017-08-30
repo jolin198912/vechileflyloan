@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.LoanBankCardMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-05 16:09:35. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.LoanBankCard" >
+		<id column="lbc_id" property="lbcId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="repay_platform" property="repayPlatform" jdbcType="VARCHAR" />
+		<result column="receive_bank" property="receiveBank" jdbcType="VARCHAR" />
+		<result column="receive_bank_cardno" property="receiveBankCardno" jdbcType="VARCHAR" />
+		<result column="receive_name" property="receiveName" jdbcType="VARCHAR" />
+		<result column="repay_bank_cardno" property="repayBankCardno" jdbcType="VARCHAR" />
+		<result column="repay_bank" property="repayBank" jdbcType="VARCHAR" />
+		<result column="repay_name" property="repayName" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-05 16:09:35. -->
+	<sql id="Base_Column_List" >
+		lbc_id, loan_record_id, repay_platform, receive_bank, receive_bank_cardno, receive_name, 
+		repay_bank_cardno, repay_bank, repay_name, createdon, remark
+	</sql>
+
+	<!-- 按主键查询 2017-05-05 16:09:35. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from loan_bank_card
+		where lbc_id = #{lbcId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-05 16:09:35. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from loan_bank_card
+		where lbc_id = #{lbcId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-05 16:09:35. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.LoanBankCard" >
+		<selectKey resultType="java.lang.Integer" keyProperty="lbcId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into loan_bank_card (loan_record_id, repay_platform, receive_bank, 
+			receive_bank_cardno, receive_name, repay_bank_cardno, 
+			repay_bank, repay_name, createdon, 
+			remark)
+		values (#{loanRecordId,jdbcType=INTEGER}, #{repayPlatform,jdbcType=VARCHAR}, #{receiveBank,jdbcType=VARCHAR}, 
+			#{receiveBankCardno,jdbcType=VARCHAR}, #{receiveName,jdbcType=VARCHAR}, #{repayBankCardno,jdbcType=VARCHAR}, 
+			#{repayBank,jdbcType=VARCHAR}, #{repayName,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}, 
+			#{remark,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-05 16:09:35. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.LoanBankCard" >
+		<selectKey resultType="java.lang.Integer" keyProperty="lbcId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into loan_bank_card
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				loan_record_id,
+			</if>
+			<if test="repayPlatform != null" >
+				repay_platform,
+			</if>
+			<if test="receiveBank != null" >
+				receive_bank,
+			</if>
+			<if test="receiveBankCardno != null" >
+				receive_bank_cardno,
+			</if>
+			<if test="receiveName != null" >
+				receive_name,
+			</if>
+			<if test="repayBankCardno != null" >
+				repay_bank_cardno,
+			</if>
+			<if test="repayBank != null" >
+				repay_bank,
+			</if>
+			<if test="repayName != null" >
+				repay_name,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				#{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="repayPlatform != null" >
+				#{repayPlatform,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveBank != null" >
+				#{receiveBank,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveBankCardno != null" >
+				#{receiveBankCardno,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveName != null" >
+				#{receiveName,jdbcType=VARCHAR},
+			</if>
+			<if test="repayBankCardno != null" >
+				#{repayBankCardno,jdbcType=VARCHAR},
+			</if>
+			<if test="repayBank != null" >
+				#{repayBank,jdbcType=VARCHAR},
+			</if>
+			<if test="repayName != null" >
+				#{repayName,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-05 16:09:35. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.LoanBankCard" >
+		update loan_bank_card
+		<set >
+			<if test="loanRecordId != null" >
+				loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="repayPlatform != null" >
+				repay_platform = #{repayPlatform,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveBank != null" >
+				receive_bank = #{receiveBank,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveBankCardno != null" >
+				receive_bank_cardno = #{receiveBankCardno,jdbcType=VARCHAR},
+			</if>
+			<if test="receiveName != null" >
+				receive_name = #{receiveName,jdbcType=VARCHAR},
+			</if>
+			<if test="repayBankCardno != null" >
+				repay_bank_cardno = #{repayBankCardno,jdbcType=VARCHAR},
+			</if>
+			<if test="repayBank != null" >
+				repay_bank = #{repayBank,jdbcType=VARCHAR},
+			</if>
+			<if test="repayName != null" >
+				repay_name = #{repayName,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where lbc_id = #{lbcId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-05 16:09:35. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.LoanBankCard" >
+		update loan_bank_card
+		set loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			repay_platform = #{repayPlatform,jdbcType=VARCHAR},
+			receive_bank = #{receiveBank,jdbcType=VARCHAR},
+			receive_bank_cardno = #{receiveBankCardno,jdbcType=VARCHAR},
+			receive_name = #{receiveName,jdbcType=VARCHAR},
+			repay_bank_cardno = #{repayBankCardno,jdbcType=VARCHAR},
+			repay_bank = #{repayBank,jdbcType=VARCHAR},
+			repay_name = #{repayName,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR}
+		where lbc_id = #{lbcId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-05 16:09:35. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from loan_bank_card
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

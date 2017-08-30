@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.LoanRecordMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-05 16:27:57. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.LoanRecord" >
+		<id column="loan_id" property="loanId" jdbcType="INTEGER" />
+		<result column="loan_limit" property="loanLimit" jdbcType="DECIMAL" />
+		<result column="bill_day" property="billDay" jdbcType="SMALLINT" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+		<result column="loan_number" property="loanNumber" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="idcardno" property="idcardno" jdbcType="VARCHAR" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+		<result column="mem_situation_type" property="memSituationType" jdbcType="TINYINT" />
+		<result column="lending_time" property="lendingTime" jdbcType="TIMESTAMP" />
+		<result column="time" property="time" jdbcType="SMALLINT" />
+		<result column="loan_type" property="loanType" jdbcType="TINYINT" />
+		<result column="repay_state" property="repayState" jdbcType="TINYINT" />
+		<result column="lp_id" property="lpId" jdbcType="SMALLINT" />
+		<result column="late_fee_rate" property="lateFeeRate" jdbcType="DECIMAL" />
+		<result column="remind_fee" property="remindFee" jdbcType="DECIMAL" />
+		<result column="face_similarity" property="faceSimilarity" jdbcType="DECIMAL" />
+		<result column="rate" property="rate" jdbcType="DECIMAL" />
+		<result column="current_pay_amount" property="currentPayAmount" jdbcType="DECIMAL" />
+		<result column="pay_amount" property="payAmount" jdbcType="DECIMAL" />
+		<result column="apply_state" property="applyState" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="pay_status" property="payStatus" jdbcType="TINYINT" />
+		<result column="pay_result" property="payResult" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-05 16:27:57. -->
+	<sql id="Base_Column_List" >
+		loan_id, loan_limit, bill_day, start_time, end_time, user_mobile, loan_number, username, 
+		idcardno, member_id, apply_time, mem_situation_type, lending_time, time, loan_type, 
+		repay_state, lp_id, late_fee_rate, remind_fee, face_similarity, rate, current_pay_amount, 
+		pay_amount, apply_state, createdon, remark, pay_status, pay_result
+	</sql>
+
+	<!-- 按主键查询 2017-05-05 16:27:57. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from loan_record
+		where loan_id = #{loanId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-05 16:27:57. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from loan_record
+		where loan_id = #{loanId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-05 16:27:57. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.LoanRecord" >
+		<selectKey resultType="java.lang.Integer" keyProperty="loanId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into loan_record (loan_limit, bill_day, start_time, 
+			end_time, user_mobile, loan_number, 
+			username, idcardno, member_id, 
+			apply_time, mem_situation_type, lending_time, 
+			time, loan_type, repay_state, 
+			lp_id, late_fee_rate, remind_fee, 
+			face_similarity, rate, current_pay_amount, 
+			pay_amount, apply_state, createdon, 
+			remark, pay_status, pay_result
+			)
+		values (#{loanLimit,jdbcType=DECIMAL}, #{billDay,jdbcType=SMALLINT}, #{startTime,jdbcType=TIMESTAMP}, 
+			#{endTime,jdbcType=TIMESTAMP}, #{userMobile,jdbcType=VARCHAR}, #{loanNumber,jdbcType=VARCHAR}, 
+			#{username,jdbcType=VARCHAR}, #{idcardno,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, 
+			#{applyTime,jdbcType=TIMESTAMP}, #{memSituationType,jdbcType=TINYINT}, #{lendingTime,jdbcType=TIMESTAMP}, 
+			#{time,jdbcType=SMALLINT}, #{loanType,jdbcType=TINYINT}, #{repayState,jdbcType=TINYINT}, 
+			#{lpId,jdbcType=SMALLINT}, #{lateFeeRate,jdbcType=DECIMAL}, #{remindFee,jdbcType=DECIMAL}, 
+			#{faceSimilarity,jdbcType=DECIMAL}, #{rate,jdbcType=DECIMAL}, #{currentPayAmount,jdbcType=DECIMAL}, 
+			#{payAmount,jdbcType=DECIMAL}, #{applyState,jdbcType=TINYINT}, #{createdon,jdbcType=TIMESTAMP}, 
+			#{remark,jdbcType=VARCHAR}, #{payStatus,jdbcType=TINYINT}, #{payResult,jdbcType=VARCHAR}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-05 16:27:57. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.LoanRecord" >
+		<selectKey resultType="java.lang.Integer" keyProperty="loanId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into loan_record
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="loanLimit != null" >
+				loan_limit,
+			</if>
+			<if test="billDay != null" >
+				bill_day,
+			</if>
+			<if test="startTime != null" >
+				start_time,
+			</if>
+			<if test="endTime != null" >
+				end_time,
+			</if>
+			<if test="userMobile != null" >
+				user_mobile,
+			</if>
+			<if test="loanNumber != null" >
+				loan_number,
+			</if>
+			<if test="username != null" >
+				username,
+			</if>
+			<if test="idcardno != null" >
+				idcardno,
+			</if>
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="applyTime != null" >
+				apply_time,
+			</if>
+			<if test="memSituationType != null" >
+				mem_situation_type,
+			</if>
+			<if test="lendingTime != null" >
+				lending_time,
+			</if>
+			<if test="time != null" >
+				time,
+			</if>
+			<if test="loanType != null" >
+				loan_type,
+			</if>
+			<if test="repayState != null" >
+				repay_state,
+			</if>
+			<if test="lpId != null" >
+				lp_id,
+			</if>
+			<if test="lateFeeRate != null" >
+				late_fee_rate,
+			</if>
+			<if test="remindFee != null" >
+				remind_fee,
+			</if>
+			<if test="faceSimilarity != null" >
+				face_similarity,
+			</if>
+			<if test="rate != null" >
+				rate,
+			</if>
+			<if test="currentPayAmount != null" >
+				current_pay_amount,
+			</if>
+			<if test="payAmount != null" >
+				pay_amount,
+			</if>
+			<if test="applyState != null" >
+				apply_state,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="payStatus != null" >
+				pay_status,
+			</if>
+			<if test="payResult != null" >
+				pay_result,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="loanLimit != null" >
+				#{loanLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="billDay != null" >
+				#{billDay,jdbcType=SMALLINT},
+			</if>
+			<if test="startTime != null" >
+				#{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null" >
+				#{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userMobile != null" >
+				#{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="loanNumber != null" >
+				#{loanNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null" >
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="idcardno != null" >
+				#{idcardno,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="applyTime != null" >
+				#{applyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="memSituationType != null" >
+				#{memSituationType,jdbcType=TINYINT},
+			</if>
+			<if test="lendingTime != null" >
+				#{lendingTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="time != null" >
+				#{time,jdbcType=SMALLINT},
+			</if>
+			<if test="loanType != null" >
+				#{loanType,jdbcType=TINYINT},
+			</if>
+			<if test="repayState != null" >
+				#{repayState,jdbcType=TINYINT},
+			</if>
+			<if test="lpId != null" >
+				#{lpId,jdbcType=SMALLINT},
+			</if>
+			<if test="lateFeeRate != null" >
+				#{lateFeeRate,jdbcType=DECIMAL},
+			</if>
+			<if test="remindFee != null" >
+				#{remindFee,jdbcType=DECIMAL},
+			</if>
+			<if test="faceSimilarity != null" >
+				#{faceSimilarity,jdbcType=DECIMAL},
+			</if>
+			<if test="rate != null" >
+				#{rate,jdbcType=DECIMAL},
+			</if>
+			<if test="currentPayAmount != null" >
+				#{currentPayAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="payAmount != null" >
+				#{payAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="applyState != null" >
+				#{applyState,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="payStatus != null" >
+				#{payStatus,jdbcType=TINYINT},
+			</if>
+			<if test="payResult != null" >
+				#{payResult,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-05 16:27:57. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.LoanRecord" >
+		update loan_record
+		<set >
+			<if test="loanLimit != null" >
+				loan_limit = #{loanLimit,jdbcType=DECIMAL},
+			</if>
+			<if test="billDay != null" >
+				bill_day = #{billDay,jdbcType=SMALLINT},
+			</if>
+			<if test="startTime != null" >
+				start_time = #{startTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endTime != null" >
+				end_time = #{endTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="userMobile != null" >
+				user_mobile = #{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="loanNumber != null" >
+				loan_number = #{loanNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null" >
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="idcardno != null" >
+				idcardno = #{idcardno,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="applyTime != null" >
+				apply_time = #{applyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="memSituationType != null" >
+				mem_situation_type = #{memSituationType,jdbcType=TINYINT},
+			</if>
+			<if test="lendingTime != null" >
+				lending_time = #{lendingTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="time != null" >
+				time = #{time,jdbcType=SMALLINT},
+			</if>
+			<if test="loanType != null" >
+				loan_type = #{loanType,jdbcType=TINYINT},
+			</if>
+			<if test="repayState != null" >
+				repay_state = #{repayState,jdbcType=TINYINT},
+			</if>
+			<if test="lpId != null" >
+				lp_id = #{lpId,jdbcType=SMALLINT},
+			</if>
+			<if test="lateFeeRate != null" >
+				late_fee_rate = #{lateFeeRate,jdbcType=DECIMAL},
+			</if>
+			<if test="remindFee != null" >
+				remind_fee = #{remindFee,jdbcType=DECIMAL},
+			</if>
+			<if test="faceSimilarity != null" >
+				face_similarity = #{faceSimilarity,jdbcType=DECIMAL},
+			</if>
+			<if test="rate != null" >
+				rate = #{rate,jdbcType=DECIMAL},
+			</if>
+			<if test="currentPayAmount != null" >
+				current_pay_amount = #{currentPayAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="payAmount != null" >
+				pay_amount = #{payAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="applyState != null" >
+				apply_state = #{applyState,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="payStatus != null" >
+				pay_status = #{payStatus,jdbcType=TINYINT},
+			</if>
+			<if test="payResult != null" >
+				pay_result = #{payResult,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where loan_id = #{loanId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-05 16:27:57. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.LoanRecord" >
+		update loan_record
+		set loan_limit = #{loanLimit,jdbcType=DECIMAL},
+			bill_day = #{billDay,jdbcType=SMALLINT},
+			start_time = #{startTime,jdbcType=TIMESTAMP},
+			end_time = #{endTime,jdbcType=TIMESTAMP},
+			user_mobile = #{userMobile,jdbcType=VARCHAR},
+			loan_number = #{loanNumber,jdbcType=VARCHAR},
+			username = #{username,jdbcType=VARCHAR},
+			idcardno = #{idcardno,jdbcType=VARCHAR},
+			member_id = #{memberId,jdbcType=INTEGER},
+			apply_time = #{applyTime,jdbcType=TIMESTAMP},
+			mem_situation_type = #{memSituationType,jdbcType=TINYINT},
+			lending_time = #{lendingTime,jdbcType=TIMESTAMP},
+			time = #{time,jdbcType=SMALLINT},
+			loan_type = #{loanType,jdbcType=TINYINT},
+			repay_state = #{repayState,jdbcType=TINYINT},
+			lp_id = #{lpId,jdbcType=SMALLINT},
+			late_fee_rate = #{lateFeeRate,jdbcType=DECIMAL},
+			remind_fee = #{remindFee,jdbcType=DECIMAL},
+			face_similarity = #{faceSimilarity,jdbcType=DECIMAL},
+			rate = #{rate,jdbcType=DECIMAL},
+			current_pay_amount = #{currentPayAmount,jdbcType=DECIMAL},
+			pay_amount = #{payAmount,jdbcType=DECIMAL},
+			apply_state = #{applyState,jdbcType=TINYINT},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR},
+			pay_status = #{payStatus,jdbcType=TINYINT},
+			pay_result = #{payResult,jdbcType=VARCHAR}
+		where loan_id = #{loanId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-05 16:27:57. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from loan_record
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

@@ -1,0 +1,935 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.CreditApplyMapper" >
+	<!-- 实体类 - 数据库映射 2017-06-05 10:38:33. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.CreditApply" >
+		<id column="ca_id" property="caId" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="id_card" property="idCard" jdbcType="VARCHAR" />
+		<result column="couple_card" property="coupleCard" jdbcType="VARCHAR" />
+		<result column="couple_mobile" property="coupleMobile" jdbcType="VARCHAR" />
+		<result column="couple_name" property="coupleName" jdbcType="VARCHAR" />
+		<result column="couple_education" property="coupleEducation" jdbcType="TINYINT" />
+		<result column="couple_job" property="coupleJob" jdbcType="TINYINT" />
+		<result column="sex" property="sex" jdbcType="TINYINT" />
+		<result column="birthday" property="birthday" jdbcType="DATE" />
+		<result column="origin_type" property="originType" jdbcType="TINYINT" />
+		<result column="domicile_province" property="domicileProvince" jdbcType="VARCHAR" />
+		<result column="domicile_detail" property="domicileDetail" jdbcType="VARCHAR" />
+		<result column="domicile_time" property="domicileTime" jdbcType="TINYINT" />
+		<result column="nation" property="nation" jdbcType="VARCHAR" />
+		<result column="education" property="education" jdbcType="TINYINT" />
+		<result column="high_edu_starttime" property="highEduStarttime" jdbcType="TIMESTAMP" />
+		<result column="high_edu_endtime" property="highEduEndtime" jdbcType="TIMESTAMP" />
+		<result column="company_name" property="companyName" jdbcType="VARCHAR" />
+		<result column="com_bus_time_length" property="comBusTimeLength" jdbcType="SMALLINT" />
+		<result column="is_company_fivehun" property="isCompanyFivehun" jdbcType="TINYINT" />
+		<result column="is_allow_contact" property="isAllowContact" jdbcType="TINYINT" />
+		<result column="is_allow_record" property="isAllowRecord" jdbcType="TINYINT" />
+		<result column="is_allow_message" property="isAllowMessage" jdbcType="TINYINT" />
+		<result column="is_allow_location" property="isAllowLocation" jdbcType="TINYINT" />
+		<result column="job" property="job" jdbcType="TINYINT" />
+		<result column="industry" property="industry" jdbcType="VARCHAR" />
+		<result column="work_place" property="workPlace" jdbcType="VARCHAR" />
+		<result column="work_experience" property="workExperience" jdbcType="VARCHAR" />
+		<result column="wanted_limit" property="wantedLimit" jdbcType="INTEGER" />
+		<result column="wanted_period" property="wantedPeriod" jdbcType="TINYINT" />
+		<result column="wanted_repay_day" property="wantedRepayDay" jdbcType="TINYINT" />
+		<result column="marriage" property="marriage" jdbcType="TINYINT" />
+		<result column="child_amount" property="childAmount" jdbcType="TINYINT" />
+		<result column="family_amount" property="familyAmount" jdbcType="TINYINT" />
+		<result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+		<result column="year_pay" property="yearPay" jdbcType="DECIMAL" />
+		<result column="qq" property="qq" jdbcType="VARCHAR" />
+		<result column="qq_age" property="qqAge" jdbcType="SMALLINT" />
+		<result column="wx_age" property="wxAge" jdbcType="SMALLINT" />
+		<result column="wx" property="wx" jdbcType="VARCHAR" />
+		<result column="fengkong_state" property="fengkongState" jdbcType="TINYINT" />
+		<result column="apply_state" property="applyState" jdbcType="TINYINT" />
+		<result column="apply_step" property="applyStep" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="buy_type" property="buyType" jdbcType="TINYINT" />
+		<result column="house_type" property="houseType" jdbcType="TINYINT" />
+		<result column="house_caty" property="houseCaty" jdbcType="TINYINT" />
+		<result column="house_big" property="houseBig" jdbcType="SMALLINT" />
+		<result column="loan_amount" property="loanAmount" jdbcType="DECIMAL" />
+		<result column="city" property="city" jdbcType="VARCHAR" />
+		<result column="area" property="area" jdbcType="VARCHAR" />
+		<result column="income" property="income" jdbcType="DECIMAL" />
+		<result column="social_security" property="socialSecurity" jdbcType="TINYINT" />
+		<result column="accumulation_fund" property="accumulationFund" jdbcType="TINYINT" />
+		<result column="jingdong_quto" property="jingdongQuto" jdbcType="DECIMAL" />
+		<result column="mayijieb_quto" property="mayijiebQuto" jdbcType="DECIMAL" />
+		<result column="huabei_quto" property="huabeiQuto" jdbcType="DECIMAL" />
+		<result column="debit" property="debit" jdbcType="DECIMAL" />
+		<result column="car_number" property="carNumber" jdbcType="VARCHAR" />
+		<result column="car_brand" property="carBrand" jdbcType="VARCHAR" />
+		<result column="car_lisence" property="carLisence" jdbcType="VARCHAR" />
+		<result column="car_property" property="carProperty" jdbcType="TINYINT" />
+		<result column="car_driven" property="carDriven" jdbcType="TINYINT" />
+		<result column="car_owner" property="carOwner" jdbcType="VARCHAR" />
+		<result column="car_code" property="carCode" jdbcType="VARCHAR" />
+		<result column="buy_date" property="buyDate" jdbcType="TIMESTAMP" />
+		<result column="counts" property="counts" jdbcType="SMALLINT" />
+		<result column="price" property="price" jdbcType="DECIMAL" />
+		<result column="car_insurance_amount" property="carInsuranceAmount" jdbcType="DECIMAL" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="native_place" property="nativePlace" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-06-05 10:38:33. -->
+	<sql id="Base_Column_List" >
+		ca_id, name, member_id, id_card, couple_card, couple_mobile, couple_name, couple_education, 
+		couple_job, sex, birthday, origin_type, domicile_province, domicile_detail, domicile_time, 
+		nation, education, high_edu_starttime, high_edu_endtime, company_name, com_bus_time_length, 
+		is_company_fivehun, is_allow_contact, is_allow_record, is_allow_message, is_allow_location, 
+		job, industry, work_place, work_experience, wanted_limit, wanted_period, wanted_repay_day, 
+		marriage, child_amount, family_amount, apply_time, year_pay, qq, qq_age, wx_age, 
+		wx, fengkong_state, apply_state, apply_step, createdon, remark, buy_type, house_type, 
+		house_caty, house_big, loan_amount, city, area, income, social_security, accumulation_fund, 
+		jingdong_quto, mayijieb_quto, huabei_quto, debit, car_number, car_brand, car_lisence, 
+		car_property, car_driven, car_owner, car_code, buy_date, counts, price, car_insurance_amount, 
+		address, native_place
+	</sql>
+
+	<!-- 按主键查询 2017-06-05 10:38:33. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from credit_apply
+		where ca_id = #{caId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-06-05 10:38:33. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from credit_apply
+		where ca_id = #{caId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-06-05 10:38:33. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.CreditApply" >
+		<selectKey resultType="java.lang.Integer" keyProperty="caId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into credit_apply (name, member_id, id_card, 
+			couple_card, couple_mobile, couple_name, 
+			couple_education, couple_job, sex, 
+			birthday, origin_type, domicile_province, 
+			domicile_detail, domicile_time, nation, 
+			education, high_edu_starttime, high_edu_endtime, 
+			company_name, com_bus_time_length, is_company_fivehun, 
+			is_allow_contact, is_allow_record, is_allow_message, 
+			is_allow_location, job, industry, 
+			work_place, work_experience, wanted_limit, 
+			wanted_period, wanted_repay_day, marriage, 
+			child_amount, family_amount, apply_time, 
+			year_pay, qq, qq_age, 
+			wx_age, wx, fengkong_state, 
+			apply_state, apply_step, createdon, 
+			remark, buy_type, house_type, 
+			house_caty, house_big, loan_amount, 
+			city, area, income, 
+			social_security, accumulation_fund, jingdong_quto, 
+			mayijieb_quto, huabei_quto, debit, 
+			car_number, car_brand, car_lisence, 
+			car_property, car_driven, car_owner, 
+			car_code, buy_date, counts, 
+			price, car_insurance_amount, address, 
+			native_place)
+		values (#{name,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, #{idCard,jdbcType=VARCHAR}, 
+			#{coupleCard,jdbcType=VARCHAR}, #{coupleMobile,jdbcType=VARCHAR}, #{coupleName,jdbcType=VARCHAR}, 
+			#{coupleEducation,jdbcType=TINYINT}, #{coupleJob,jdbcType=TINYINT}, #{sex,jdbcType=TINYINT}, 
+			#{birthday,jdbcType=DATE}, #{originType,jdbcType=TINYINT}, #{domicileProvince,jdbcType=VARCHAR}, 
+			#{domicileDetail,jdbcType=VARCHAR}, #{domicileTime,jdbcType=TINYINT}, #{nation,jdbcType=VARCHAR}, 
+			#{education,jdbcType=TINYINT}, #{highEduStarttime,jdbcType=TIMESTAMP}, #{highEduEndtime,jdbcType=TIMESTAMP}, 
+			#{companyName,jdbcType=VARCHAR}, #{comBusTimeLength,jdbcType=SMALLINT}, #{isCompanyFivehun,jdbcType=TINYINT}, 
+			#{isAllowContact,jdbcType=TINYINT}, #{isAllowRecord,jdbcType=TINYINT}, #{isAllowMessage,jdbcType=TINYINT}, 
+			#{isAllowLocation,jdbcType=TINYINT}, #{job,jdbcType=TINYINT}, #{industry,jdbcType=VARCHAR}, 
+			#{workPlace,jdbcType=VARCHAR}, #{workExperience,jdbcType=VARCHAR}, #{wantedLimit,jdbcType=INTEGER}, 
+			#{wantedPeriod,jdbcType=TINYINT}, #{wantedRepayDay,jdbcType=TINYINT}, #{marriage,jdbcType=TINYINT}, 
+			#{childAmount,jdbcType=TINYINT}, #{familyAmount,jdbcType=TINYINT}, #{applyTime,jdbcType=TIMESTAMP}, 
+			#{yearPay,jdbcType=DECIMAL}, #{qq,jdbcType=VARCHAR}, #{qqAge,jdbcType=SMALLINT}, 
+			#{wxAge,jdbcType=SMALLINT}, #{wx,jdbcType=VARCHAR}, #{fengkongState,jdbcType=TINYINT}, 
+			#{applyState,jdbcType=TINYINT}, #{applyStep,jdbcType=TINYINT}, #{createdon,jdbcType=TIMESTAMP}, 
+			#{remark,jdbcType=VARCHAR}, #{buyType,jdbcType=TINYINT}, #{houseType,jdbcType=TINYINT}, 
+			#{houseCaty,jdbcType=TINYINT}, #{houseBig,jdbcType=SMALLINT}, #{loanAmount,jdbcType=DECIMAL}, 
+			#{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{income,jdbcType=DECIMAL}, 
+			#{socialSecurity,jdbcType=TINYINT}, #{accumulationFund,jdbcType=TINYINT}, #{jingdongQuto,jdbcType=DECIMAL}, 
+			#{mayijiebQuto,jdbcType=DECIMAL}, #{huabeiQuto,jdbcType=DECIMAL}, #{debit,jdbcType=DECIMAL}, 
+			#{carNumber,jdbcType=VARCHAR}, #{carBrand,jdbcType=VARCHAR}, #{carLisence,jdbcType=VARCHAR}, 
+			#{carProperty,jdbcType=TINYINT}, #{carDriven,jdbcType=TINYINT}, #{carOwner,jdbcType=VARCHAR}, 
+			#{carCode,jdbcType=VARCHAR}, #{buyDate,jdbcType=TIMESTAMP}, #{counts,jdbcType=SMALLINT}, 
+			#{price,jdbcType=DECIMAL}, #{carInsuranceAmount,jdbcType=DECIMAL}, #{address,jdbcType=VARCHAR}, 
+			#{nativePlace,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-06-05 10:38:33. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.CreditApply" >
+		<selectKey resultType="java.lang.Integer" keyProperty="caId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into credit_apply
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="name != null" >
+				name,
+			</if>
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="idCard != null" >
+				id_card,
+			</if>
+			<if test="coupleCard != null" >
+				couple_card,
+			</if>
+			<if test="coupleMobile != null" >
+				couple_mobile,
+			</if>
+			<if test="coupleName != null" >
+				couple_name,
+			</if>
+			<if test="coupleEducation != null" >
+				couple_education,
+			</if>
+			<if test="coupleJob != null" >
+				couple_job,
+			</if>
+			<if test="sex != null" >
+				sex,
+			</if>
+			<if test="birthday != null" >
+				birthday,
+			</if>
+			<if test="originType != null" >
+				origin_type,
+			</if>
+			<if test="domicileProvince != null" >
+				domicile_province,
+			</if>
+			<if test="domicileDetail != null" >
+				domicile_detail,
+			</if>
+			<if test="domicileTime != null" >
+				domicile_time,
+			</if>
+			<if test="nation != null" >
+				nation,
+			</if>
+			<if test="education != null" >
+				education,
+			</if>
+			<if test="highEduStarttime != null" >
+				high_edu_starttime,
+			</if>
+			<if test="highEduEndtime != null" >
+				high_edu_endtime,
+			</if>
+			<if test="companyName != null" >
+				company_name,
+			</if>
+			<if test="comBusTimeLength != null" >
+				com_bus_time_length,
+			</if>
+			<if test="isCompanyFivehun != null" >
+				is_company_fivehun,
+			</if>
+			<if test="isAllowContact != null" >
+				is_allow_contact,
+			</if>
+			<if test="isAllowRecord != null" >
+				is_allow_record,
+			</if>
+			<if test="isAllowMessage != null" >
+				is_allow_message,
+			</if>
+			<if test="isAllowLocation != null" >
+				is_allow_location,
+			</if>
+			<if test="job != null" >
+				job,
+			</if>
+			<if test="industry != null" >
+				industry,
+			</if>
+			<if test="workPlace != null" >
+				work_place,
+			</if>
+			<if test="workExperience != null" >
+				work_experience,
+			</if>
+			<if test="wantedLimit != null" >
+				wanted_limit,
+			</if>
+			<if test="wantedPeriod != null" >
+				wanted_period,
+			</if>
+			<if test="wantedRepayDay != null" >
+				wanted_repay_day,
+			</if>
+			<if test="marriage != null" >
+				marriage,
+			</if>
+			<if test="childAmount != null" >
+				child_amount,
+			</if>
+			<if test="familyAmount != null" >
+				family_amount,
+			</if>
+			<if test="applyTime != null" >
+				apply_time,
+			</if>
+			<if test="yearPay != null" >
+				year_pay,
+			</if>
+			<if test="qq != null" >
+				qq,
+			</if>
+			<if test="qqAge != null" >
+				qq_age,
+			</if>
+			<if test="wxAge != null" >
+				wx_age,
+			</if>
+			<if test="wx != null" >
+				wx,
+			</if>
+			<if test="fengkongState != null" >
+				fengkong_state,
+			</if>
+			<if test="applyState != null" >
+				apply_state,
+			</if>
+			<if test="applyStep != null" >
+				apply_step,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="buyType != null" >
+				buy_type,
+			</if>
+			<if test="houseType != null" >
+				house_type,
+			</if>
+			<if test="houseCaty != null" >
+				house_caty,
+			</if>
+			<if test="houseBig != null" >
+				house_big,
+			</if>
+			<if test="loanAmount != null" >
+				loan_amount,
+			</if>
+			<if test="city != null" >
+				city,
+			</if>
+			<if test="area != null" >
+				area,
+			</if>
+			<if test="income != null" >
+				income,
+			</if>
+			<if test="socialSecurity != null" >
+				social_security,
+			</if>
+			<if test="accumulationFund != null" >
+				accumulation_fund,
+			</if>
+			<if test="jingdongQuto != null" >
+				jingdong_quto,
+			</if>
+			<if test="mayijiebQuto != null" >
+				mayijieb_quto,
+			</if>
+			<if test="huabeiQuto != null" >
+				huabei_quto,
+			</if>
+			<if test="debit != null" >
+				debit,
+			</if>
+			<if test="carNumber != null" >
+				car_number,
+			</if>
+			<if test="carBrand != null" >
+				car_brand,
+			</if>
+			<if test="carLisence != null" >
+				car_lisence,
+			</if>
+			<if test="carProperty != null" >
+				car_property,
+			</if>
+			<if test="carDriven != null" >
+				car_driven,
+			</if>
+			<if test="carOwner != null" >
+				car_owner,
+			</if>
+			<if test="carCode != null" >
+				car_code,
+			</if>
+			<if test="buyDate != null" >
+				buy_date,
+			</if>
+			<if test="counts != null" >
+				counts,
+			</if>
+			<if test="price != null" >
+				price,
+			</if>
+			<if test="carInsuranceAmount != null" >
+				car_insurance_amount,
+			</if>
+			<if test="address != null" >
+				address,
+			</if>
+			<if test="nativePlace != null" >
+				native_place,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="name != null" >
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="idCard != null" >
+				#{idCard,jdbcType=VARCHAR},
+			</if>
+			<if test="coupleCard != null" >
+				#{coupleCard,jdbcType=VARCHAR},
+			</if>
+			<if test="coupleMobile != null" >
+				#{coupleMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="coupleName != null" >
+				#{coupleName,jdbcType=VARCHAR},
+			</if>
+			<if test="coupleEducation != null" >
+				#{coupleEducation,jdbcType=TINYINT},
+			</if>
+			<if test="coupleJob != null" >
+				#{coupleJob,jdbcType=TINYINT},
+			</if>
+			<if test="sex != null" >
+				#{sex,jdbcType=TINYINT},
+			</if>
+			<if test="birthday != null" >
+				#{birthday,jdbcType=DATE},
+			</if>
+			<if test="originType != null" >
+				#{originType,jdbcType=TINYINT},
+			</if>
+			<if test="domicileProvince != null" >
+				#{domicileProvince,jdbcType=VARCHAR},
+			</if>
+			<if test="domicileDetail != null" >
+				#{domicileDetail,jdbcType=VARCHAR},
+			</if>
+			<if test="domicileTime != null" >
+				#{domicileTime,jdbcType=TINYINT},
+			</if>
+			<if test="nation != null" >
+				#{nation,jdbcType=VARCHAR},
+			</if>
+			<if test="education != null" >
+				#{education,jdbcType=TINYINT},
+			</if>
+			<if test="highEduStarttime != null" >
+				#{highEduStarttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="highEduEndtime != null" >
+				#{highEduEndtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="companyName != null" >
+				#{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="comBusTimeLength != null" >
+				#{comBusTimeLength,jdbcType=SMALLINT},
+			</if>
+			<if test="isCompanyFivehun != null" >
+				#{isCompanyFivehun,jdbcType=TINYINT},
+			</if>
+			<if test="isAllowContact != null" >
+				#{isAllowContact,jdbcType=TINYINT},
+			</if>
+			<if test="isAllowRecord != null" >
+				#{isAllowRecord,jdbcType=TINYINT},
+			</if>
+			<if test="isAllowMessage != null" >
+				#{isAllowMessage,jdbcType=TINYINT},
+			</if>
+			<if test="isAllowLocation != null" >
+				#{isAllowLocation,jdbcType=TINYINT},
+			</if>
+			<if test="job != null" >
+				#{job,jdbcType=TINYINT},
+			</if>
+			<if test="industry != null" >
+				#{industry,jdbcType=VARCHAR},
+			</if>
+			<if test="workPlace != null" >
+				#{workPlace,jdbcType=VARCHAR},
+			</if>
+			<if test="workExperience != null" >
+				#{workExperience,jdbcType=VARCHAR},
+			</if>
+			<if test="wantedLimit != null" >
+				#{wantedLimit,jdbcType=INTEGER},
+			</if>
+			<if test="wantedPeriod != null" >
+				#{wantedPeriod,jdbcType=TINYINT},
+			</if>
+			<if test="wantedRepayDay != null" >
+				#{wantedRepayDay,jdbcType=TINYINT},
+			</if>
+			<if test="marriage != null" >
+				#{marriage,jdbcType=TINYINT},
+			</if>
+			<if test="childAmount != null" >
+				#{childAmount,jdbcType=TINYINT},
+			</if>
+			<if test="familyAmount != null" >
+				#{familyAmount,jdbcType=TINYINT},
+			</if>
+			<if test="applyTime != null" >
+				#{applyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="yearPay != null" >
+				#{yearPay,jdbcType=DECIMAL},
+			</if>
+			<if test="qq != null" >
+				#{qq,jdbcType=VARCHAR},
+			</if>
+			<if test="qqAge != null" >
+				#{qqAge,jdbcType=SMALLINT},
+			</if>
+			<if test="wxAge != null" >
+				#{wxAge,jdbcType=SMALLINT},
+			</if>
+			<if test="wx != null" >
+				#{wx,jdbcType=VARCHAR},
+			</if>
+			<if test="fengkongState != null" >
+				#{fengkongState,jdbcType=TINYINT},
+			</if>
+			<if test="applyState != null" >
+				#{applyState,jdbcType=TINYINT},
+			</if>
+			<if test="applyStep != null" >
+				#{applyStep,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="buyType != null" >
+				#{buyType,jdbcType=TINYINT},
+			</if>
+			<if test="houseType != null" >
+				#{houseType,jdbcType=TINYINT},
+			</if>
+			<if test="houseCaty != null" >
+				#{houseCaty,jdbcType=TINYINT},
+			</if>
+			<if test="houseBig != null" >
+				#{houseBig,jdbcType=SMALLINT},
+			</if>
+			<if test="loanAmount != null" >
+				#{loanAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="city != null" >
+				#{city,jdbcType=VARCHAR},
+			</if>
+			<if test="area != null" >
+				#{area,jdbcType=VARCHAR},
+			</if>
+			<if test="income != null" >
+				#{income,jdbcType=DECIMAL},
+			</if>
+			<if test="socialSecurity != null" >
+				#{socialSecurity,jdbcType=TINYINT},
+			</if>
+			<if test="accumulationFund != null" >
+				#{accumulationFund,jdbcType=TINYINT},
+			</if>
+			<if test="jingdongQuto != null" >
+				#{jingdongQuto,jdbcType=DECIMAL},
+			</if>
+			<if test="mayijiebQuto != null" >
+				#{mayijiebQuto,jdbcType=DECIMAL},
+			</if>
+			<if test="huabeiQuto != null" >
+				#{huabeiQuto,jdbcType=DECIMAL},
+			</if>
+			<if test="debit != null" >
+				#{debit,jdbcType=DECIMAL},
+			</if>
+			<if test="carNumber != null" >
+				#{carNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="carBrand != null" >
+				#{carBrand,jdbcType=VARCHAR},
+			</if>
+			<if test="carLisence != null" >
+				#{carLisence,jdbcType=VARCHAR},
+			</if>
+			<if test="carProperty != null" >
+				#{carProperty,jdbcType=TINYINT},
+			</if>
+			<if test="carDriven != null" >
+				#{carDriven,jdbcType=TINYINT},
+			</if>
+			<if test="carOwner != null" >
+				#{carOwner,jdbcType=VARCHAR},
+			</if>
+			<if test="carCode != null" >
+				#{carCode,jdbcType=VARCHAR},
+			</if>
+			<if test="buyDate != null" >
+				#{buyDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="counts != null" >
+				#{counts,jdbcType=SMALLINT},
+			</if>
+			<if test="price != null" >
+				#{price,jdbcType=DECIMAL},
+			</if>
+			<if test="carInsuranceAmount != null" >
+				#{carInsuranceAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="address != null" >
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="nativePlace != null" >
+				#{nativePlace,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-06-05 10:38:33. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.CreditApply" >
+		update credit_apply
+		<set >
+			<if test="name != null" >
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="idCard != null" >
+				id_card = #{idCard,jdbcType=VARCHAR},
+			</if>
+			<if test="coupleCard != null" >
+				couple_card = #{coupleCard,jdbcType=VARCHAR},
+			</if>
+			<if test="coupleMobile != null" >
+				couple_mobile = #{coupleMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="coupleName != null" >
+				couple_name = #{coupleName,jdbcType=VARCHAR},
+			</if>
+			<if test="coupleEducation != null" >
+				couple_education = #{coupleEducation,jdbcType=TINYINT},
+			</if>
+			<if test="coupleJob != null" >
+				couple_job = #{coupleJob,jdbcType=TINYINT},
+			</if>
+			<if test="sex != null" >
+				sex = #{sex,jdbcType=TINYINT},
+			</if>
+			<if test="birthday != null" >
+				birthday = #{birthday,jdbcType=DATE},
+			</if>
+			<if test="originType != null" >
+				origin_type = #{originType,jdbcType=TINYINT},
+			</if>
+			<if test="domicileProvince != null" >
+				domicile_province = #{domicileProvince,jdbcType=VARCHAR},
+			</if>
+			<if test="domicileDetail != null" >
+				domicile_detail = #{domicileDetail,jdbcType=VARCHAR},
+			</if>
+			<if test="domicileTime != null" >
+				domicile_time = #{domicileTime,jdbcType=TINYINT},
+			</if>
+			<if test="nation != null" >
+				nation = #{nation,jdbcType=VARCHAR},
+			</if>
+			<if test="education != null" >
+				education = #{education,jdbcType=TINYINT},
+			</if>
+			<if test="highEduStarttime != null" >
+				high_edu_starttime = #{highEduStarttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="highEduEndtime != null" >
+				high_edu_endtime = #{highEduEndtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="companyName != null" >
+				company_name = #{companyName,jdbcType=VARCHAR},
+			</if>
+			<if test="comBusTimeLength != null" >
+				com_bus_time_length = #{comBusTimeLength,jdbcType=SMALLINT},
+			</if>
+			<if test="isCompanyFivehun != null" >
+				is_company_fivehun = #{isCompanyFivehun,jdbcType=TINYINT},
+			</if>
+			<if test="isAllowContact != null" >
+				is_allow_contact = #{isAllowContact,jdbcType=TINYINT},
+			</if>
+			<if test="isAllowRecord != null" >
+				is_allow_record = #{isAllowRecord,jdbcType=TINYINT},
+			</if>
+			<if test="isAllowMessage != null" >
+				is_allow_message = #{isAllowMessage,jdbcType=TINYINT},
+			</if>
+			<if test="isAllowLocation != null" >
+				is_allow_location = #{isAllowLocation,jdbcType=TINYINT},
+			</if>
+			<if test="job != null" >
+				job = #{job,jdbcType=TINYINT},
+			</if>
+			<if test="industry != null" >
+				industry = #{industry,jdbcType=VARCHAR},
+			</if>
+			<if test="workPlace != null" >
+				work_place = #{workPlace,jdbcType=VARCHAR},
+			</if>
+			<if test="workExperience != null" >
+				work_experience = #{workExperience,jdbcType=VARCHAR},
+			</if>
+			<if test="wantedLimit != null" >
+				wanted_limit = #{wantedLimit,jdbcType=INTEGER},
+			</if>
+			<if test="wantedPeriod != null" >
+				wanted_period = #{wantedPeriod,jdbcType=TINYINT},
+			</if>
+			<if test="wantedRepayDay != null" >
+				wanted_repay_day = #{wantedRepayDay,jdbcType=TINYINT},
+			</if>
+			<if test="marriage != null" >
+				marriage = #{marriage,jdbcType=TINYINT},
+			</if>
+			<if test="childAmount != null" >
+				child_amount = #{childAmount,jdbcType=TINYINT},
+			</if>
+			<if test="familyAmount != null" >
+				family_amount = #{familyAmount,jdbcType=TINYINT},
+			</if>
+			<if test="applyTime != null" >
+				apply_time = #{applyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="yearPay != null" >
+				year_pay = #{yearPay,jdbcType=DECIMAL},
+			</if>
+			<if test="qq != null" >
+				qq = #{qq,jdbcType=VARCHAR},
+			</if>
+			<if test="qqAge != null" >
+				qq_age = #{qqAge,jdbcType=SMALLINT},
+			</if>
+			<if test="wxAge != null" >
+				wx_age = #{wxAge,jdbcType=SMALLINT},
+			</if>
+			<if test="wx != null" >
+				wx = #{wx,jdbcType=VARCHAR},
+			</if>
+			<if test="fengkongState != null" >
+				fengkong_state = #{fengkongState,jdbcType=TINYINT},
+			</if>
+			<if test="applyState != null" >
+				apply_state = #{applyState,jdbcType=TINYINT},
+			</if>
+			<if test="applyStep != null" >
+				apply_step = #{applyStep,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="buyType != null" >
+				buy_type = #{buyType,jdbcType=TINYINT},
+			</if>
+			<if test="houseType != null" >
+				house_type = #{houseType,jdbcType=TINYINT},
+			</if>
+			<if test="houseCaty != null" >
+				house_caty = #{houseCaty,jdbcType=TINYINT},
+			</if>
+			<if test="houseBig != null" >
+				house_big = #{houseBig,jdbcType=SMALLINT},
+			</if>
+			<if test="loanAmount != null" >
+				loan_amount = #{loanAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="city != null" >
+				city = #{city,jdbcType=VARCHAR},
+			</if>
+			<if test="area != null" >
+				area = #{area,jdbcType=VARCHAR},
+			</if>
+			<if test="income != null" >
+				income = #{income,jdbcType=DECIMAL},
+			</if>
+			<if test="socialSecurity != null" >
+				social_security = #{socialSecurity,jdbcType=TINYINT},
+			</if>
+			<if test="accumulationFund != null" >
+				accumulation_fund = #{accumulationFund,jdbcType=TINYINT},
+			</if>
+			<if test="jingdongQuto != null" >
+				jingdong_quto = #{jingdongQuto,jdbcType=DECIMAL},
+			</if>
+			<if test="mayijiebQuto != null" >
+				mayijieb_quto = #{mayijiebQuto,jdbcType=DECIMAL},
+			</if>
+			<if test="huabeiQuto != null" >
+				huabei_quto = #{huabeiQuto,jdbcType=DECIMAL},
+			</if>
+			<if test="debit != null" >
+				debit = #{debit,jdbcType=DECIMAL},
+			</if>
+			<if test="carNumber != null" >
+				car_number = #{carNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="carBrand != null" >
+				car_brand = #{carBrand,jdbcType=VARCHAR},
+			</if>
+			<if test="carLisence != null" >
+				car_lisence = #{carLisence,jdbcType=VARCHAR},
+			</if>
+			<if test="carProperty != null" >
+				car_property = #{carProperty,jdbcType=TINYINT},
+			</if>
+			<if test="carDriven != null" >
+				car_driven = #{carDriven,jdbcType=TINYINT},
+			</if>
+			<if test="carOwner != null" >
+				car_owner = #{carOwner,jdbcType=VARCHAR},
+			</if>
+			<if test="carCode != null" >
+				car_code = #{carCode,jdbcType=VARCHAR},
+			</if>
+			<if test="buyDate != null" >
+				buy_date = #{buyDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="counts != null" >
+				counts = #{counts,jdbcType=SMALLINT},
+			</if>
+			<if test="price != null" >
+				price = #{price,jdbcType=DECIMAL},
+			</if>
+			<if test="carInsuranceAmount != null" >
+				car_insurance_amount = #{carInsuranceAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="address != null" >
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="nativePlace != null" >
+				native_place = #{nativePlace,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ca_id = #{caId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-06-05 10:38:33. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.CreditApply" >
+		update credit_apply
+		set name = #{name,jdbcType=VARCHAR},
+			member_id = #{memberId,jdbcType=INTEGER},
+			id_card = #{idCard,jdbcType=VARCHAR},
+			couple_card = #{coupleCard,jdbcType=VARCHAR},
+			couple_mobile = #{coupleMobile,jdbcType=VARCHAR},
+			couple_name = #{coupleName,jdbcType=VARCHAR},
+			couple_education = #{coupleEducation,jdbcType=TINYINT},
+			couple_job = #{coupleJob,jdbcType=TINYINT},
+			sex = #{sex,jdbcType=TINYINT},
+			birthday = #{birthday,jdbcType=DATE},
+			origin_type = #{originType,jdbcType=TINYINT},
+			domicile_province = #{domicileProvince,jdbcType=VARCHAR},
+			domicile_detail = #{domicileDetail,jdbcType=VARCHAR},
+			domicile_time = #{domicileTime,jdbcType=TINYINT},
+			nation = #{nation,jdbcType=VARCHAR},
+			education = #{education,jdbcType=TINYINT},
+			high_edu_starttime = #{highEduStarttime,jdbcType=TIMESTAMP},
+			high_edu_endtime = #{highEduEndtime,jdbcType=TIMESTAMP},
+			company_name = #{companyName,jdbcType=VARCHAR},
+			com_bus_time_length = #{comBusTimeLength,jdbcType=SMALLINT},
+			is_company_fivehun = #{isCompanyFivehun,jdbcType=TINYINT},
+			is_allow_contact = #{isAllowContact,jdbcType=TINYINT},
+			is_allow_record = #{isAllowRecord,jdbcType=TINYINT},
+			is_allow_message = #{isAllowMessage,jdbcType=TINYINT},
+			is_allow_location = #{isAllowLocation,jdbcType=TINYINT},
+			job = #{job,jdbcType=TINYINT},
+			industry = #{industry,jdbcType=VARCHAR},
+			work_place = #{workPlace,jdbcType=VARCHAR},
+			work_experience = #{workExperience,jdbcType=VARCHAR},
+			wanted_limit = #{wantedLimit,jdbcType=INTEGER},
+			wanted_period = #{wantedPeriod,jdbcType=TINYINT},
+			wanted_repay_day = #{wantedRepayDay,jdbcType=TINYINT},
+			marriage = #{marriage,jdbcType=TINYINT},
+			child_amount = #{childAmount,jdbcType=TINYINT},
+			family_amount = #{familyAmount,jdbcType=TINYINT},
+			apply_time = #{applyTime,jdbcType=TIMESTAMP},
+			year_pay = #{yearPay,jdbcType=DECIMAL},
+			qq = #{qq,jdbcType=VARCHAR},
+			qq_age = #{qqAge,jdbcType=SMALLINT},
+			wx_age = #{wxAge,jdbcType=SMALLINT},
+			wx = #{wx,jdbcType=VARCHAR},
+			fengkong_state = #{fengkongState,jdbcType=TINYINT},
+			apply_state = #{applyState,jdbcType=TINYINT},
+			apply_step = #{applyStep,jdbcType=TINYINT},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR},
+			buy_type = #{buyType,jdbcType=TINYINT},
+			house_type = #{houseType,jdbcType=TINYINT},
+			house_caty = #{houseCaty,jdbcType=TINYINT},
+			house_big = #{houseBig,jdbcType=SMALLINT},
+			loan_amount = #{loanAmount,jdbcType=DECIMAL},
+			city = #{city,jdbcType=VARCHAR},
+			area = #{area,jdbcType=VARCHAR},
+			income = #{income,jdbcType=DECIMAL},
+			social_security = #{socialSecurity,jdbcType=TINYINT},
+			accumulation_fund = #{accumulationFund,jdbcType=TINYINT},
+			jingdong_quto = #{jingdongQuto,jdbcType=DECIMAL},
+			mayijieb_quto = #{mayijiebQuto,jdbcType=DECIMAL},
+			huabei_quto = #{huabeiQuto,jdbcType=DECIMAL},
+			debit = #{debit,jdbcType=DECIMAL},
+			car_number = #{carNumber,jdbcType=VARCHAR},
+			car_brand = #{carBrand,jdbcType=VARCHAR},
+			car_lisence = #{carLisence,jdbcType=VARCHAR},
+			car_property = #{carProperty,jdbcType=TINYINT},
+			car_driven = #{carDriven,jdbcType=TINYINT},
+			car_owner = #{carOwner,jdbcType=VARCHAR},
+			car_code = #{carCode,jdbcType=VARCHAR},
+			buy_date = #{buyDate,jdbcType=TIMESTAMP},
+			counts = #{counts,jdbcType=SMALLINT},
+			price = #{price,jdbcType=DECIMAL},
+			car_insurance_amount = #{carInsuranceAmount,jdbcType=DECIMAL},
+			address = #{address,jdbcType=VARCHAR},
+			native_place = #{nativePlace,jdbcType=VARCHAR}
+		where ca_id = #{caId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-06-05 10:38:33. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from credit_apply
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

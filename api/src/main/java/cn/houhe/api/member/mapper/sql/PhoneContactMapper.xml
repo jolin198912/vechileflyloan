@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.member.mapper.PhoneContactMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-03 15:07:07. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.member.entity.PhoneContact" >
+		<id column="pc_id" property="pcId" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="relation" property="relation" jdbcType="VARCHAR" />
+		<result column="relation_type" property="relationType" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-03 15:07:07. -->
+	<sql id="Base_Column_List" >
+		pc_id, member_id, name, mobile, relation, relation_type, createdon
+	</sql>
+
+	<!-- 按主键查询 2017-05-03 15:07:07. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from phone_contact
+		where pc_id = #{pcId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-03 15:07:07. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from phone_contact
+		where pc_id = #{pcId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-03 15:07:07. -->
+	<insert id="insert" parameterType="cn.houhe.api.member.entity.PhoneContact" >
+		<selectKey resultType="java.lang.Integer" keyProperty="pcId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into phone_contact (member_id, name, mobile, 
+			relation, relation_type, createdon
+			)
+		values (#{memberId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+			#{relation,jdbcType=VARCHAR}, #{relationType,jdbcType=TINYINT}, #{createdon,jdbcType=TIMESTAMP}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-03 15:07:07. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.member.entity.PhoneContact" >
+		<selectKey resultType="java.lang.Integer" keyProperty="pcId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into phone_contact
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="name != null" >
+				name,
+			</if>
+			<if test="mobile != null" >
+				mobile,
+			</if>
+			<if test="relation != null" >
+				relation,
+			</if>
+			<if test="relationType != null" >
+				relation_type,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="name != null" >
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null" >
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="relation != null" >
+				#{relation,jdbcType=VARCHAR},
+			</if>
+			<if test="relationType != null" >
+				#{relationType,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-03 15:07:07. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.member.entity.PhoneContact" >
+		update phone_contact
+		<set >
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="name != null" >
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null" >
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="relation != null" >
+				relation = #{relation,jdbcType=VARCHAR},
+			</if>
+			<if test="relationType != null" >
+				relation_type = #{relationType,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where pc_id = #{pcId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-03 15:07:07. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.member.entity.PhoneContact" >
+		update phone_contact
+		set member_id = #{memberId,jdbcType=INTEGER},
+			name = #{name,jdbcType=VARCHAR},
+			mobile = #{mobile,jdbcType=VARCHAR},
+			relation = #{relation,jdbcType=VARCHAR},
+			relation_type = #{relationType,jdbcType=TINYINT},
+			createdon = #{createdon,jdbcType=TIMESTAMP}
+		where pc_id = #{pcId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-03 15:07:07. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from phone_contact
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

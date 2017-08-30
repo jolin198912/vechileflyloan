@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.IssuesMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 10:04:06. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.config.entity.Issues" >
+		<id column="iu_id" property="iuId" jdbcType="SMALLINT" />
+		<result column="issue_type_id" property="issueTypeId" jdbcType="SMALLINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="solve_count" property="solveCount" jdbcType="INTEGER" />
+		<result column="unsolve_count" property="unsolveCount" jdbcType="INTEGER" />
+		<result column="is_enable" property="isEnable" jdbcType="TINYINT" />
+		<result column="createdby" property="createdby" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="modifiedby" property="modifiedby" jdbcType="VARCHAR" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 10:04:06. -->
+	<sql id="Base_Column_List" >
+		iu_id, issue_type_id, title, content, solve_count, unsolve_count, is_enable, createdby, 
+		createdon, modifiedby, modifiedon
+	</sql>
+
+	<!-- 按主键查询 2017-03-30 10:04:06. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+		select 
+		<include refid="Base_Column_List" />
+		from issues
+		where iu_id = #{iuId,jdbcType=SMALLINT}
+	</select>
+
+	<!-- 按主键删除 2017-03-30 10:04:06. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+		delete from issues
+		where iu_id = #{iuId,jdbcType=SMALLINT}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-03-30 10:04:06. -->
+	<insert id="insert" parameterType="cn.houhe.api.config.entity.Issues" >
+		<selectKey resultType="java.lang.Short" keyProperty="iuId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into issues (issue_type_id, title, content, 
+			solve_count, unsolve_count, is_enable, 
+			createdby, createdon, modifiedby, 
+			modifiedon)
+		values (#{issueTypeId,jdbcType=SMALLINT}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+			#{solveCount,jdbcType=INTEGER}, #{unsolveCount,jdbcType=INTEGER}, #{isEnable,jdbcType=TINYINT}, 
+			#{createdby,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=VARCHAR}, 
+			#{modifiedon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-03-30 10:04:06. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.config.entity.Issues" >
+		<selectKey resultType="java.lang.Short" keyProperty="iuId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into issues
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="issueTypeId != null" >
+				issue_type_id,
+			</if>
+			<if test="title != null" >
+				title,
+			</if>
+			<if test="content != null" >
+				content,
+			</if>
+			<if test="solveCount != null" >
+				solve_count,
+			</if>
+			<if test="unsolveCount != null" >
+				unsolve_count,
+			</if>
+			<if test="isEnable != null" >
+				is_enable,
+			</if>
+			<if test="createdby != null" >
+				createdby,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="issueTypeId != null" >
+				#{issueTypeId,jdbcType=SMALLINT},
+			</if>
+			<if test="title != null" >
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null" >
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="solveCount != null" >
+				#{solveCount,jdbcType=INTEGER},
+			</if>
+			<if test="unsolveCount != null" >
+				#{unsolveCount,jdbcType=INTEGER},
+			</if>
+			<if test="isEnable != null" >
+				#{isEnable,jdbcType=TINYINT},
+			</if>
+			<if test="createdby != null" >
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				#{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-03-30 10:04:06. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.config.entity.Issues" >
+		update issues
+		<set >
+			<if test="issueTypeId != null" >
+				issue_type_id = #{issueTypeId,jdbcType=SMALLINT},
+			</if>
+			<if test="title != null" >
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null" >
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="solveCount != null" >
+				solve_count = #{solveCount,jdbcType=INTEGER},
+			</if>
+			<if test="unsolveCount != null" >
+				unsolve_count = #{unsolveCount,jdbcType=INTEGER},
+			</if>
+			<if test="isEnable != null" >
+				is_enable = #{isEnable,jdbcType=TINYINT},
+			</if>
+			<if test="createdby != null" >
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where iu_id = #{iuId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-03-30 10:04:06. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.config.entity.Issues" >
+		update issues
+		set issue_type_id = #{issueTypeId,jdbcType=SMALLINT},
+			title = #{title,jdbcType=VARCHAR},
+			content = #{content,jdbcType=VARCHAR},
+			solve_count = #{solveCount,jdbcType=INTEGER},
+			unsolve_count = #{unsolveCount,jdbcType=INTEGER},
+			is_enable = #{isEnable,jdbcType=TINYINT},
+			createdby = #{createdby,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP}
+		where iu_id = #{iuId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-03-30 10:04:06. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from issues
+		<where >
+			<if test="issueTypeId != null" >
+				issue_type_id = #{issueTypeId,jdbcType=SMALLINT},
+			</if>
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

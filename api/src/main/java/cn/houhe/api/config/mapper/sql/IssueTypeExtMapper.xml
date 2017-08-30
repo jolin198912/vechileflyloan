@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.IssueTypeExtMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 10:04:06. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.config.entity.IssueTypeExt" >
+		<id column="it_id" property="itId" jdbcType="SMALLINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 获取所有未删除且类别下有问题的类别 -->
+	<select id="GetAll" resultMap="BaseResultMap">
+		select a.name,a.it_id
+		from issue_type a
+		where a.is_del = 0
+		and  (select count(1) from issues b where b.is_enable=1 and b.issue_type_id=a.it_id)>0
+		order by a.createdon desc
+	</select>
+	<select id="getCatIssues" resultType="cn.houhe.api.config.web.bo.IssueCatDto" parameterType="java.lang.Integer">
+		select it.it_id as id,it.name as title from issue_type it
+		where it.is_del=0
+		<if test="tid>0">
+			and it.it_id=#{tid}
+		</if>
+	</select>
+
+	<select id="GetIssuesTypeUsing" resultMap="BaseResultMap">
+		select i_t.it_id,i_t.name
+		from issue_type i_t
+		left join issues i
+		on i.issue_type_id = i_t.it_id
+		where i_t.it_id = #{tid}
+	</select>
+</mapper>

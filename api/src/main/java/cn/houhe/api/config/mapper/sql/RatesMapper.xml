@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.RatesMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-05 12:22:12. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.config.entity.Rates" >
+		<id column="rr_id" property="rrId" jdbcType="SMALLINT" />
+		<result column="level_id" property="levelId" jdbcType="SMALLINT" />
+		<result column="rate" property="rate" jdbcType="DECIMAL" />
+		<result column="type" property="type" jdbcType="SMALLINT" />
+		<result column="loan_pay_rate" property="loanPayRate" jdbcType="DECIMAL" />
+		<result column="account_manage_rate" property="accountManageRate" jdbcType="DECIMAL" />
+		<result column="consultation_rate" property="consultationRate" jdbcType="DECIMAL" />
+		<result column="first_loan_rate" property="firstLoanRate" jdbcType="DECIMAL" />
+		<result column="least_loan_rate" property="leastLoanRate" jdbcType="DECIMAL" />
+		<result column="delay_rate" property="delayRate" jdbcType="DECIMAL" />
+		<result column="discount" property="discount" jdbcType="DECIMAL" />
+		<result column="withdrawals_rate" property="withdrawalsRate" jdbcType="DECIMAL" />
+		<result column="quota_manage_rate" property="quotaManageRate" jdbcType="DECIMAL" />
+		<result column="remind_fee" property="remindFee" jdbcType="DECIMAL" />
+		<result column="quota_manage_fee" property="quotaManageFee" jdbcType="DECIMAL" />
+		<result column="createdby" property="createdby" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="modifiedby" property="modifiedby" jdbcType="VARCHAR" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-05 12:22:12. -->
+	<sql id="Base_Column_List" >
+		rr_id, level_id, rate, type, loan_pay_rate, account_manage_rate, consultation_rate, 
+		first_loan_rate, least_loan_rate, delay_rate, discount, withdrawals_rate, quota_manage_rate, 
+		remind_fee, quota_manage_fee, createdby, createdon, modifiedby, modifiedon
+	</sql>
+
+	<!-- 按主键查询 2017-05-05 12:22:12. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+		select 
+		<include refid="Base_Column_List" />
+		from rates
+		where rr_id = #{rrId,jdbcType=SMALLINT}
+	</select>
+
+	<!-- 按主键删除 2017-05-05 12:22:12. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+		delete from rates
+		where rr_id = #{rrId,jdbcType=SMALLINT}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-05 12:22:12. -->
+	<insert id="insert" parameterType="cn.houhe.api.config.entity.Rates" >
+		<selectKey resultType="java.lang.Short" keyProperty="rrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into rates (level_id, rate, type, 
+			loan_pay_rate, account_manage_rate, consultation_rate, 
+			first_loan_rate, least_loan_rate, delay_rate, 
+			discount, withdrawals_rate, quota_manage_rate, 
+			remind_fee, quota_manage_fee, createdby, 
+			createdon, modifiedby, modifiedon
+			)
+		values (#{levelId,jdbcType=SMALLINT}, #{rate,jdbcType=DECIMAL}, #{type,jdbcType=SMALLINT}, 
+			#{loanPayRate,jdbcType=DECIMAL}, #{accountManageRate,jdbcType=DECIMAL}, #{consultationRate,jdbcType=DECIMAL}, 
+			#{firstLoanRate,jdbcType=DECIMAL}, #{leastLoanRate,jdbcType=DECIMAL}, #{delayRate,jdbcType=DECIMAL}, 
+			#{discount,jdbcType=DECIMAL}, #{withdrawalsRate,jdbcType=DECIMAL}, #{quotaManageRate,jdbcType=DECIMAL}, 
+			#{remindFee,jdbcType=DECIMAL}, #{quotaManageFee,jdbcType=DECIMAL}, #{createdby,jdbcType=VARCHAR}, 
+			#{createdon,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=VARCHAR}, #{modifiedon,jdbcType=TIMESTAMP}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-05 12:22:12. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.config.entity.Rates" >
+		<selectKey resultType="java.lang.Short" keyProperty="rrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into rates
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="levelId != null" >
+				level_id,
+			</if>
+			<if test="rate != null" >
+				rate,
+			</if>
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="loanPayRate != null" >
+				loan_pay_rate,
+			</if>
+			<if test="accountManageRate != null" >
+				account_manage_rate,
+			</if>
+			<if test="consultationRate != null" >
+				consultation_rate,
+			</if>
+			<if test="firstLoanRate != null" >
+				first_loan_rate,
+			</if>
+			<if test="leastLoanRate != null" >
+				least_loan_rate,
+			</if>
+			<if test="delayRate != null" >
+				delay_rate,
+			</if>
+			<if test="discount != null" >
+				discount,
+			</if>
+			<if test="withdrawalsRate != null" >
+				withdrawals_rate,
+			</if>
+			<if test="quotaManageRate != null" >
+				quota_manage_rate,
+			</if>
+			<if test="remindFee != null" >
+				remind_fee,
+			</if>
+			<if test="quotaManageFee != null" >
+				quota_manage_fee,
+			</if>
+			<if test="createdby != null" >
+				createdby,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="levelId != null" >
+				#{levelId,jdbcType=SMALLINT},
+			</if>
+			<if test="rate != null" >
+				#{rate,jdbcType=DECIMAL},
+			</if>
+			<if test="type != null" >
+				#{type,jdbcType=SMALLINT},
+			</if>
+			<if test="loanPayRate != null" >
+				#{loanPayRate,jdbcType=DECIMAL},
+			</if>
+			<if test="accountManageRate != null" >
+				#{accountManageRate,jdbcType=DECIMAL},
+			</if>
+			<if test="consultationRate != null" >
+				#{consultationRate,jdbcType=DECIMAL},
+			</if>
+			<if test="firstLoanRate != null" >
+				#{firstLoanRate,jdbcType=DECIMAL},
+			</if>
+			<if test="leastLoanRate != null" >
+				#{leastLoanRate,jdbcType=DECIMAL},
+			</if>
+			<if test="delayRate != null" >
+				#{delayRate,jdbcType=DECIMAL},
+			</if>
+			<if test="discount != null" >
+				#{discount,jdbcType=DECIMAL},
+			</if>
+			<if test="withdrawalsRate != null" >
+				#{withdrawalsRate,jdbcType=DECIMAL},
+			</if>
+			<if test="quotaManageRate != null" >
+				#{quotaManageRate,jdbcType=DECIMAL},
+			</if>
+			<if test="remindFee != null" >
+				#{remindFee,jdbcType=DECIMAL},
+			</if>
+			<if test="quotaManageFee != null" >
+				#{quotaManageFee,jdbcType=DECIMAL},
+			</if>
+			<if test="createdby != null" >
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				#{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-05 12:22:12. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.config.entity.Rates" >
+		update rates
+		<set >
+			<if test="levelId != null" >
+				level_id = #{levelId,jdbcType=SMALLINT},
+			</if>
+			<if test="rate != null" >
+				rate = #{rate,jdbcType=DECIMAL},
+			</if>
+			<if test="type != null" >
+				type = #{type,jdbcType=SMALLINT},
+			</if>
+			<if test="loanPayRate != null" >
+				loan_pay_rate = #{loanPayRate,jdbcType=DECIMAL},
+			</if>
+			<if test="accountManageRate != null" >
+				account_manage_rate = #{accountManageRate,jdbcType=DECIMAL},
+			</if>
+			<if test="consultationRate != null" >
+				consultation_rate = #{consultationRate,jdbcType=DECIMAL},
+			</if>
+			<if test="firstLoanRate != null" >
+				first_loan_rate = #{firstLoanRate,jdbcType=DECIMAL},
+			</if>
+			<if test="leastLoanRate != null" >
+				least_loan_rate = #{leastLoanRate,jdbcType=DECIMAL},
+			</if>
+			<if test="delayRate != null" >
+				delay_rate = #{delayRate,jdbcType=DECIMAL},
+			</if>
+			<if test="discount != null" >
+				discount = #{discount,jdbcType=DECIMAL},
+			</if>
+			<if test="withdrawalsRate != null" >
+				withdrawals_rate = #{withdrawalsRate,jdbcType=DECIMAL},
+			</if>
+			<if test="quotaManageRate != null" >
+				quota_manage_rate = #{quotaManageRate,jdbcType=DECIMAL},
+			</if>
+			<if test="remindFee != null" >
+				remind_fee = #{remindFee,jdbcType=DECIMAL},
+			</if>
+			<if test="quotaManageFee != null" >
+				quota_manage_fee = #{quotaManageFee,jdbcType=DECIMAL},
+			</if>
+			<if test="createdby != null" >
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where rr_id = #{rrId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-05 12:22:12. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.config.entity.Rates" >
+		update rates
+		set level_id = #{levelId,jdbcType=SMALLINT},
+			rate = #{rate,jdbcType=DECIMAL},
+			type = #{type,jdbcType=SMALLINT},
+			loan_pay_rate = #{loanPayRate,jdbcType=DECIMAL},
+			account_manage_rate = #{accountManageRate,jdbcType=DECIMAL},
+			consultation_rate = #{consultationRate,jdbcType=DECIMAL},
+			first_loan_rate = #{firstLoanRate,jdbcType=DECIMAL},
+			least_loan_rate = #{leastLoanRate,jdbcType=DECIMAL},
+			delay_rate = #{delayRate,jdbcType=DECIMAL},
+			discount = #{discount,jdbcType=DECIMAL},
+			withdrawals_rate = #{withdrawalsRate,jdbcType=DECIMAL},
+			quota_manage_rate = #{quotaManageRate,jdbcType=DECIMAL},
+			remind_fee = #{remindFee,jdbcType=DECIMAL},
+			quota_manage_fee = #{quotaManageFee,jdbcType=DECIMAL},
+			createdby = #{createdby,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP}
+		where rr_id = #{rrId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-05 12:22:12. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from rates
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

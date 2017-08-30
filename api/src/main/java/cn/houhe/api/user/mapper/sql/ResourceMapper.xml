@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.user.mapper.ResourceMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-10 16:50:49. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.user.entity.Resource" >
+		<id column="res_id" property="resId" jdbcType="INTEGER" />
+		<result column="is_single" property="isSingle" jdbcType="INTEGER" />
+		<result column="parent_id" property="parentId" jdbcType="INTEGER" />
+		<result column="res_code" property="resCode" jdbcType="VARCHAR" />
+		<result column="res_name" property="resName" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="createdby" property="createdby" jdbcType="VARCHAR" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+		<result column="modifiedby" property="modifiedby" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-10 16:50:49. -->
+	<sql id="Base_Column_List" >
+		res_id, is_single, parent_id, res_code, res_name, remark, createdon, createdby, modifiedon, 
+		modifiedby
+	</sql>
+
+	<!-- 按主键查询 2017-04-10 16:50:49. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from resource
+		where res_id = #{resId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-04-10 16:50:49. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from resource
+		where res_id = #{resId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-10 16:50:49. -->
+	<insert id="insert" parameterType="cn.houhe.api.user.entity.Resource" >
+		<selectKey resultType="java.lang.Integer" keyProperty="resId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into resource (is_single, parent_id, res_code, 
+			res_name, remark, createdon, 
+			createdby, modifiedon, modifiedby
+			)
+		values (#{isSingle,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{resCode,jdbcType=VARCHAR}, 
+			#{resName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}, 
+			#{createdby,jdbcType=VARCHAR}, #{modifiedon,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=VARCHAR}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-10 16:50:49. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.user.entity.Resource" >
+		<selectKey resultType="java.lang.Integer" keyProperty="resId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into resource
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="isSingle != null" >
+				is_single,
+			</if>
+			<if test="parentId != null" >
+				parent_id,
+			</if>
+			<if test="resCode != null" >
+				res_code,
+			</if>
+			<if test="resName != null" >
+				res_name,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="createdby != null" >
+				createdby,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="isSingle != null" >
+				#{isSingle,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null" >
+				#{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="resCode != null" >
+				#{resCode,jdbcType=VARCHAR},
+			</if>
+			<if test="resName != null" >
+				#{resName,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null" >
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				#{modifiedby,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-10 16:50:49. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.user.entity.Resource" >
+		update resource
+		<set >
+			<if test="isSingle != null" >
+				is_single = #{isSingle,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null" >
+				parent_id = #{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="resCode != null" >
+				res_code = #{resCode,jdbcType=VARCHAR},
+			</if>
+			<if test="resName != null" >
+				res_name = #{resName,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null" >
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where res_id = #{resId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-10 16:50:49. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.user.entity.Resource" >
+		update resource
+		set is_single = #{isSingle,jdbcType=INTEGER},
+			parent_id = #{parentId,jdbcType=INTEGER},
+			res_code = #{resCode,jdbcType=VARCHAR},
+			res_name = #{resName,jdbcType=VARCHAR},
+			remark = #{remark,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			createdby = #{createdby,jdbcType=VARCHAR},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			modifiedby = #{modifiedby,jdbcType=VARCHAR}
+		where res_id = #{resId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-10 16:50:49. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from resource
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.member.mapper.RegisterRecordMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-14 11:59:03. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.member.entity.RegisterRecord" >
+		<id column="rr_id" property="rrId" jdbcType="INTEGER" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="id_code" property="idCode" jdbcType="VARCHAR" />
+		<result column="id_code_count" property="idCodeCount" jdbcType="SMALLINT" />
+		<result column="is_success" property="isSuccess" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-14 11:59:03. -->
+	<sql id="Base_Column_List" >
+		rr_id, mobile, id_code, id_code_count, is_success, createdon
+	</sql>
+
+	<!-- 按主键查询 2017-04-14 11:59:03. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from register_record
+		where rr_id = #{rrId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-04-14 11:59:03. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from register_record
+		where rr_id = #{rrId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-14 11:59:03. -->
+	<insert id="insert" parameterType="cn.houhe.api.member.entity.RegisterRecord" >
+		<selectKey resultType="java.lang.Integer" keyProperty="rrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into register_record (mobile, id_code, id_code_count, 
+			is_success, createdon)
+		values (#{mobile,jdbcType=VARCHAR}, #{idCode,jdbcType=VARCHAR}, #{idCodeCount,jdbcType=SMALLINT}, 
+			#{isSuccess,jdbcType=TINYINT}, #{createdon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-14 11:59:03. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.member.entity.RegisterRecord" >
+		<selectKey resultType="java.lang.Integer" keyProperty="rrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into register_record
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="mobile != null" >
+				mobile,
+			</if>
+			<if test="idCode != null" >
+				id_code,
+			</if>
+			<if test="idCodeCount != null" >
+				id_code_count,
+			</if>
+			<if test="isSuccess != null" >
+				is_success,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="mobile != null" >
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="idCode != null" >
+				#{idCode,jdbcType=VARCHAR},
+			</if>
+			<if test="idCodeCount != null" >
+				#{idCodeCount,jdbcType=SMALLINT},
+			</if>
+			<if test="isSuccess != null" >
+				#{isSuccess,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-14 11:59:03. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.member.entity.RegisterRecord" >
+		update register_record
+		<set >
+			<if test="mobile != null" >
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="idCode != null" >
+				id_code = #{idCode,jdbcType=VARCHAR},
+			</if>
+			<if test="idCodeCount != null" >
+				id_code_count = #{idCodeCount,jdbcType=SMALLINT},
+			</if>
+			<if test="isSuccess != null" >
+				is_success = #{isSuccess,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where rr_id = #{rrId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-14 11:59:03. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.member.entity.RegisterRecord" >
+		update register_record
+		set mobile = #{mobile,jdbcType=VARCHAR},
+			id_code = #{idCode,jdbcType=VARCHAR},
+			id_code_count = #{idCodeCount,jdbcType=SMALLINT},
+			is_success = #{isSuccess,jdbcType=TINYINT},
+			createdon = #{createdon,jdbcType=TIMESTAMP}
+		where rr_id = #{rrId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-14 11:59:03. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from register_record
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

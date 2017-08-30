@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.RemainderMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-25 16:44:11. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.Remainder" >
+		<id column="rmd_id" property="rmdId" jdbcType="INTEGER" />
+		<result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="repayments_plan_id" property="repaymentsPlanId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="TINYINT" />
+		<result column="contact_truth" property="contactTruth" jdbcType="TINYINT" />
+		<result column="contact_has_negative" property="contactHasNegative" jdbcType="TINYINT" />
+		<result column="remainder_id" property="remainderId" jdbcType="INTEGER" />
+		<result column="remainder" property="remainder" jdbcType="VARCHAR" />
+		<result column="remaind_object" property="remaindObject" jdbcType="TINYINT" />
+		<result column="remaind_name" property="remaindName" jdbcType="VARCHAR" />
+		<result column="call_state" property="callState" jdbcType="VARCHAR" />
+		<result column="attitude" property="attitude" jdbcType="VARCHAR" />
+		<result column="link_attitude" property="linkAttitude" jdbcType="VARCHAR" />
+		<result column="debit_desire" property="debitDesire" jdbcType="VARCHAR" />
+		<result column="promise_debit_date" property="promiseDebitDate" jdbcType="DATE" />
+		<result column="reason" property="reason" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-25 16:44:11. -->
+	<sql id="Base_Column_List" >
+		rmd_id, user_mobile, username, member_id, repayments_plan_id, loan_record_id, type, 
+		contact_truth, contact_has_negative, remainder_id, remainder, remaind_object, remaind_name, 
+		call_state, attitude, link_attitude, debit_desire, promise_debit_date, reason, remark, 
+		createdon
+	</sql>
+
+	<!-- 按主键查询 2017-04-25 16:44:11. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from remainder
+		where rmd_id = #{rmdId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-04-25 16:44:11. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from remainder
+		where rmd_id = #{rmdId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-25 16:44:11. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.Remainder" >
+		<selectKey resultType="java.lang.Integer" keyProperty="rmdId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into remainder (user_mobile, username, member_id, 
+			repayments_plan_id, loan_record_id, type, 
+			contact_truth, contact_has_negative, remainder_id, 
+			remainder, remaind_object, remaind_name, 
+			call_state, attitude, link_attitude, 
+			debit_desire, promise_debit_date, reason, 
+			remark, createdon)
+		values (#{userMobile,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, 
+			#{repaymentsPlanId,jdbcType=INTEGER}, #{loanRecordId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT}, 
+			#{contactTruth,jdbcType=TINYINT}, #{contactHasNegative,jdbcType=TINYINT}, #{remainderId,jdbcType=INTEGER}, 
+			#{remainder,jdbcType=VARCHAR}, #{remaindObject,jdbcType=TINYINT}, #{remaindName,jdbcType=VARCHAR}, 
+			#{callState,jdbcType=VARCHAR}, #{attitude,jdbcType=VARCHAR}, #{linkAttitude,jdbcType=VARCHAR}, 
+			#{debitDesire,jdbcType=VARCHAR}, #{promiseDebitDate,jdbcType=DATE}, #{reason,jdbcType=VARCHAR}, 
+			#{remark,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-25 16:44:11. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.Remainder" >
+		<selectKey resultType="java.lang.Integer" keyProperty="rmdId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into remainder
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="userMobile != null" >
+				user_mobile,
+			</if>
+			<if test="username != null" >
+				username,
+			</if>
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="repaymentsPlanId != null" >
+				repayments_plan_id,
+			</if>
+			<if test="loanRecordId != null" >
+				loan_record_id,
+			</if>
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="contactTruth != null" >
+				contact_truth,
+			</if>
+			<if test="contactHasNegative != null" >
+				contact_has_negative,
+			</if>
+			<if test="remainderId != null" >
+				remainder_id,
+			</if>
+			<if test="remainder != null" >
+				remainder,
+			</if>
+			<if test="remaindObject != null" >
+				remaind_object,
+			</if>
+			<if test="remaindName != null" >
+				remaind_name,
+			</if>
+			<if test="callState != null" >
+				call_state,
+			</if>
+			<if test="attitude != null" >
+				attitude,
+			</if>
+			<if test="linkAttitude != null" >
+				link_attitude,
+			</if>
+			<if test="debitDesire != null" >
+				debit_desire,
+			</if>
+			<if test="promiseDebitDate != null" >
+				promise_debit_date,
+			</if>
+			<if test="reason != null" >
+				reason,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="userMobile != null" >
+				#{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null" >
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="repaymentsPlanId != null" >
+				#{repaymentsPlanId,jdbcType=INTEGER},
+			</if>
+			<if test="loanRecordId != null" >
+				#{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="type != null" >
+				#{type,jdbcType=TINYINT},
+			</if>
+			<if test="contactTruth != null" >
+				#{contactTruth,jdbcType=TINYINT},
+			</if>
+			<if test="contactHasNegative != null" >
+				#{contactHasNegative,jdbcType=TINYINT},
+			</if>
+			<if test="remainderId != null" >
+				#{remainderId,jdbcType=INTEGER},
+			</if>
+			<if test="remainder != null" >
+				#{remainder,jdbcType=VARCHAR},
+			</if>
+			<if test="remaindObject != null" >
+				#{remaindObject,jdbcType=TINYINT},
+			</if>
+			<if test="remaindName != null" >
+				#{remaindName,jdbcType=VARCHAR},
+			</if>
+			<if test="callState != null" >
+				#{callState,jdbcType=VARCHAR},
+			</if>
+			<if test="attitude != null" >
+				#{attitude,jdbcType=VARCHAR},
+			</if>
+			<if test="linkAttitude != null" >
+				#{linkAttitude,jdbcType=VARCHAR},
+			</if>
+			<if test="debitDesire != null" >
+				#{debitDesire,jdbcType=VARCHAR},
+			</if>
+			<if test="promiseDebitDate != null" >
+				#{promiseDebitDate,jdbcType=DATE},
+			</if>
+			<if test="reason != null" >
+				#{reason,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-25 16:44:11. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.Remainder" >
+		update remainder
+		<set >
+			<if test="userMobile != null" >
+				user_mobile = #{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null" >
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="repaymentsPlanId != null" >
+				repayments_plan_id = #{repaymentsPlanId,jdbcType=INTEGER},
+			</if>
+			<if test="loanRecordId != null" >
+				loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="type != null" >
+				type = #{type,jdbcType=TINYINT},
+			</if>
+			<if test="contactTruth != null" >
+				contact_truth = #{contactTruth,jdbcType=TINYINT},
+			</if>
+			<if test="contactHasNegative != null" >
+				contact_has_negative = #{contactHasNegative,jdbcType=TINYINT},
+			</if>
+			<if test="remainderId != null" >
+				remainder_id = #{remainderId,jdbcType=INTEGER},
+			</if>
+			<if test="remainder != null" >
+				remainder = #{remainder,jdbcType=VARCHAR},
+			</if>
+			<if test="remaindObject != null" >
+				remaind_object = #{remaindObject,jdbcType=TINYINT},
+			</if>
+			<if test="remaindName != null" >
+				remaind_name = #{remaindName,jdbcType=VARCHAR},
+			</if>
+			<if test="callState != null" >
+				call_state = #{callState,jdbcType=VARCHAR},
+			</if>
+			<if test="attitude != null" >
+				attitude = #{attitude,jdbcType=VARCHAR},
+			</if>
+			<if test="linkAttitude != null" >
+				link_attitude = #{linkAttitude,jdbcType=VARCHAR},
+			</if>
+			<if test="debitDesire != null" >
+				debit_desire = #{debitDesire,jdbcType=VARCHAR},
+			</if>
+			<if test="promiseDebitDate != null" >
+				promise_debit_date = #{promiseDebitDate,jdbcType=DATE},
+			</if>
+			<if test="reason != null" >
+				reason = #{reason,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where rmd_id = #{rmdId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-25 16:44:11. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.Remainder" >
+		update remainder
+		set user_mobile = #{userMobile,jdbcType=VARCHAR},
+			username = #{username,jdbcType=VARCHAR},
+			member_id = #{memberId,jdbcType=INTEGER},
+			repayments_plan_id = #{repaymentsPlanId,jdbcType=INTEGER},
+			loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			type = #{type,jdbcType=TINYINT},
+			contact_truth = #{contactTruth,jdbcType=TINYINT},
+			contact_has_negative = #{contactHasNegative,jdbcType=TINYINT},
+			remainder_id = #{remainderId,jdbcType=INTEGER},
+			remainder = #{remainder,jdbcType=VARCHAR},
+			remaind_object = #{remaindObject,jdbcType=TINYINT},
+			remaind_name = #{remaindName,jdbcType=VARCHAR},
+			call_state = #{callState,jdbcType=VARCHAR},
+			attitude = #{attitude,jdbcType=VARCHAR},
+			link_attitude = #{linkAttitude,jdbcType=VARCHAR},
+			debit_desire = #{debitDesire,jdbcType=VARCHAR},
+			promise_debit_date = #{promiseDebitDate,jdbcType=DATE},
+			reason = #{reason,jdbcType=VARCHAR},
+			remark = #{remark,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP}
+		where rmd_id = #{rmdId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-25 16:44:11. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from remainder
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

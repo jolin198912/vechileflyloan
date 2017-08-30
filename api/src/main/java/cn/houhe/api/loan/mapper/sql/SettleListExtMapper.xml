@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.SettleListExtMapper" >
+	<select id="selectSettleList" resultType="cn.houhe.api.loan.entity.bo.SettleListObject">
+		select b.loan_number,b.username,b.mem_situation_type,b.apply_time,b.end_time,a.paytime,b.loan_limit,b.rate,b.time,b.loan_type,a.repay_type,a.total_interest,
+		ifnull(c.loan_pay_fee,0) as loan_pay_fee,ifnull(c.financing_fee,0) as financing_fee,ifnull(c.account_manage_fee,0) as account_manage_fee,
+		ifnull(c.consultation_fee,0) as consultation_fee,ifnull(c.quota_manage_fee,0) as quota_manage_fee,ifnull(c.withdrawals_fee,0) as withdrawals_fee,
+		ifnull(c.advance_repay_fee,0) as advance_repay_fee,
+		(select sum(d.delay_days) from houhe_loan.repayments_plan d where d.loan_record_id=a.loan_record_id) as delay_days,
+		(select sum(d.late_fee) from houhe_loan.repayments_plan d where d.loan_record_id=a.loan_record_id) as late_fee,
+		(select sum(d.remind_fee) from houhe_loan.repayments_plan d where d.loan_record_id=a.loan_record_id) as remind_fee
+		from houhe_loan.loan_accounts a
+		left join houhe_loan.loan_record b on a.loan_record_id=b.loan_id
+		left join houhe_loan.loan_basic_fee c on b.loan_id=c.loan_record_id
+		where 1=1
+		<if test="dto.loanNo!=null">
+			and b.loan_number like concat('%',#{dto.loanNo},'%')
+		</if>
+		<if test="dto.username!=null">
+			and b.username like concat('%',#{dto.username},'%')
+		</if>
+		<if test="dto.stratPayDate!=null">
+			and a.paytime>#{dto.stratPayDate}
+		</if>
+		<if test="dto.endPayDate!=null">
+			and a.paytime&lt;#{dto.endPayDate}
+		</if>
+		<if test="dto.repayType!=null">
+			and a.repay_type = #{dto.repayType}
+		</if>
+		limit #{dto.page},#{dto.rows}
+	</select>
+
+	<select id="selectSettleListCount" resultType="java.lang.Integer">
+		select count(1)
+		from houhe_loan.loan_accounts a
+		left join houhe_loan.loan_record b on a.loan_record_id=b.loan_id
+		left join houhe_loan.loan_basic_fee c on b.loan_id=c.loan_record_id
+		where 1=1
+		<if test="dto.loanNo!=null">
+			and b.loan_number like concat('%',#{dto.loanNo},'%')
+		</if>
+		<if test="dto.username!=null">
+			and b.username like concat('%',#{dto.username},'%')
+		</if>
+		<if test="dto.stratPayDate!=null">
+			and a.paytime>#{dto.stratPayDate}
+		</if>
+		<if test="dto.endPayDate!=null">
+			and a.paytime&lt;#{dto.endPayDate}
+		</if>
+		<if test="dto.repayType!=null">
+			and a.repay_type = #{dto.repayType}
+		</if>
+	</select>
+</mapper>

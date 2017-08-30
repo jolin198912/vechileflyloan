@@ -1,0 +1,1556 @@
+2017-08-29 17:11:38 druid.sql.Statement - {conn-310005, pstmt-320010} execute error. SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,
+        ca.apply_time as applyTime,
+        ca.apply_state as applyState,
+        la.first_audit_person as fap,
+        la.second_audit_person as sap,
+        la.plan_fap_id as faPid,
+        la.plan_sap_id  as saPid,
+        la.first_audit_time AS fat,
+        la.second_audit_time AS sat,
+        ci.loan_limit_total AS llimit,
+		ci.pdl_loan_limit_total as pdllimit,
+        (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,
+        (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,
+        ci.total_scores as totalscores
+        FROM houhe_loan.credit_apply ca
+        left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id
+        JOIN houhe_member.member mm ON ca.member_id = mm.memid
+        LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0      
+		 
+		 
+		 
+			 
+			 
+				and ca.apply_state in (4,6)
+			 
+			 
+		 
+	 
+		AND ca.fengkong_state = 1
+		 
+		 
+		 
+			AND (la.first_audit_time > ? or la.second_audit_time > ?)
+		 
+		 
+			AND (la.first_audit_time < ? or la.second_audit_time < ?)
+		 
+		 
+		 
+			and ca.name like concat('%',?,'%')
+		 
+	 
+		 
+			and la.first_audit_time > dto.astart and la.first_audit_time < dto.aend						
+		 
+		 
+			 
+			 			
+				ORDER BY la.first_audit_time DESC
+			 			
+		 
+		limit ?,?
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+	at com.mysql.jdbc.Util.getInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:943)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3973)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3909)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2527)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2680)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2501)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1858)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1197)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2931)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.proxy.jdbc.PreparedStatementProxyImpl.execute(PreparedStatementProxyImpl.java:131)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
+	at com.sun.proxy.$Proxy152.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:63)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:218)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:123)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
+	at com.sun.proxy.$Proxy36.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:230)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
+	at com.sun.proxy.$Proxy63.selectCreditApplyList(Unknown Source)
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:99)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$FastClassBySpringCGLIB$$c94f4e8c.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:652)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$EnhancerBySpringCGLIB$$71effa9e.findPage(<generated>)
+	at cn.houhe.api.loan.web.CreditApplyAction.listData(CreditApplyAction.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:684)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1496)
+	at cn.com.iotrust.common.mvc.LogFilter.doFilter(LogFilter.java:114)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1476)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:499)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1086)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:428)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1020)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:370)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:494)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:971)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1033)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:651)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:667)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:748)
+2017-08-29 17:11:38 druid.sql.Statement - {conn-310005, pstmt-320010} execute error. SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,
+        ca.apply_time as applyTime,
+        ca.apply_state as applyState,
+        la.first_audit_person as fap,
+        la.second_audit_person as sap,
+        la.plan_fap_id as faPid,
+        la.plan_sap_id  as saPid,
+        la.first_audit_time AS fat,
+        la.second_audit_time AS sat,
+        ci.loan_limit_total AS llimit,
+		ci.pdl_loan_limit_total as pdllimit,
+        (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,
+        (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,
+        ci.total_scores as totalscores
+        FROM houhe_loan.credit_apply ca
+        left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id
+        JOIN houhe_member.member mm ON ca.member_id = mm.memid
+        LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0      
+		 
+		 
+		 
+			 
+			 
+				and ca.apply_state in (4,6)
+			 
+			 
+		 
+	 
+		AND ca.fengkong_state = 1
+		 
+		 
+		 
+			AND (la.first_audit_time > ? or la.second_audit_time > ?)
+		 
+		 
+			AND (la.first_audit_time < ? or la.second_audit_time < ?)
+		 
+		 
+		 
+			and ca.name like concat('%',?,'%')
+		 
+	 
+		 
+			and la.first_audit_time > dto.astart and la.first_audit_time < dto.aend						
+		 
+		 
+			 
+			 			
+				ORDER BY la.first_audit_time DESC
+			 			
+		 
+		limit ?,?
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+	at com.mysql.jdbc.Util.getInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:943)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3973)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3909)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2527)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2680)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2501)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1858)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1197)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2931)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.proxy.jdbc.PreparedStatementProxyImpl.execute(PreparedStatementProxyImpl.java:131)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
+	at com.sun.proxy.$Proxy152.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:63)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:218)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:123)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
+	at com.sun.proxy.$Proxy36.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:230)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
+	at com.sun.proxy.$Proxy63.selectCreditApplyList(Unknown Source)
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:99)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$FastClassBySpringCGLIB$$c94f4e8c.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:652)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$EnhancerBySpringCGLIB$$71effa9e.findPage(<generated>)
+	at cn.houhe.api.loan.web.CreditApplyAction.listData(CreditApplyAction.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:684)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1496)
+	at cn.com.iotrust.common.mvc.LogFilter.doFilter(LogFilter.java:114)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1476)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:499)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1086)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:428)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1020)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:370)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:494)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:971)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1033)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:651)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:667)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:748)
+2017-08-29 17:11:38 cn.com.iotrust.common.mvc.AnnotationHandlerMethodExceptionResolver - 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+### The error may exist in file [H:\CheFeiDaiWorkSpace_20170814\houhe-api\api\target\classes\cn\houhe\api\loan\mapper\sql\CreditApplyExtMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,         ca.apply_time as applyTime,         ca.apply_state as applyState,         la.first_audit_person as fap,         la.second_audit_person as sap,         la.plan_fap_id as faPid,         la.plan_sap_id  as saPid,         la.first_audit_time AS fat,         la.second_audit_time AS sat,         ci.loan_limit_total AS llimit,   ci.pdl_loan_limit_total as pdllimit,         (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,         (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,         ci.total_scores as totalscores         FROM houhe_loan.credit_apply ca         left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id         JOIN houhe_member.member mm ON ca.member_id = mm.memid         LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0                                 and ca.apply_state in (4,6)                    AND ca.fengkong_state = 1                AND (la.first_audit_time > ? or la.second_audit_time > ?)            AND (la.first_audit_time < ? or la.second_audit_time < ?)                and ca.name like concat('%',?,'%')               and la.first_audit_time > dto.astart and la.first_audit_time < dto.aend                                ORDER BY la.first_audit_time DESC               limit ?,?
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+cn.com.iotrust.common.ServiceException: 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+### The error may exist in file [H:\CheFeiDaiWorkSpace_20170814\houhe-api\api\target\classes\cn\houhe\api\loan\mapper\sql\CreditApplyExtMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,         ca.apply_time as applyTime,         ca.apply_state as applyState,         la.first_audit_person as fap,         la.second_audit_person as sap,         la.plan_fap_id as faPid,         la.plan_sap_id  as saPid,         la.first_audit_time AS fat,         la.second_audit_time AS sat,         ci.loan_limit_total AS llimit,   ci.pdl_loan_limit_total as pdllimit,         (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,         (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,         ci.total_scores as totalscores         FROM houhe_loan.credit_apply ca         left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id         JOIN houhe_member.member mm ON ca.member_id = mm.memid         LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0                                 and ca.apply_state in (4,6)                    AND ca.fengkong_state = 1                AND (la.first_audit_time > ? or la.second_audit_time > ?)            AND (la.first_audit_time < ? or la.second_audit_time < ?)                and ca.name like concat('%',?,'%')               and la.first_audit_time > dto.astart and la.first_audit_time < dto.aend                                ORDER BY la.first_audit_time DESC               limit ?,?
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:103)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$FastClassBySpringCGLIB$$c94f4e8c.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:652)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$EnhancerBySpringCGLIB$$71effa9e.findPage(<generated>)
+	at cn.houhe.api.loan.web.CreditApplyAction.listData(CreditApplyAction.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:684)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1496)
+	at cn.com.iotrust.common.mvc.LogFilter.doFilter(LogFilter.java:114)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1476)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:499)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1086)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:428)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1020)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:370)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:494)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:971)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1033)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:651)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:667)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+### The error may exist in file [H:\CheFeiDaiWorkSpace_20170814\houhe-api\api\target\classes\cn\houhe\api\loan\mapper\sql\CreditApplyExtMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,         ca.apply_time as applyTime,         ca.apply_state as applyState,         la.first_audit_person as fap,         la.second_audit_person as sap,         la.plan_fap_id as faPid,         la.plan_sap_id  as saPid,         la.first_audit_time AS fat,         la.second_audit_time AS sat,         ci.loan_limit_total AS llimit,   ci.pdl_loan_limit_total as pdllimit,         (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,         (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,         ci.total_scores as totalscores         FROM houhe_loan.credit_apply ca         left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id         JOIN houhe_member.member mm ON ca.member_id = mm.memid         LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0                                 and ca.apply_state in (4,6)                    AND ca.fengkong_state = 1                AND (la.first_audit_time > ? or la.second_audit_time > ?)            AND (la.first_audit_time < ? or la.second_audit_time < ?)                and ca.name like concat('%',?,'%')               and la.first_audit_time > dto.astart and la.first_audit_time < dto.aend                                ORDER BY la.first_audit_time DESC               limit ?,?
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:231)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:446)
+	at com.sun.proxy.$Proxy36.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:230)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
+	at com.sun.proxy.$Proxy63.selectCreditApplyList(Unknown Source)
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:99)
+	... 56 common frames omitted
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+	at com.mysql.jdbc.Util.getInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:943)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3973)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3909)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2527)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2680)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2501)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1858)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1197)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2931)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.proxy.jdbc.PreparedStatementProxyImpl.execute(PreparedStatementProxyImpl.java:131)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
+	at com.sun.proxy.$Proxy152.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:63)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:218)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:123)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
+	... 63 common frames omitted
+2017-08-29 17:11:47 druid.sql.Statement - {conn-310005, pstmt-320014} execute error. SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,
+        ca.apply_time as applyTime,
+        ca.apply_state as applyState,
+        la.first_audit_person as fap,
+        la.second_audit_person as sap,
+        la.plan_fap_id as faPid,
+        la.plan_sap_id  as saPid,
+        la.first_audit_time AS fat,
+        la.second_audit_time AS sat,
+        ci.loan_limit_total AS llimit,
+		ci.pdl_loan_limit_total as pdllimit,
+        (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,
+        (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,
+        ci.total_scores as totalscores
+        FROM houhe_loan.credit_apply ca
+        left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id
+        JOIN houhe_member.member mm ON ca.member_id = mm.memid
+        LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0      
+		 
+		 
+		 
+			 
+			 
+				and ca.apply_state in (4,6)
+			 
+			 
+		 
+	 
+		AND ca.fengkong_state = 1
+		 
+		 
+		 
+			AND (la.first_audit_time > ? or la.second_audit_time > ?)
+		 
+		 
+			AND (la.first_audit_time < ? or la.second_audit_time < ?)
+		 
+		 
+		 
+			and ca.name like concat('%',?,'%')
+		 
+	 
+		 
+			and la.first_audit_time > dto.astart and la.first_audit_time < dto.aend						
+		 
+		 
+			 
+			 			
+				ORDER BY la.first_audit_time DESC
+			 			
+		 
+		limit ?,?
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+	at com.mysql.jdbc.Util.getInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:943)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3973)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3909)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2527)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2680)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2501)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1858)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1197)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2931)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.proxy.jdbc.PreparedStatementProxyImpl.execute(PreparedStatementProxyImpl.java:131)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
+	at com.sun.proxy.$Proxy152.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:63)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:218)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:123)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
+	at com.sun.proxy.$Proxy36.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:230)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
+	at com.sun.proxy.$Proxy63.selectCreditApplyList(Unknown Source)
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:99)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$FastClassBySpringCGLIB$$c94f4e8c.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:652)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$EnhancerBySpringCGLIB$$71effa9e.findPage(<generated>)
+	at cn.houhe.api.loan.web.CreditApplyAction.listData(CreditApplyAction.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:684)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1496)
+	at cn.com.iotrust.common.mvc.LogFilter.doFilter(LogFilter.java:114)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1476)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:499)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1086)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:428)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1020)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:370)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:494)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:971)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1033)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:651)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:667)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:748)
+2017-08-29 17:11:47 druid.sql.Statement - {conn-310005, pstmt-320014} execute error. SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,
+        ca.apply_time as applyTime,
+        ca.apply_state as applyState,
+        la.first_audit_person as fap,
+        la.second_audit_person as sap,
+        la.plan_fap_id as faPid,
+        la.plan_sap_id  as saPid,
+        la.first_audit_time AS fat,
+        la.second_audit_time AS sat,
+        ci.loan_limit_total AS llimit,
+		ci.pdl_loan_limit_total as pdllimit,
+        (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,
+        (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,
+        ci.total_scores as totalscores
+        FROM houhe_loan.credit_apply ca
+        left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id
+        JOIN houhe_member.member mm ON ca.member_id = mm.memid
+        LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0      
+		 
+		 
+		 
+			 
+			 
+				and ca.apply_state in (4,6)
+			 
+			 
+		 
+	 
+		AND ca.fengkong_state = 1
+		 
+		 
+		 
+			AND (la.first_audit_time > ? or la.second_audit_time > ?)
+		 
+		 
+			AND (la.first_audit_time < ? or la.second_audit_time < ?)
+		 
+		 
+		 
+			and ca.name like concat('%',?,'%')
+		 
+	 
+		 
+			and la.first_audit_time > dto.astart and la.first_audit_time < dto.aend						
+		 
+		 
+			 
+			 			
+				ORDER BY la.first_audit_time DESC
+			 			
+		 
+		limit ?,?
+com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+	at com.mysql.jdbc.Util.getInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:943)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3973)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3909)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2527)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2680)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2501)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1858)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1197)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2931)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.proxy.jdbc.PreparedStatementProxyImpl.execute(PreparedStatementProxyImpl.java:131)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
+	at com.sun.proxy.$Proxy152.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:63)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:218)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:123)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
+	at com.sun.proxy.$Proxy36.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:230)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
+	at com.sun.proxy.$Proxy63.selectCreditApplyList(Unknown Source)
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:99)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$FastClassBySpringCGLIB$$c94f4e8c.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:652)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$EnhancerBySpringCGLIB$$71effa9e.findPage(<generated>)
+	at cn.houhe.api.loan.web.CreditApplyAction.listData(CreditApplyAction.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:684)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1496)
+	at cn.com.iotrust.common.mvc.LogFilter.doFilter(LogFilter.java:114)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1476)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:499)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1086)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:428)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1020)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:370)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:494)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:971)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1033)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:651)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:667)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:748)
+2017-08-29 17:11:47 cn.com.iotrust.common.mvc.AnnotationHandlerMethodExceptionResolver - 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+### The error may exist in file [H:\CheFeiDaiWorkSpace_20170814\houhe-api\api\target\classes\cn\houhe\api\loan\mapper\sql\CreditApplyExtMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,         ca.apply_time as applyTime,         ca.apply_state as applyState,         la.first_audit_person as fap,         la.second_audit_person as sap,         la.plan_fap_id as faPid,         la.plan_sap_id  as saPid,         la.first_audit_time AS fat,         la.second_audit_time AS sat,         ci.loan_limit_total AS llimit,   ci.pdl_loan_limit_total as pdllimit,         (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,         (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,         ci.total_scores as totalscores         FROM houhe_loan.credit_apply ca         left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id         JOIN houhe_member.member mm ON ca.member_id = mm.memid         LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0                                 and ca.apply_state in (4,6)                    AND ca.fengkong_state = 1                AND (la.first_audit_time > ? or la.second_audit_time > ?)            AND (la.first_audit_time < ? or la.second_audit_time < ?)                and ca.name like concat('%',?,'%')               and la.first_audit_time > dto.astart and la.first_audit_time < dto.aend                                ORDER BY la.first_audit_time DESC               limit ?,?
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+cn.com.iotrust.common.ServiceException: 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+### The error may exist in file [H:\CheFeiDaiWorkSpace_20170814\houhe-api\api\target\classes\cn\houhe\api\loan\mapper\sql\CreditApplyExtMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,         ca.apply_time as applyTime,         ca.apply_state as applyState,         la.first_audit_person as fap,         la.second_audit_person as sap,         la.plan_fap_id as faPid,         la.plan_sap_id  as saPid,         la.first_audit_time AS fat,         la.second_audit_time AS sat,         ci.loan_limit_total AS llimit,   ci.pdl_loan_limit_total as pdllimit,         (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,         (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,         ci.total_scores as totalscores         FROM houhe_loan.credit_apply ca         left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id         JOIN houhe_member.member mm ON ca.member_id = mm.memid         LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0                                 and ca.apply_state in (4,6)                    AND ca.fengkong_state = 1                AND (la.first_audit_time > ? or la.second_audit_time > ?)            AND (la.first_audit_time < ? or la.second_audit_time < ?)                and ca.name like concat('%',?,'%')               and la.first_audit_time > dto.astart and la.first_audit_time < dto.aend                                ORDER BY la.first_audit_time DESC               limit ?,?
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:103)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$FastClassBySpringCGLIB$$c94f4e8c.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:652)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$EnhancerBySpringCGLIB$$71effa9e.findPage(<generated>)
+	at cn.houhe.api.loan.web.CreditApplyAction.listData(CreditApplyAction.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:684)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1496)
+	at cn.com.iotrust.common.mvc.LogFilter.doFilter(LogFilter.java:114)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1476)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:499)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1086)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:428)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1020)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:370)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:494)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:971)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1033)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:651)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:667)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.springframework.jdbc.BadSqlGrammarException: 
+### Error querying database.  Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+### The error may exist in file [H:\CheFeiDaiWorkSpace_20170814\houhe-api\api\target\classes\cn\houhe\api\loan\mapper\sql\CreditApplyExtMapper.xml]
+### The error may involve defaultParameterMap
+### The error occurred while setting parameters
+### SQL: SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,         ca.apply_time as applyTime,         ca.apply_state as applyState,         la.first_audit_person as fap,         la.second_audit_person as sap,         la.plan_fap_id as faPid,         la.plan_sap_id  as saPid,         la.first_audit_time AS fat,         la.second_audit_time AS sat,         ci.loan_limit_total AS llimit,   ci.pdl_loan_limit_total as pdllimit,         (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,         (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,         ci.total_scores as totalscores         FROM houhe_loan.credit_apply ca         left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id         JOIN houhe_member.member mm ON ca.member_id = mm.memid         LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0                                 and ca.apply_state in (4,6)                    AND ca.fengkong_state = 1                AND (la.first_audit_time > ? or la.second_audit_time > ?)            AND (la.first_audit_time < ? or la.second_audit_time < ?)                and ca.name like concat('%',?,'%')               and la.first_audit_time > dto.astart and la.first_audit_time < dto.aend                                ORDER BY la.first_audit_time DESC               limit ?,?
+### Cause: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+; bad SQL grammar []; nested exception is com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+	at org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator.doTranslate(SQLErrorCodeSQLExceptionTranslator.java:231)
+	at org.springframework.jdbc.support.AbstractFallbackSQLExceptionTranslator.translate(AbstractFallbackSQLExceptionTranslator.java:73)
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:73)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:446)
+	at com.sun.proxy.$Proxy36.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:230)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
+	at com.sun.proxy.$Proxy63.selectCreditApplyList(Unknown Source)
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:99)
+	... 56 common frames omitted
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: Unknown column 'dto.astart' in 'where clause'
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at com.mysql.jdbc.Util.handleNewInstance(Util.java:425)
+	at com.mysql.jdbc.Util.getInstance(Util.java:408)
+	at com.mysql.jdbc.SQLError.createSQLException(SQLError.java:943)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3973)
+	at com.mysql.jdbc.MysqlIO.checkErrorPacket(MysqlIO.java:3909)
+	at com.mysql.jdbc.MysqlIO.sendCommand(MysqlIO.java:2527)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2680)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2501)
+	at com.mysql.jdbc.PreparedStatement.executeInternal(PreparedStatement.java:1858)
+	at com.mysql.jdbc.PreparedStatement.execute(PreparedStatement.java:1197)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2931)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.filter.FilterEventAdapter.preparedStatement_execute(FilterEventAdapter.java:440)
+	at com.alibaba.druid.filter.FilterChainImpl.preparedStatement_execute(FilterChainImpl.java:2929)
+	at com.alibaba.druid.proxy.jdbc.PreparedStatementProxyImpl.execute(PreparedStatementProxyImpl.java:131)
+	at com.alibaba.druid.pool.DruidPooledPreparedStatement.execute(DruidPooledPreparedStatement.java:493)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.apache.ibatis.logging.jdbc.PreparedStatementLogger.invoke(PreparedStatementLogger.java:59)
+	at com.sun.proxy.$Proxy152.execute(Unknown Source)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:63)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:218)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:123)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
+	... 63 common frames omitted
+2017-08-29 18:57:04 org.springframework.scheduling.support.TaskUtils$LoggingErrorHandler - Unexpected error occurred in scheduled task.
+org.springframework.data.redis.RedisConnectionFailureException: java.net.SocketTimeoutException: Read timed out; nested exception is redis.clients.jedis.exceptions.JedisConnectionException: java.net.SocketTimeoutException: Read timed out
+	at org.springframework.data.redis.connection.jedis.JedisExceptionConverter.convert(JedisExceptionConverter.java:67)
+	at org.springframework.data.redis.connection.jedis.JedisExceptionConverter.convert(JedisExceptionConverter.java:41)
+	at org.springframework.data.redis.PassThroughExceptionTranslationStrategy.translate(PassThroughExceptionTranslationStrategy.java:37)
+	at org.springframework.data.redis.FallbackExceptionTranslationStrategy.translate(FallbackExceptionTranslationStrategy.java:37)
+	at org.springframework.data.redis.connection.jedis.JedisConnection.convertJedisAccessException(JedisConnection.java:212)
+	at org.springframework.data.redis.connection.jedis.JedisConnection.sMembers(JedisConnection.java:1986)
+	at org.springframework.data.redis.core.DefaultSetOperations$7.doInRedis(DefaultSetOperations.java:129)
+	at org.springframework.data.redis.core.DefaultSetOperations$7.doInRedis(DefaultSetOperations.java:126)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:191)
+	at org.springframework.data.redis.core.RedisTemplate.execute(RedisTemplate.java:153)
+	at org.springframework.data.redis.core.AbstractOperations.execute(AbstractOperations.java:88)
+	at org.springframework.data.redis.core.DefaultSetOperations.members(DefaultSetOperations.java:126)
+	at org.springframework.data.redis.core.DefaultBoundSetOperations.members(DefaultBoundSetOperations.java:91)
+	at org.springframework.session.data.redis.RedisSessionExpirationPolicy.cleanExpiredSessions(RedisSessionExpirationPolicy.java:131)
+	at org.springframework.session.data.redis.RedisOperationsSessionRepository.cleanupExpiredSessions(RedisOperationsSessionRepository.java:398)
+	at sun.reflect.GeneratedMethodAccessor153.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.scheduling.support.ScheduledMethodRunnable.run(ScheduledMethodRunnable.java:65)
+	at org.springframework.scheduling.support.DelegatingErrorHandlingRunnable.run(DelegatingErrorHandlingRunnable.java:54)
+	at org.springframework.scheduling.concurrent.ReschedulingRunnable.run(ReschedulingRunnable.java:81)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: redis.clients.jedis.exceptions.JedisConnectionException: java.net.SocketTimeoutException: Read timed out
+	at redis.clients.util.RedisInputStream.ensureFill(RedisInputStream.java:201)
+	at redis.clients.util.RedisInputStream.readByte(RedisInputStream.java:40)
+	at redis.clients.jedis.Protocol.process(Protocol.java:141)
+	at redis.clients.jedis.Protocol.read(Protocol.java:205)
+	at redis.clients.jedis.Connection.readProtocolWithCheckingBroken(Connection.java:297)
+	at redis.clients.jedis.Connection.getBinaryMultiBulkReply(Connection.java:233)
+	at redis.clients.jedis.BinaryJedis.smembers(BinaryJedis.java:1222)
+	at org.springframework.data.redis.connection.jedis.JedisConnection.sMembers(JedisConnection.java:1984)
+	... 22 common frames omitted
+Caused by: java.net.SocketTimeoutException: Read timed out
+	at java.net.SocketInputStream.socketRead0(Native Method)
+	at java.net.SocketInputStream.socketRead(SocketInputStream.java:116)
+	at java.net.SocketInputStream.read(SocketInputStream.java:171)
+	at java.net.SocketInputStream.read(SocketInputStream.java:141)
+	at java.net.SocketInputStream.read(SocketInputStream.java:127)
+	at redis.clients.util.RedisInputStream.ensureFill(RedisInputStream.java:195)
+	... 29 common frames omitted
+2017-08-29 19:57:50 cn.com.iotrust.common.mvc.AnnotationHandlerMethodExceptionResolver - nested exception is org.apache.ibatis.builder.BuilderException: Error evaluating expression ''. Cause: org.apache.ibatis.ognl.ExpressionSyntaxException: Malformed OGNL expression:  [org.apache.ibatis.ognl.ParseException: Encountered "<EOF>" at line 1, column 0.
+Was expecting one of:
+    ":" ...
+    "not" ...
+    "+" ...
+    "-" ...
+    "~" ...
+    "!" ...
+    "(" ...
+    "true" ...
+    "false" ...
+    "null" ...
+    "#this" ...
+    "#root" ...
+    "#" ...
+    "[" ...
+    "{" ...
+    "@" ...
+    "new" ...
+    <IDENT> ...
+    <DYNAMIC_SUBSCRIPT> ...
+    "\'" ...
+    "`" ...
+    "\"" ...
+    <INT_LITERAL> ...
+    <FLT_LITERAL> ...
+    ]
+cn.com.iotrust.common.ServiceException: nested exception is org.apache.ibatis.builder.BuilderException: Error evaluating expression ''. Cause: org.apache.ibatis.ognl.ExpressionSyntaxException: Malformed OGNL expression:  [org.apache.ibatis.ognl.ParseException: Encountered "<EOF>" at line 1, column 0.
+Was expecting one of:
+    ":" ...
+    "not" ...
+    "+" ...
+    "-" ...
+    "~" ...
+    "!" ...
+    "(" ...
+    "true" ...
+    "false" ...
+    "null" ...
+    "#this" ...
+    "#root" ...
+    "#" ...
+    "[" ...
+    "{" ...
+    "@" ...
+    "new" ...
+    <IDENT> ...
+    <DYNAMIC_SUBSCRIPT> ...
+    "\'" ...
+    "`" ...
+    "\"" ...
+    <INT_LITERAL> ...
+    <FLT_LITERAL> ...
+    ]
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:103)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$FastClassBySpringCGLIB$$c94f4e8c.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:652)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$EnhancerBySpringCGLIB$$11fca4ce.findPage(<generated>)
+	at cn.houhe.api.loan.web.CreditApplyAction.listData(CreditApplyAction.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:684)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1496)
+	at cn.com.iotrust.common.mvc.LogFilter.doFilter(LogFilter.java:114)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1476)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:499)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1086)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:428)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1020)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:370)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:494)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:971)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1033)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:651)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:667)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.builder.BuilderException: Error evaluating expression ''. Cause: org.apache.ibatis.ognl.ExpressionSyntaxException: Malformed OGNL expression:  [org.apache.ibatis.ognl.ParseException: Encountered "<EOF>" at line 1, column 0.
+Was expecting one of:
+    ":" ...
+    "not" ...
+    "+" ...
+    "-" ...
+    "~" ...
+    "!" ...
+    "(" ...
+    "true" ...
+    "false" ...
+    "null" ...
+    "#this" ...
+    "#root" ...
+    "#" ...
+    "[" ...
+    "{" ...
+    "@" ...
+    "new" ...
+    <IDENT> ...
+    <DYNAMIC_SUBSCRIPT> ...
+    "\'" ...
+    "`" ...
+    "\"" ...
+    <INT_LITERAL> ...
+    <FLT_LITERAL> ...
+    ]
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:77)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:446)
+	at com.sun.proxy.$Proxy36.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:230)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
+	at com.sun.proxy.$Proxy63.selectCreditApplyList(Unknown Source)
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:99)
+	... 56 common frames omitted
+Caused by: org.apache.ibatis.builder.BuilderException: Error evaluating expression ''. Cause: org.apache.ibatis.ognl.ExpressionSyntaxException: Malformed OGNL expression:  [org.apache.ibatis.ognl.ParseException: Encountered "<EOF>" at line 1, column 0.
+Was expecting one of:
+    ":" ...
+    "not" ...
+    "+" ...
+    "-" ...
+    "~" ...
+    "!" ...
+    "(" ...
+    "true" ...
+    "false" ...
+    "null" ...
+    "#this" ...
+    "#root" ...
+    "#" ...
+    "[" ...
+    "{" ...
+    "@" ...
+    "new" ...
+    <IDENT> ...
+    <DYNAMIC_SUBSCRIPT> ...
+    "\'" ...
+    "`" ...
+    "\"" ...
+    <INT_LITERAL> ...
+    <FLT_LITERAL> ...
+    ]
+	at org.apache.ibatis.scripting.xmltags.OgnlCache.getValue(OgnlCache.java:46)
+	at org.apache.ibatis.scripting.xmltags.ExpressionEvaluator.evaluateBoolean(ExpressionEvaluator.java:32)
+	at org.apache.ibatis.scripting.xmltags.IfSqlNode.apply(IfSqlNode.java:34)
+	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:33)
+	at org.apache.ibatis.scripting.xmltags.IfSqlNode.apply(IfSqlNode.java:35)
+	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:33)
+	at org.apache.ibatis.scripting.xmltags.IfSqlNode.apply(IfSqlNode.java:35)
+	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:33)
+	at org.apache.ibatis.scripting.xmltags.DynamicSqlSource.getBoundSql(DynamicSqlSource.java:41)
+	at org.apache.ibatis.mapping.MappedStatement.getBoundSql(MappedStatement.java:292)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:81)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:218)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:123)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
+	... 63 common frames omitted
+Caused by: org.apache.ibatis.ognl.ExpressionSyntaxException: Malformed OGNL expression: 
+	at org.apache.ibatis.ognl.Ognl.parseExpression(Ognl.java:112)
+	at org.apache.ibatis.scripting.xmltags.OgnlCache.parseExpression(OgnlCache.java:53)
+	at org.apache.ibatis.scripting.xmltags.OgnlCache.getValue(OgnlCache.java:44)
+	... 80 common frames omitted
+Caused by: org.apache.ibatis.ognl.ParseException: Encountered "<EOF>" at line 1, column 0.
+Was expecting one of:
+    ":" ...
+    "not" ...
+    "+" ...
+    "-" ...
+    "~" ...
+    "!" ...
+    "(" ...
+    "true" ...
+    "false" ...
+    "null" ...
+    "#this" ...
+    "#root" ...
+    "#" ...
+    "[" ...
+    "{" ...
+    "@" ...
+    "new" ...
+    <IDENT> ...
+    <DYNAMIC_SUBSCRIPT> ...
+    "\'" ...
+    "`" ...
+    "\"" ...
+    <INT_LITERAL> ...
+    <FLT_LITERAL> ...
+    
+	at org.apache.ibatis.ognl.OgnlParser.generateParseException(OgnlParser.java:3172)
+	at org.apache.ibatis.ognl.OgnlParser.jj_consume_token(OgnlParser.java:3051)
+	at org.apache.ibatis.ognl.OgnlParser.unaryExpression(OgnlParser.java:1236)
+	at org.apache.ibatis.ognl.OgnlParser.multiplicativeExpression(OgnlParser.java:971)
+	at org.apache.ibatis.ognl.OgnlParser.additiveExpression(OgnlParser.java:894)
+	at org.apache.ibatis.ognl.OgnlParser.shiftExpression(OgnlParser.java:750)
+	at org.apache.ibatis.ognl.OgnlParser.relationalExpression(OgnlParser.java:508)
+	at org.apache.ibatis.ognl.OgnlParser.equalityExpression(OgnlParser.java:405)
+	at org.apache.ibatis.ognl.OgnlParser.andExpression(OgnlParser.java:352)
+	at org.apache.ibatis.ognl.OgnlParser.exclusiveOrExpression(OgnlParser.java:299)
+	at org.apache.ibatis.ognl.OgnlParser.inclusiveOrExpression(OgnlParser.java:246)
+	at org.apache.ibatis.ognl.OgnlParser.logicalAndExpression(OgnlParser.java:193)
+	at org.apache.ibatis.ognl.OgnlParser.logicalOrExpression(OgnlParser.java:140)
+	at org.apache.ibatis.ognl.OgnlParser.conditionalTestExpression(OgnlParser.java:101)
+	at org.apache.ibatis.ognl.OgnlParser.assignmentExpression(OgnlParser.java:64)
+	at org.apache.ibatis.ognl.OgnlParser.expression(OgnlParser.java:23)
+	at org.apache.ibatis.ognl.OgnlParser.topLevelExpression(OgnlParser.java:15)
+	at org.apache.ibatis.ognl.Ognl.parseExpression(Ognl.java:110)
+	... 82 common frames omitted
+2017-08-29 19:57:54 cn.com.iotrust.common.mvc.AnnotationHandlerMethodExceptionResolver - nested exception is org.apache.ibatis.builder.BuilderException: Error evaluating expression ''. Cause: org.apache.ibatis.ognl.ExpressionSyntaxException: Malformed OGNL expression:  [org.apache.ibatis.ognl.ParseException: Encountered "<EOF>" at line 1, column 0.
+Was expecting one of:
+    ":" ...
+    "not" ...
+    "+" ...
+    "-" ...
+    "~" ...
+    "!" ...
+    "(" ...
+    "true" ...
+    "false" ...
+    "null" ...
+    "#this" ...
+    "#root" ...
+    "#" ...
+    "[" ...
+    "{" ...
+    "@" ...
+    "new" ...
+    <IDENT> ...
+    <DYNAMIC_SUBSCRIPT> ...
+    "\'" ...
+    "`" ...
+    "\"" ...
+    <INT_LITERAL> ...
+    <FLT_LITERAL> ...
+    ]
+cn.com.iotrust.common.ServiceException: nested exception is org.apache.ibatis.builder.BuilderException: Error evaluating expression ''. Cause: org.apache.ibatis.ognl.ExpressionSyntaxException: Malformed OGNL expression:  [org.apache.ibatis.ognl.ParseException: Encountered "<EOF>" at line 1, column 0.
+Was expecting one of:
+    ":" ...
+    "not" ...
+    "+" ...
+    "-" ...
+    "~" ...
+    "!" ...
+    "(" ...
+    "true" ...
+    "false" ...
+    "null" ...
+    "#this" ...
+    "#root" ...
+    "#" ...
+    "[" ...
+    "{" ...
+    "@" ...
+    "new" ...
+    <IDENT> ...
+    <DYNAMIC_SUBSCRIPT> ...
+    "\'" ...
+    "`" ...
+    "\"" ...
+    <INT_LITERAL> ...
+    <FLT_LITERAL> ...
+    ]
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:103)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$FastClassBySpringCGLIB$$c94f4e8c.invoke(<generated>)
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:652)
+	at cn.houhe.api.loan.service.CreditApplyExtService$$EnhancerBySpringCGLIB$$11fca4ce.findPage(<generated>)
+	at cn.houhe.api.loan.web.CreditApplyAction.listData(CreditApplyAction.java:52)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:133)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:684)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1496)
+	at cn.com.iotrust.common.mvc.LogFilter.doFilter(LogFilter.java:114)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1476)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:499)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1086)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:428)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1020)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:370)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:494)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:971)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1033)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:651)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:667)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: org.mybatis.spring.MyBatisSystemException: nested exception is org.apache.ibatis.builder.BuilderException: Error evaluating expression ''. Cause: org.apache.ibatis.ognl.ExpressionSyntaxException: Malformed OGNL expression:  [org.apache.ibatis.ognl.ParseException: Encountered "<EOF>" at line 1, column 0.
+Was expecting one of:
+    ":" ...
+    "not" ...
+    "+" ...
+    "-" ...
+    "~" ...
+    "!" ...
+    "(" ...
+    "true" ...
+    "false" ...
+    "null" ...
+    "#this" ...
+    "#root" ...
+    "#" ...
+    "[" ...
+    "{" ...
+    "@" ...
+    "new" ...
+    <IDENT> ...
+    <DYNAMIC_SUBSCRIPT> ...
+    "\'" ...
+    "`" ...
+    "\"" ...
+    <INT_LITERAL> ...
+    <FLT_LITERAL> ...
+    ]
+	at org.mybatis.spring.MyBatisExceptionTranslator.translateExceptionIfPossible(MyBatisExceptionTranslator.java:77)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:446)
+	at com.sun.proxy.$Proxy36.selectList(Unknown Source)
+	at org.mybatis.spring.SqlSessionTemplate.selectList(SqlSessionTemplate.java:230)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
+	at com.sun.proxy.$Proxy63.selectCreditApplyList(Unknown Source)
+	at cn.houhe.api.loan.service.CreditApplyExtService.findPage(CreditApplyExtService.java:99)
+	... 56 common frames omitted
+Caused by: org.apache.ibatis.builder.BuilderException: Error evaluating expression ''. Cause: org.apache.ibatis.ognl.ExpressionSyntaxException: Malformed OGNL expression:  [org.apache.ibatis.ognl.ParseException: Encountered "<EOF>" at line 1, column 0.
+Was expecting one of:
+    ":" ...
+    "not" ...
+    "+" ...
+    "-" ...
+    "~" ...
+    "!" ...
+    "(" ...
+    "true" ...
+    "false" ...
+    "null" ...
+    "#this" ...
+    "#root" ...
+    "#" ...
+    "[" ...
+    "{" ...
+    "@" ...
+    "new" ...
+    <IDENT> ...
+    <DYNAMIC_SUBSCRIPT> ...
+    "\'" ...
+    "`" ...
+    "\"" ...
+    <INT_LITERAL> ...
+    <FLT_LITERAL> ...
+    ]
+	at org.apache.ibatis.scripting.xmltags.OgnlCache.getValue(OgnlCache.java:46)
+	at org.apache.ibatis.scripting.xmltags.ExpressionEvaluator.evaluateBoolean(ExpressionEvaluator.java:32)
+	at org.apache.ibatis.scripting.xmltags.IfSqlNode.apply(IfSqlNode.java:34)
+	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:33)
+	at org.apache.ibatis.scripting.xmltags.IfSqlNode.apply(IfSqlNode.java:35)
+	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:33)
+	at org.apache.ibatis.scripting.xmltags.IfSqlNode.apply(IfSqlNode.java:35)
+	at org.apache.ibatis.scripting.xmltags.MixedSqlNode.apply(MixedSqlNode.java:33)
+	at org.apache.ibatis.scripting.xmltags.DynamicSqlSource.getBoundSql(DynamicSqlSource.java:41)
+	at org.apache.ibatis.mapping.MappedStatement.getBoundSql(MappedStatement.java:292)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:81)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:218)
+	at cn.com.iotrust.common.mybatis.DialectalSqlSession.selectList(DialectalSqlSession.java:123)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.mybatis.spring.SqlSessionTemplate$SqlSessionInterceptor.invoke(SqlSessionTemplate.java:433)
+	... 63 common frames omitted
+Caused by: org.apache.ibatis.ognl.ExpressionSyntaxException: Malformed OGNL expression: 
+	at org.apache.ibatis.ognl.Ognl.parseExpression(Ognl.java:112)
+	at org.apache.ibatis.scripting.xmltags.OgnlCache.parseExpression(OgnlCache.java:53)
+	at org.apache.ibatis.scripting.xmltags.OgnlCache.getValue(OgnlCache.java:44)
+	... 80 common frames omitted
+Caused by: org.apache.ibatis.ognl.ParseException: Encountered "<EOF>" at line 1, column 0.
+Was expecting one of:
+    ":" ...
+    "not" ...
+    "+" ...
+    "-" ...
+    "~" ...
+    "!" ...
+    "(" ...
+    "true" ...
+    "false" ...
+    "null" ...
+    "#this" ...
+    "#root" ...
+    "#" ...
+    "[" ...
+    "{" ...
+    "@" ...
+    "new" ...
+    <IDENT> ...
+    <DYNAMIC_SUBSCRIPT> ...
+    "\'" ...
+    "`" ...
+    "\"" ...
+    <INT_LITERAL> ...
+    <FLT_LITERAL> ...
+    
+	at org.apache.ibatis.ognl.OgnlParser.generateParseException(OgnlParser.java:3172)
+	at org.apache.ibatis.ognl.OgnlParser.jj_consume_token(OgnlParser.java:3051)
+	at org.apache.ibatis.ognl.OgnlParser.unaryExpression(OgnlParser.java:1236)
+	at org.apache.ibatis.ognl.OgnlParser.multiplicativeExpression(OgnlParser.java:971)
+	at org.apache.ibatis.ognl.OgnlParser.additiveExpression(OgnlParser.java:894)
+	at org.apache.ibatis.ognl.OgnlParser.shiftExpression(OgnlParser.java:750)
+	at org.apache.ibatis.ognl.OgnlParser.relationalExpression(OgnlParser.java:508)
+	at org.apache.ibatis.ognl.OgnlParser.equalityExpression(OgnlParser.java:405)
+	at org.apache.ibatis.ognl.OgnlParser.andExpression(OgnlParser.java:352)
+	at org.apache.ibatis.ognl.OgnlParser.exclusiveOrExpression(OgnlParser.java:299)
+	at org.apache.ibatis.ognl.OgnlParser.inclusiveOrExpression(OgnlParser.java:246)
+	at org.apache.ibatis.ognl.OgnlParser.logicalAndExpression(OgnlParser.java:193)
+	at org.apache.ibatis.ognl.OgnlParser.logicalOrExpression(OgnlParser.java:140)
+	at org.apache.ibatis.ognl.OgnlParser.conditionalTestExpression(OgnlParser.java:101)
+	at org.apache.ibatis.ognl.OgnlParser.assignmentExpression(OgnlParser.java:64)
+	at org.apache.ibatis.ognl.OgnlParser.expression(OgnlParser.java:23)
+	at org.apache.ibatis.ognl.OgnlParser.topLevelExpression(OgnlParser.java:15)
+	at org.apache.ibatis.ognl.Ognl.parseExpression(Ognl.java:110)
+	... 82 common frames omitted
+2017-08-29 20:47:32 cn.com.iotrust.common.mvc.AnnotationHandlerMethodExceptionResolver - org.springframework.validation.BeanPropertyBindingResult: 1 errors
+Field error in object 'creditApplyListDto' on field 'aend': rejected value [2017-05-13 23:59:59]; codes [typeMismatch.creditApplyListDto.aend,typeMismatch.aend,typeMismatch.java.util.Date,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [creditApplyListDto.aend,aend]; arguments []; default message [aend]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'java.util.Date' for property 'aend'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [java.util.Date] for value '2017-05-13 23:59:59'; nested exception is java.lang.IllegalArgumentException]
+org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 1 errors
+Field error in object 'creditApplyListDto' on field 'aend': rejected value [2017-05-13 23:59:59]; codes [typeMismatch.creditApplyListDto.aend,typeMismatch.aend,typeMismatch.java.util.Date,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [creditApplyListDto.aend,aend]; arguments []; default message [aend]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'java.util.Date' for property 'aend'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [java.util.Date] for value '2017-05-13 23:59:59'; nested exception is java.lang.IllegalArgumentException]
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.resolveArgument(ModelAttributeMethodProcessor.java:117)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:121)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:158)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:128)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:684)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1496)
+	at cn.com.iotrust.common.mvc.LogFilter.doFilter(LogFilter.java:114)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1476)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:499)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1086)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:428)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1020)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:370)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:494)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:971)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1033)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:651)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:667)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:748)
+2017-08-29 20:47:42 cn.com.iotrust.common.mvc.AnnotationHandlerMethodExceptionResolver - org.springframework.validation.BeanPropertyBindingResult: 1 errors
+Field error in object 'creditApplyListDto' on field 'aend': rejected value [2017-05-31 23:59:59]; codes [typeMismatch.creditApplyListDto.aend,typeMismatch.aend,typeMismatch.java.util.Date,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [creditApplyListDto.aend,aend]; arguments []; default message [aend]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'java.util.Date' for property 'aend'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [java.util.Date] for value '2017-05-31 23:59:59'; nested exception is java.lang.IllegalArgumentException]
+org.springframework.validation.BindException: org.springframework.validation.BeanPropertyBindingResult: 1 errors
+Field error in object 'creditApplyListDto' on field 'aend': rejected value [2017-05-31 23:59:59]; codes [typeMismatch.creditApplyListDto.aend,typeMismatch.aend,typeMismatch.java.util.Date,typeMismatch]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [creditApplyListDto.aend,aend]; arguments []; default message [aend]]; default message [Failed to convert property value of type 'java.lang.String' to required type 'java.util.Date' for property 'aend'; nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type [java.util.Date] for value '2017-05-31 23:59:59'; nested exception is java.lang.IllegalArgumentException]
+	at org.springframework.web.method.annotation.ModelAttributeMethodProcessor.resolveArgument(ModelAttributeMethodProcessor.java:117)
+	at org.springframework.web.method.support.HandlerMethodArgumentResolverComposite.resolveArgument(HandlerMethodArgumentResolverComposite.java:121)
+	at org.springframework.web.method.support.InvocableHandlerMethod.getMethodArgumentValues(InvocableHandlerMethod.java:158)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:128)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:116)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:827)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:738)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:85)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:963)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:897)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:970)
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:872)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:755)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:846)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:684)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1496)
+	at cn.com.iotrust.common.mvc.LogFilter.doFilter(LogFilter.java:114)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:197)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1484)
+	at org.springframework.session.web.http.SessionRepositoryFilter.doFilterInternal(SessionRepositoryFilter.java:167)
+	at org.springframework.session.web.http.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:80)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:346)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:262)
+	at org.eclipse.jetty.servlet.ServletHandler$CachedChain.doFilter(ServletHandler.java:1476)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:499)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:137)
+	at org.eclipse.jetty.security.SecurityHandler.handle(SecurityHandler.java:557)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:231)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1086)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:428)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1020)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:370)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:494)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:971)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1033)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:651)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:667)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:748)

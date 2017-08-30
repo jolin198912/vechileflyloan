@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.WithholdListExtMapper">
+    <select id="selectWithholdList" resultType="cn.houhe.api.loan.entity.bo.WithholdListObject">
+        select a.number,a.bank_user_name,a.user_mobile,a.repay_amount,a.pay_platform,a.pay_time,a.`status` from
+        houhe_loan.debit_rcd a
+        where 1=1
+        <if test="dto.payplatform!=-1">
+            and a.pay_platform=#{dto.payplatform}
+        </if>
+        <if test="dto.orderstatus!=-1">
+            and a.`status` = #{dto.orderstatus}
+        </if>
+        <if test="dto.stratPayDate!=null">
+            and a.pay_time>=#{dto.stratPayDate}
+        </if>
+        <if test="dto.endPayDate!=null">
+            and a.pay_time&lt;=#{dto.endPayDate}
+        </if>
+        order by a.pay_time desc
+        limit #{dto.page},#{dto.rows}
+    </select>
+
+    <select id="selectWithholdListCount" resultType="java.lang.Integer">
+        select count(1) from houhe_loan.debit_rcd a
+        where 1=1
+        <if test="dto.payplatform!=-1">
+            and a.pay_platform=#{dto.payplatform}
+        </if>
+        <if test="dto.orderstatus!=-1">
+            and a.`status` = #{dto.orderstatus}
+        </if>
+        <if test="dto.stratPayDate!=null">
+            and a.pay_time>=#{dto.stratPayDate}
+        </if>
+        <if test="dto.endPayDate!=null">
+            and a.pay_time&lt;=#{dto.endPayDate}
+        </if>
+    </select>
+</mapper>

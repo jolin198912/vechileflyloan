@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.LoanPayExtMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-13 15:27:06. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.LoanPay" >
+		<id column="lp_id" property="lpId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="loan_limit" property="loanLimit" jdbcType="DECIMAL" />
+		<result column="pay_platform" property="payPlatform" jdbcType="VARCHAR" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+		<result column="receive_bank_cardno" property="receiveBankCardno" jdbcType="VARCHAR" />
+		<result column="receive_bank" property="receiveBank" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="paytime" property="paytime" jdbcType="TIMESTAMP" />
+		<result column="number" property="number" jdbcType="VARCHAR" />
+		<result column="flownumber" property="flownumber" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-13 15:27:06. -->
+	<sql id="Base_Column_List" >
+		lp_id, loan_record_id, amount, loan_limit, pay_platform, member_id, username, user_mobile, 
+		receive_bank_cardno, receive_bank, status, paytime, number,flownumber, createdon, remark
+	</sql>
+
+</mapper>

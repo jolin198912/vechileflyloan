@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.CreditApplyExtMapper" >
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-06 15:17:13. -->
+	<sql id="Base_Column_List" >
+		ca_id, name, id_card, domicile, domicile_detail, education, family_income, company_type, 
+		company_name, job, work_time_start, work_time_current, marriage, child_amount, apply_time, 
+		apply_state, apply_step, member_id, createdon, remark
+	</sql>
+
+	<sql id="state">
+		<if test="dto.state != null">
+			<if test="dto.state ==0"><!--初审阶段-->
+				and ca.apply_state in (1,2)
+			</if>
+			<if test="dto.state ==1"><!--初审阶段-->
+				and ca.apply_state in (4,6)
+			</if>
+			<if test="dto.state ==2"><!--初审阶段-->
+				and ca.apply_state in (3,5,7)
+			</if>
+		</if>
+	</sql>
+
+	<sql id="queryParam">
+		<include refid="state"/>
+		AND ca.fengkong_state = 1
+		<if test="dto.start !=null" >
+			and ca.apply_time > #{dto.start}
+		</if>
+		<if test="dto.end !=null" >
+			and ca.apply_time &lt; #{dto.end}
+		</if>
+		<if test="dto.astart!=null">
+			AND (la.first_audit_time > #{dto.astart} or la.second_audit_time > #{dto.astart})
+		</if>
+		<if test="dto.aend != null">
+			AND (la.first_audit_time &lt; #{dto.aend} or la.second_audit_time &lt; #{dto.aend})
+		</if>
+		<if test="dto.apid != null ">
+			and	(la.plan_fap_id = #{dto.apid} or la.plan_sap_id = #{dto.apid})
+		</if>
+		<if test="dto.name !=null ">
+			and ca.name like concat('%',#{dto.name},'%')
+		</if>
+	</sql>
+	<select id="selectCreditApplyList" resultType="cn.houhe.api.loan.entity.bo.CreditApplyList">
+        SELECT ca.ca_id as caid,ci.cd_id as cdid,ca.name,mm.mobileno as mobile,
+        ca.apply_time as applyTime,
+        ca.apply_state as applyState,
+        la.first_audit_person as fap,
+        la.second_audit_person as sap,
+        la.plan_fap_id as faPid,
+        la.plan_sap_id  as saPid,
+        la.first_audit_time AS fat,
+        la.second_audit_time AS sat,
+        ci.loan_limit_total AS llimit,
+		ci.pdl_loan_limit_total as pdllimit,
+        (select le.name from houhe_config.`level` le where le.level_id=mm.level_id) as creditRate,
+        (select le.name from houhe_config.`level` le where le.level_id=mm.pdl_level_id) as pdlcreditRate,
+        ci.total_scores as totalscores
+        FROM houhe_loan.credit_apply ca
+        left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id
+        JOIN houhe_member.member mm ON ca.member_id = mm.memid
+        LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0      
+		<include refid="queryParam"/>		
+		<if test="dto.astart != null ">
+    		AND <![CDATA[ la.second_audit_time >= #{dto.astart,jdbcType=DATE}  ]]>
+	    </if>
+		<if test="dto.aend != null ">
+		    AND <![CDATA[ la.second_audit_time <= #{dto.aend,jdbcType=DATE}  ]]>
+		</if>			
+		<if test="dto.state != null">
+			<if test="dto.state ==0">
+				ORDER BY ca.apply_time DESC
+			</if>
+			<if test="dto.state ==1">			
+				ORDER BY la.second_audit_time DESC
+			</if>
+			<if test="dto.state ==2">		
+				ORDER BY la.second_audit_time DESC , la.first_audit_time DESC
+			</if>			
+		</if>
+		limit #{start},#{size}
+	</select>
+	<select id="selectCreditApplyListCount" resultType="java.lang.Integer">
+		SELECT count(1)
+		FROM houhe_loan.credit_apply ca
+		left join houhe_loan.loan_audit la on ca.ca_id = la.credit_apply_id
+		JOIN houhe_member.member mm ON ca.member_id = mm.memid
+		LEFT JOIN houhe_loan.creditinfo ci on ca.member_id = ci.member_id where  ca.apply_state !=0
+		<include refid="queryParam"/>
+	</select>
+	<select id="getCreditApplyInfo" resultType="cn.houhe.api.loan.entity.bo.CreditApplyInfo">
+		SELECT ca.*, ci.system_limit_total as slimit,ci.loan_limit_total as alimit, mm.mobileno AS mobile,
+		(
+		SELECT url
+		FROM houhe_member.member_pic_resources mpr
+		WHERE ca.ca_id = mpr.object_id AND mpr.object_type=2 AND mpr.pictype = 1 AND mpr.member_id = ca.member_id limit 1) AS front,
+		(
+		SELECT url
+		FROM houhe_member.member_pic_resources mpr
+		WHERE ca.ca_id = mpr.object_id AND mpr.object_type=2 AND mpr.pictype = 2 AND mpr.member_id = ca.member_id limit 1) AS back,
+		(
+		SELECT url
+		FROM houhe_member.member_pic_resources mpr
+		WHERE ca.ca_id = mpr.object_id AND mpr.object_type=2 AND mpr.pictype = 3 AND mpr.member_id = ca.member_id limit 1) AS face,
+		(
+		SELECT url
+		FROM houhe_member.member_pic_resources mpr
+		WHERE ca.ca_id = mpr.object_id AND mpr.object_type=2 AND mpr.pictype = 6 AND mpr.member_id = ca.member_id limit 1) AS dfront,
+		(
+		SELECT url
+		FROM houhe_member.member_pic_resources mpr
+		WHERE ca.ca_id = mpr.object_id AND mpr.object_type=2 AND mpr.pictype = 7 AND mpr.member_id = ca.member_id limit 1) AS dback,
+		(
+		SELECT url
+		FROM houhe_member.member_pic_resources mpr
+		WHERE ca.ca_id = mpr.object_id AND mpr.object_type=2 AND mpr.pictype = 5 AND mpr.member_id = ca.member_id limit 1) AS jfront,
+		(
+		SELECT url
+		FROM houhe_member.member_pic_resources mpr
+		WHERE ca.ca_id = mpr.object_id AND mpr.object_type=2 AND mpr.pictype = 8 AND mpr.member_id = ca.member_id limit 1) AS jback,
+		la.remark as auditremark,
+		vi.education_state,
+		vi.education_time_state,
+		vi.couple_name_state,
+		vi.couple_mobile_state,
+		vi.couple_idcard_state,
+		vi.couple_edu_state,
+		vi.address_state
+		FROM houhe_loan.credit_apply ca JOIN houhe_member.member mm ON ca.member_id = mm.memid
+		LEFT JOIN houhe_loan.loan_audit la ON ca.ca_id = la.credit_apply_id
+		LEFT JOIN houhe_loan.creditinfo ci ON ca.member_id = ci.member_id
+		LEFT JOIN houhe_loan.verify_info vi ON ca.ca_id = vi.credit_apply_id
+		where ca.ca_id = #{caid}
+	</select>
+	<select id="getCreditScoreInfo" resultType="cn.houhe.api.loan.entity.RiskmanageScoresRecord">
+		select
+		r_s_r.rsr_id as rsrId,
+		r_s_r.creditinfo_id as creditinfoId,
+		r_s_r.apply_time_score as applyTimeScore,
+		r_s_r.wanted_limit_score as wantedLimitScore,
+		r_s_r.wanted_period_score as wantedPeriodScore,
+		r_s_r.wanted_repay_day_score as wantedRepayDayScore,
+		r_s_r.buy_car_age_score as buyCarAgeScore,
+		r_s_r.car_lisence_score as carLisenceScore,
+		r_s_r.car_property_score as carPropertyScore,
+		r_s_r.buy_date_above_score as buyDateAboveScore,
+		r_s_r.buy_date_above_add_score as buyDateAboveAddScore,
+		r_s_r.counts_score as countsScore,
+		r_s_r.price_score as priceScore,
+		r_s_r.car_insurance_amount_score as carInsuranceAmountScore,
+		r_s_r.car_driven_score as carDrivenScore,
+		r_s_r.house_area_score as houseAreaScore,
+		r_s_r.house_appraisement_score as houseAppraisementScore,
+		r_s_r.loan_amount_income_score as loanAmountIncomeScore,
+		r_s_r.length_of_residence_score as lengthOfResidenceScore,
+		r_s_r.is_allow_contact_score as isAllowContactScore,
+		r_s_r.is_allow_record_score as isAllowRecordScore,
+		r_s_r.is_allow_message_score as isAllowMessageScore,
+		r_s_r.is_allow_location_score as isAllowLocationScore,
+		r_s_r.br_stability_score as brStabilityScore,
+		r_s_r.id_phone_locale_score as idPhoneLocaleScore,
+		r_s_r.id_phone_name_score as idPhoneNameScore,
+		r_s_r.phone_on_time_score as phoneOnTimeScore,
+		r_s_r.bqs_score as bqsScore,
+		r_s_r.phone_costs_score as phoneCostsScore,
+		r_s_r.is500_score as is500Score,
+		r_s_r.educationlevel_score as educationlevelScore,
+		r_s_r.edudgcheck_score as edudgcheckScore,
+		r_s_r.eduyear_score as eduyearScore,
+		r_s_r.eduage_score as eduageScore,
+		r_s_r.qqwxage_score as qqwxageScore,
+		r_s_r.qqwxinage_score as qqwxinageScore,
+		r_s_r.linkphone_score as linkphoneScore,
+		r_s_r.workadd_score as workaddScore,
+		r_s_r.workadd_home_score as workaddHomeScore,
+		r_s_r.wkyear_score as wkyearScore,
+		r_s_r.income_score as incomeScore,
+		r_s_r.social_security_score as socialSecurityScore,
+		r_s_r.accumulation_fund_score as accumulationFundScore,
+		r_s_r.income_compare_score as incomeCompareScore,
+		r_s_r.debit_score as debitScore,
+		r_s_r.age_score as ageScore,
+		r_s_r.age_man_older_score as ageManOlderScore,
+		r_s_r.age_diff_five_score as ageDiffFiveScore,
+		r_s_r.married_score as marriedScore,
+		r_s_r.education_equal_score as educationEqualScore,
+		r_s_r.wife_education_higher_score as wifeEducationHigherScore,
+		r_s_r.wife_working_score as wifeWorkingScore,
+		r_s_r.family_count_score as familyCountScore,
+		r_s_r.country_origin_score as countryOriginScore,
+		r_s_r.city_origin_age30_score as cityOriginAge30Score,
+		r_s_r.boy_great_seven_score as boyGreatSevenScore,
+		r_s_r.birth_age_score as birthAgeScore,
+		r_s_r.boy_and_girl_score as boyAndGirlScore,
+		r_s_r.age_subtract_score as ageSubtractScore,
+		r_s_r.live_address_score as liveAddressScore,
+		r_s_r.house_address_score as houseAddressScore,
+		r_s_r.address_score as addressScore,
+		r_s_r.live_time_score as liveTimeScore,
+		r_s_r.pay_year_score as payYearScore,
+		r_s_r.pay_income_rate_score as payIncomeRateScore,
+		r_s_r.girl_degree_score as girlDegreeScore,
+		r_s_r.op_auth_score as opAuthScore,
+		r_s_r.credit_auth_score as creditAuthScore,
+		r_s_r.al_auth_score as alAuthScore,
+		c.total_scores as totalScores
+		from houhe_loan.riskmanage_scores_record r_s_r
+		left join houhe_loan.creditinfo c
+		on c.cd_id = r_s_r.creditinfo_id
+		where r_s_r.creditinfo_id = #{cdid}
+	</select>
+
+	<select id="selectMemCountBySex" resultType="java.util.HashMap">
+		SELECT mCount,totalCount,fCount,mCount/totalCount AS mCountRate,fCount/totalCount AS fCountRate
+		FROM
+		(
+		SELECT COUNT(*) AS mCount,(
+		SELECT COUNT(*)
+		FROM credit_apply) AS totalCount
+		FROM credit_apply
+		WHERE sex = 0) AS m,
+		(
+		SELECT COUNT(*) AS fCount
+		FROM credit_apply
+		WHERE sex = 1) AS f
+	</select>
+	
+	<select id="selectMemCountByAge" resultType="java.util.HashMap">
+		SELECT lessThan25.lessThan25Count,lessThan25.lessThan25Count/lessThan25.totalCount AS lessThan25CountRate,
+		_25_35._25_35Count,_25_35._25_35Count/lessThan25.totalCount AS _25_35CountRate,
+		_36_45._36_45Count,_36_45._36_45Count/lessThan25.totalCount AS _36_45CountRate,
+		moreThan45.moreThan45Count,moreThan45.moreThan45Count/lessThan25.totalCount AS moreThan45CountRate
+		FROM (
+		SELECT COUNT(*) AS lessThan25Count,(
+		SELECT COUNT(*)
+		FROM credit_apply) AS totalCount
+		FROM credit_apply
+		WHERE YEAR(NOW())- YEAR(birthday) &lt; 25) AS lessThan25,
+		(
+		SELECT COUNT(*) AS _25_35Count
+		FROM credit_apply
+		WHERE YEAR(NOW())- YEAR(birthday) BETWEEN 25 AND 35) AS _25_35,
+		(
+		SELECT COUNT(*) AS _36_45Count
+		FROM credit_apply
+		WHERE YEAR(NOW())- YEAR(birthday) BETWEEN 36 AND 45) AS _36_45,
+		(
+		SELECT COUNT(*) AS moreThan45Count
+		FROM credit_apply
+		WHERE YEAR(NOW())- YEAR(birthday) &gt; 45) AS moreThan45
+	</select>
+	
+	<select id="selectMemCountByMarriage" resultType="java.util.HashMap">
+		SELECT marriedCount,marriedCount/totalCount as marriedCountRate,unmarriedCount,unmarriedCount/totalCount as unmarriedCountRate,
+			divorceCount,divorceCount/totalCount as divorceCountRate,widowedCount,widowedCount/totaLCount as widowedCountRate
+		FROM(
+		SELECT COUNT(*) AS marriedCount, (
+		SELECT COUNT(*)
+		FROM credit_apply) AS totalCount
+		FROM credit_apply
+		WHERE marriage = 3) AS married,
+		(
+		SELECT COUNT(*) AS unmarriedCount
+		FROM credit_apply
+		WHERE marriage = 0) AS unmarried,
+		(
+		SELECT COUNT(*) AS divorceCount
+		FROM credit_apply
+		WHERE marriage = 1) AS divorce,
+		(
+		SELECT COUNT(*) AS widowedCount
+		FROM credit_apply
+		WHERE marriage = 2) AS widowed
+	</select>
+	
+	<select id="selectMemCountByDomicileProvince" resultType="java.util.HashMap">
+		SELECT
+			domicile_province AS province,
+			COUNT(*) AS provinceCount,
+			(SELECT COUNT(*) FROM credit_apply) AS totalCount
+		FROM houhe_loan.credit_apply
+		GROUP BY domicile_province
+		ORDER BY COUNT(*) DESC
+		LIMIT 9
+	</select>
+
+	<select id="selectMemCountByNativeProvince" resultType="java.util.HashMap">
+		SELECT
+			native_place AS province,
+			COUNT(*) AS provinceCount,
+			(SELECT COUNT(*) FROM credit_apply) AS totalCount
+		FROM houhe_loan.credit_apply
+		GROUP BY native_place
+		ORDER BY COUNT(*) DESC
+		LIMIT 9
+	</select>
+
+	<select id="getThirdPartyInfo" resultType="cn.houhe.api.loan.entity.bo.ThirdPartyInfoObject">
+		select v_t_r.baiqishi_result as baiqishiResult, v_t_r.tongdun_result as tongdunResult, v_t_r.bairong_result as bairongResult
+		from verify_third_result v_t_r
+		left join credit_apply c_a
+		on v_t_r.credit_apply_id = c_a.ca_id
+		where v_t_r.credit_apply_id = #{caid}
+	</select>
+</mapper>

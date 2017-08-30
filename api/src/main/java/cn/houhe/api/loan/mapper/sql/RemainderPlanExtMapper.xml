@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.RemainderPlanExtMapper" >
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-24 18:33:37. -->
+	<insert id="insertSelective">
+		insert into remainder_plan
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				loan_record_id,
+			</if>
+			<if test="repaymentsPlanId != null" >
+				repayments_plan_id,
+			</if>
+			<if test="remainderId != null" >
+				remainder_id,
+			</if>
+			<if test="remainder != null" >
+				remainder,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				#{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="repaymentsPlanId != null" >
+				#{repaymentsPlanId,jdbcType=INTEGER},
+			</if>
+			<if test="remainderId != null" >
+				#{remainderId,jdbcType=INTEGER},
+			</if>
+			<if test="remainder != null" >
+				#{remainder,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+</mapper>

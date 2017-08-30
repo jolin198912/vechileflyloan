@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.CommDataConfigMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-13 11:30:10. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.config.entity.CommDataConfig" >
+		<id column="menu_id" property="menuId" jdbcType="SMALLINT" />
+		<result column="menu_type" property="menuType" jdbcType="TINYINT" />
+		<result column="menu_item" property="menuItem" jdbcType="VARCHAR" />
+		<result column="sort" property="sort" jdbcType="SMALLINT" />
+		<result column="value" property="value" jdbcType="SMALLINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-13 11:30:10. -->
+	<sql id="Base_Column_List" >
+		menu_id, menu_type, menu_item, sort, value, createdon
+	</sql>
+
+	<!-- 按主键查询 2017-04-13 11:30:10. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+		select 
+		<include refid="Base_Column_List" />
+		from comm_data_config
+		where menu_id = #{menuId,jdbcType=SMALLINT}
+	</select>
+
+	<!-- 按主键删除 2017-04-13 11:30:10. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+		delete from comm_data_config
+		where menu_id = #{menuId,jdbcType=SMALLINT}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-13 11:30:10. -->
+	<insert id="insert" parameterType="cn.houhe.api.config.entity.CommDataConfig" >
+		<selectKey resultType="java.lang.Short" keyProperty="menuId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into comm_data_config (menu_type, menu_item, sort, 
+			value, createdon)
+		values (#{menuType,jdbcType=TINYINT}, #{menuItem,jdbcType=VARCHAR}, #{sort,jdbcType=SMALLINT}, 
+			#{value,jdbcType=SMALLINT}, #{createdon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-13 11:30:10. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.config.entity.CommDataConfig" >
+		<selectKey resultType="java.lang.Short" keyProperty="menuId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into comm_data_config
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="menuType != null" >
+				menu_type,
+			</if>
+			<if test="menuItem != null" >
+				menu_item,
+			</if>
+			<if test="sort != null" >
+				sort,
+			</if>
+			<if test="value != null" >
+				value,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="menuType != null" >
+				#{menuType,jdbcType=TINYINT},
+			</if>
+			<if test="menuItem != null" >
+				#{menuItem,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null" >
+				#{sort,jdbcType=SMALLINT},
+			</if>
+			<if test="value != null" >
+				#{value,jdbcType=SMALLINT},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-13 11:30:10. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.config.entity.CommDataConfig" >
+		update comm_data_config
+		<set >
+			<if test="menuType != null" >
+				menu_type = #{menuType,jdbcType=TINYINT},
+			</if>
+			<if test="menuItem != null" >
+				menu_item = #{menuItem,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null" >
+				sort = #{sort,jdbcType=SMALLINT},
+			</if>
+			<if test="value != null" >
+				value = #{value,jdbcType=SMALLINT},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where menu_id = #{menuId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-13 11:30:10. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.config.entity.CommDataConfig" >
+		update comm_data_config
+		set menu_type = #{menuType,jdbcType=TINYINT},
+			menu_item = #{menuItem,jdbcType=VARCHAR},
+			sort = #{sort,jdbcType=SMALLINT},
+			value = #{value,jdbcType=SMALLINT},
+			createdon = #{createdon,jdbcType=TIMESTAMP}
+		where menu_id = #{menuId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-13 11:30:10. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from comm_data_config
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.CommDataConfigExtMapper" >
+
+	<!--通过menuType查询menuItem-->
+	<select id="selectMenuItems" resultType="java.util.HashMap" parameterType="java.lang.Byte">
+		select c.value, c.menu_item
+		from comm_data_config c
+		where menu_type=#{menuType,jdbcType=TINYINT}
+		order by c.sort
+	</select>
+
+</mapper>

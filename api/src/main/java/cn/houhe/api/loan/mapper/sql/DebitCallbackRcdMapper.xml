@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.DebitCallbackRcdMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-27 10:38:09. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.DebitCallbackRcd" >
+		<id column="dcr_id" property="dcrId" jdbcType="INTEGER" />
+		<result column="type" property="type" jdbcType="TINYINT" />
+		<result column="number" property="number" jdbcType="VARCHAR" />
+		<result column="object_id" property="objectId" jdbcType="INTEGER" />
+		<result column="pay_number" property="payNumber" jdbcType="VARCHAR" />
+		<result column="paytime" property="paytime" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="call_date" property="callDate" jdbcType="TIMESTAMP" />
+		<result column="paramdata" property="paramdata" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-27 10:38:09. -->
+	<sql id="Base_Column_List" >
+		dcr_id, type, number, object_id, pay_number, paytime, status, call_date, paramdata
+	</sql>
+
+	<!-- 按主键查询 2017-04-27 10:38:09. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from debit_callback_rcd
+		where dcr_id = #{dcrId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-04-27 10:38:09. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from debit_callback_rcd
+		where dcr_id = #{dcrId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-27 10:38:09. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.DebitCallbackRcd" >
+		<selectKey resultType="java.lang.Integer" keyProperty="dcrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into debit_callback_rcd (type, number, object_id, 
+			pay_number, paytime, status, 
+			call_date, paramdata)
+		values (#{type,jdbcType=TINYINT}, #{number,jdbcType=VARCHAR}, #{objectId,jdbcType=INTEGER}, 
+			#{payNumber,jdbcType=VARCHAR}, #{paytime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, 
+			#{callDate,jdbcType=TIMESTAMP}, #{paramdata,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-27 10:38:09. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.DebitCallbackRcd" >
+		<selectKey resultType="java.lang.Integer" keyProperty="dcrId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into debit_callback_rcd
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="number != null" >
+				number,
+			</if>
+			<if test="objectId != null" >
+				object_id,
+			</if>
+			<if test="payNumber != null" >
+				pay_number,
+			</if>
+			<if test="paytime != null" >
+				paytime,
+			</if>
+			<if test="status != null" >
+				status,
+			</if>
+			<if test="callDate != null" >
+				call_date,
+			</if>
+			<if test="paramdata != null" >
+				paramdata,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="type != null" >
+				#{type,jdbcType=TINYINT},
+			</if>
+			<if test="number != null" >
+				#{number,jdbcType=VARCHAR},
+			</if>
+			<if test="objectId != null" >
+				#{objectId,jdbcType=INTEGER},
+			</if>
+			<if test="payNumber != null" >
+				#{payNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="paytime != null" >
+				#{paytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null" >
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="callDate != null" >
+				#{callDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="paramdata != null" >
+				#{paramdata,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-27 10:38:09. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.DebitCallbackRcd" >
+		update debit_callback_rcd
+		<set >
+			<if test="type != null" >
+				type = #{type,jdbcType=TINYINT},
+			</if>
+			<if test="number != null" >
+				number = #{number,jdbcType=VARCHAR},
+			</if>
+			<if test="objectId != null" >
+				object_id = #{objectId,jdbcType=INTEGER},
+			</if>
+			<if test="payNumber != null" >
+				pay_number = #{payNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="paytime != null" >
+				paytime = #{paytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null" >
+				status = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="callDate != null" >
+				call_date = #{callDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="paramdata != null" >
+				paramdata = #{paramdata,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where dcr_id = #{dcrId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-27 10:38:09. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.DebitCallbackRcd" >
+		update debit_callback_rcd
+		set type = #{type,jdbcType=TINYINT},
+			number = #{number,jdbcType=VARCHAR},
+			object_id = #{objectId,jdbcType=INTEGER},
+			pay_number = #{payNumber,jdbcType=VARCHAR},
+			paytime = #{paytime,jdbcType=TIMESTAMP},
+			status = #{status,jdbcType=TINYINT},
+			call_date = #{callDate,jdbcType=TIMESTAMP},
+			paramdata = #{paramdata,jdbcType=VARCHAR}
+		where dcr_id = #{dcrId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-27 10:38:09. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from debit_callback_rcd
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

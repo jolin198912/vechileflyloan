@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.RepaymentsPlanExtMapper" >
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.RepaymentsPlan" >
+		<id column="rpt_id" property="rptId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="principal" property="principal" jdbcType="DECIMAL" />
+		<result column="total_pay" property="totalPay" jdbcType="DECIMAL" />
+		<result column="real_total_pay" property="realTotalPay" jdbcType="DECIMAL" />
+		<result column="arrears" property="arrears" jdbcType="DECIMAL" />
+		<result column="current_term" property="currentTerm" jdbcType="SMALLINT" />
+		<result column="interest" property="interest" jdbcType="DECIMAL" />
+		<result column="real_pay" property="realPay" jdbcType="DECIMAL" />
+		<result column="liquidated_damages" property="liquidatedDamages" jdbcType="DECIMAL" />
+		<result column="late_fee" property="lateFee" jdbcType="DECIMAL" />
+		<result column="remind_fee" property="remindFee" jdbcType="DECIMAL" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="delay_days" property="delayDays" jdbcType="SMALLINT" />
+		<result column="pay_date" property="payDate" jdbcType="DATE" />
+		<result column="bad_day" property="badDay" jdbcType="TIMESTAMP" />
+		<result column="is_bad" property="isBad" jdbcType="TINYINT" />
+		<result column="real_pay_date" property="realPayDate" jdbcType="TIMESTAMP" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+        <result column="current_term" property="currentTerm" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		rpt_id, loan_record_id, user_mobile, username, member_id, principal, total_pay, real_total_pay,
+		arrears, current_term, interest, real_pay, liquidated_damages, late_fee, remind_fee,
+		status, delay_days, pay_date, bad_day, is_bad, real_pay_date, createdon, remark,current_term
+	</sql>
+
+    <select id="selectRepaymentListCount" resultType="java.lang.Integer">
+        select count(1)
+        from repayments_plan a
+        <if test="dto.status!=3 || (dto.memid!=null and dto.status==3)">
+            inner join remainder_plan b on a.rpt_id=b.repayments_plan_id
+        </if>
+        where 1=1 and a.delay_days > 0
+        <if test="dto.status==0 || dto.status==3">
+            and (a.`status`=0 or a.`status`=1) and a.is_bad!=1
+        </if>
+        <if test="dto.status==1">
+            and a.`status`in(3,4) and a.is_bad!=1
+        </if>
+        <if test="dto.status==2">
+            and a.is_bad=1
+        </if>
+        <if test="dto.status==3">
+            and (select count(1) from remainder_plan b where b.repayments_plan_id = a.rpt_id) = 0
+        </if>
+        <if test="dto.paystart!=null">
+            and a.pay_date>=#{dto.paystart}
+        </if>
+        <if test="dto.payend!=null">
+            and a.pay_date&lt;=#{dto.payend}
+        </if>
+        <if test="dto.name!=null">
+            and a.username like concat('%',#{dto.name},'%')
+        </if>
+        <if test="dto.memid!=null and dto.status!=3">
+            and b.remainder_id=#{dto.memid}
+        </if>
+    </select>
+    <select id="selectRepaymentList" resultType="cn.houhe.api.loan.entity.bo.RepaymentDto">
+        select
+        <choose>
+            <when test="dto.status==3">
+                a.rpt_id,a.loan_record_id,a.member_id,a.username,a.user_mobile,a.total_pay,a.pay_date,a.delay_days,a.late_fee,a.remind_fee,a.real_total_pay,a.real_pay_date,a.bad_day
+            </when>
+            <otherwise>
+                a.rpt_id,a.loan_record_id,a.member_id,a.username,a.user_mobile,a.total_pay,a.pay_date,a.delay_days,a.late_fee,a.remind_fee,a.real_total_pay,a.real_pay_date,a.bad_day,b.remainder,b.createdon
+            </otherwise>
+        </choose>
+        from repayments_plan a
+        <if test="dto.status!=3 || (dto.memid!=null and dto.status==3)">
+            inner join remainder_plan b on a.rpt_id=b.repayments_plan_id
+        </if>
+        where 1=1 and a.delay_days > 0
+        <if test="dto.status==0 || dto.status==3">
+            and (a.`status`=0 or a.`status`=1) and a.is_bad!=1
+        </if>
+        <if test="dto.status==1">
+            and a.`status`in(3,4) and a.is_bad!=1
+        </if>
+        <if test="dto.status==2">
+            and a.is_bad=1
+        </if>
+        <if test="dto.status==3">
+            and (select count(1) from remainder_plan b where b.repayments_plan_id = a.rpt_id) = 0
+        </if>
+        <if test="dto.paystart!=null">
+            and a.pay_date>=#{dto.paystart}
+        </if>
+        <if test="dto.payend!=null">
+            and a.pay_date&lt;=#{dto.payend}
+        </if>
+        <if test="dto.name!=null">
+            and a.username like concat('%',#{dto.name},'%')
+        </if>
+        <if test="dto.memid!=null and dto.status!=3">
+            and b.remainder_id=#{dto.memid}
+        </if>
+        ORDER BY a.createdon DESC
+        limit #{dto.page},#{dto.rows}
+    </select>
+    <select id="selectPersonnelList" resultType="cn.houhe.api.loan.web.bo.SelectDto">
+        select u.usid as Id,u.username as Name
+        from houhe_system_user.role_access r_a
+        left join houhe_system_user.user_role u_r
+        on r_a.role_id = u_r.role_id
+        left join houhe_system_user.userinfo u
+        on u_r.us_id = u.usid
+        where r_a.res_id = 17 and u.is_disabled = 0
+        order by u.createdon desc
+    </select>
+
+    <select id="selectOverdueListCount" resultType="java.lang.Integer">
+        select count(1)
+        from repayments_plan a
+        left join loan_record b on a.loan_record_id=b.loan_id
+        where (a.status=3 or (a.status=4 and a.delay_days>0))
+        <if test="dto.contractNo!=null">
+            and b.loan_number like concat('%',#{dto.contractNo},'%')
+        </if>
+        <if test="dto.name!=null">
+            and a.username like concat('%',#{dto.name},'%')
+        </if>
+        <if test="dto.realpayStart!=null">
+            and a.real_pay_date >= #{dto.realpayStart}
+        </if>
+        <if test="dto.realpayEnd!=null">
+            and a.real_pay_date &lt;= #{dto.realpayEnd}
+        </if>
+    </select>
+
+    <select id="selectOverdueList" resultType="cn.houhe.api.loan.entity.bo.RepaymentDto">
+         select b.loan_number,a.username,a.pay_date,a.real_pay_date,a.current_term,a.total_pay,a.delay_days,a.late_fee,a.remind_fee,a.real_total_pay
+         from repayments_plan a
+         left join loan_record b on a.loan_record_id=b.loan_id
+         where (a.status=3 or (a.status=4 and a.delay_days>0))
+        <if test="dto.contractNo!=null">
+            and b.loan_number like concat('%',#{dto.contractNo},'%')
+        </if>
+        <if test="dto.name!=null">
+            and a.username like concat('%',#{dto.name},'%')
+        </if>
+        <if test="dto.realpayStart!=null">
+            and a.real_pay_date >= #{dto.realpayStart}
+        </if>
+        <if test="dto.realpayEnd!=null">
+            and a.real_pay_date &lt;= #{dto.realpayEnd}
+        </if>
+        ORDER BY a.createdon DESC
+         limit #{dto.page},#{dto.rows}
+	</select>
+
+
+	<select id="getPlanLock" parameterType="integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from repayments_plan
+		where rpt_id = #{rptId} for update
+	</select>
+
+
+    <!-- 获取用户未来30天内未还款列表-->
+    <select id="getNotPayList" resultType="cn.houhe.api.loan.entity.bo.RepaymentDtoApp">
+         select a.rpt_id,a.loan_record_id,a.pay_date as payDate,a.real_total_pay as realTotalPay,a.delay_days as delayDays,a.principal as principal,a.interest as interest,a.gather_status as gather_status,b.repay_bank_cardno as bankCardno,b.repay_bank as bank
+         from houhe_loan.repayments_plan a left join houhe_loan.loan_bank_card b on a.loan_record_id=b.loan_record_id
+         where a.member_id=#{dto.memid} and a.`status`=0 AND a.pay_date&lt;#{dto.endate}
+    </select>
+
+    <!-- 获取还款记录列表-->
+    <select id="getRepaymentsPlanList" resultType="cn.houhe.api.loan.web.bo.RepaymentsPlanListDto">
+        select
+        r_p.rpt_id as rptId,
+        r_p.loan_record_id as loanRecordId,
+        r_p.member_id as memberId,
+        r_p.repay_number as repay_number,
+        l_b_c.repay_bank_cardno as repayBankCardNo,
+        l_b_c.repay_bank as repayBank,
+        l_b_c.repay_name as repayName,
+        r_p.user_mobile as userMobile,
+        r_p.late_fee as lateFee,
+        r_p.interest,
+        r_p.real_total_pay as realTotalPay,
+        r_p.pay_date as payDate,
+        r_p.current_term
+        from houhe_loan.repayments_plan r_p
+        join houhe_loan.loan_bank_card l_b_c
+        on l_b_c.loan_record_id = r_p.loan_record_id
+        where r_p.pay_date = curdate() and r_p.status = 0 and r_p.gather_status = 0 and r_p.delay_days = 0
+    </select>
+
+    <!--获取逾期罚金总和-->
+    <select id="getOverdueTotal" resultType="cn.houhe.api.loan.entity.bo.RepaymentDtoApp">
+       select sum(a.real_total_pay) as realTotalPay, sum(a.principal) as principal,sum(a.interest) as interest from  houhe_loan.repayments_plan a
+       where a.loan_record_id=#{loanId} and a.`status`=0 and a.delay_days>0
+    </select>
+
+    <!--获取未还本金和-->
+    <select id="getLastPrincipalTotal" resultType="java.math.BigDecimal">
+        select sum(a.principal) as principal from  houhe_loan.repayments_plan a where a.loan_record_id=#{loanId} and a.`status`=0
+    </select>
+
+    <!--获取最小的未还款日期-->
+    <select id="getLeastPayTime" resultType="cn.houhe.api.loan.entity.bo.RepaymentDtoApp">
+        select a.pay_date as payDate from houhe_loan.repayments_plan a where a.loan_record_id=#{loanId} and a.`status`=0 order by a.pay_date limit 1
+    </select>
+
+    <!--将贷款所有未还款的还款计划收款状态更新成还款中-->
+    <update id="updateStatus">
+        update houhe_loan.repayments_plan a set a.gather_status=2 where a.loan_record_id=#{loanId} and a.`status`=0
+    </update>
+
+    <!--获取处于结款中的还款计划条数-->
+    <select id="getPayingCount" resultType="java.lang.Integer">
+        select count(1) from houhe_loan.repayments_plan a where a.loan_record_id=#{loanId} and a.gather_status=2
+    </select>
+    <!--更改还款计划状态-->
+    <update id="updateRepayStatus" parameterType="java.lang.Integer">
+        update repayments_plan set gather_status=#{status} where rpt_id=#{rpt_id}
+    </update>
+    <select id="isAllPlanPay" resultType="java.lang.Boolean">
+        SELECT COUNT(1) &lt;=0 FROM houhe_loan.repayments_plan a where a.loan_record_id=#{loanId} and (a.gather_status=2 or a.gather_status=0 or a.gather_status=3)
+    </select>
+
+</mapper>

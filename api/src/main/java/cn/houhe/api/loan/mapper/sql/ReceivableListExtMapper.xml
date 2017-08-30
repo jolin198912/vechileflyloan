@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.ReceivableListExtMapper" >
+	<select id="selectReceivableList" resultType="cn.houhe.api.loan.entity.bo.ReceivableListObject">
+		select a.loan_id,a.loan_number,a.bill_day,a.username,a.mem_situation_type,a.loan_limit,a.rate,a.time,a.loan_type,a.repay_state,
+		ifnull(b.quota_manage_fee,0) as quota_manage_fee,
+		ifnull(b.withdrawals_fee,0) as withdrawals_fee,
+		ifnull(b.advance_repay_fee,0) as advance_repay_fee,
+		(select ifnull(sum(d.delay_days),0) from houhe_loan.repayments_plan d where d.loan_record_id=a.loan_id) as delayDays,
+		(select ifnull(sum(d.late_fee),0) from houhe_loan.repayments_plan d where d.loan_record_id=a.loan_id) as late_fee,
+		(select ifnull(sum(d.remind_fee),0) from houhe_loan.repayments_plan d where d.loan_record_id=a.loan_id) as remind_fee,
+		(select ifnull(sum(d.interest),0) from houhe_loan.repayments_plan d where d.loan_record_id=a.loan_id and (d.gather_status=0 or d.gather_status=3))+(select ifnull(sum(dr.interest),0) from debit_rcd dr where dr.loan_record_id=a.loan_id and  dr.`status` in (0,1,2))  as interestPayable,
+		(select ifnull(r.rate, 0) from houhe_config.rates r where r.level_id = m.level_id and r.type = a.loan_type) as fq_rate,
+		(select ifnull(r.loan_pay_rate, 0) from houhe_config.rates r where r.level_id = m.level_id and r.type = a.loan_type) as fq_loan_pay_rate,
+		(select ifnull(r.account_manage_rate, 0) from houhe_config.rates r where r.level_id = m.level_id and r.type = a.loan_type) as fq_account_manage_rate,
+		(select ifnull(r.consultation_rate, 0) from houhe_config.rates r where r.level_id = m.level_id and r.type = a.loan_type) as fq_consultation_rate
+		from houhe_loan.loan_record a inner join houhe_loan.loan_pay c on a.loan_id=c.loan_record_id
+		left join houhe_loan.loan_basic_fee b on a.loan_id=b.loan_record_id
+		left join houhe_member.member m on a.member_id = m.memid
+		where c.status=1
+		<if test="dto.loanNo!=null">
+			and a.loan_number like concat('%',#{dto.loanNo},'%')
+		</if>
+		<if test="dto.username!=null">
+			and a.username like concat('%',#{dto.username},'%')
+		</if>
+		<if test="dto.startDate!=null">
+			and a.createdon>#{dto.startDate}
+		</if>
+		<if test="dto.endDate!=null">
+			and a.createdon&lt;#{dto.endDate}
+		</if>
+		order by a.createdon desc
+		limit #{dto.page},#{dto.rows}
+	</select>
+
+	<select id="selectReceivableListCount" resultType="java.lang.Integer">
+		select count(1) from houhe_loan.loan_record a inner join houhe_loan.loan_pay c on a.loan_id=c.loan_record_id
+		left join houhe_loan.loan_basic_fee b on a.loan_id=b.loan_record_id
+		left join houhe_member.member m on a.member_id = m.memid
+		where c.status=1
+		<if test="dto.loanNo!=null">
+			and a.loan_number like concat('%',#{dto.loanNo},'%')
+		</if>
+		<if test="dto.username!=null">
+			and a.username like concat('%',#{dto.username},'%')
+		</if>
+		<if test="dto.startDate!=null">
+			and a.createdon>#{dto.startDate}
+		</if>
+		<if test="dto.endDate!=null">
+			and a.createdon&lt;#{dto.endDate}
+		</if>
+	</select>
+
+	<!--获取已付的本金-->
+	<select id="getPaiedAmount" resultType="java.math.BigDecimal">
+		select ifnull(sum(a.principal),0) from houhe_loan.repayments_plan a where (a.status=2 or a.status=3)
+		and a.loan_record_id=#{loanid} and a.pay_date&lt;#{paydate}
+	</select>
+</mapper>

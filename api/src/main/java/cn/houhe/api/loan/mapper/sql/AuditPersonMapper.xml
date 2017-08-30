@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.AuditPersonMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-07 18:44:32. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.AuditPerson" >
+		<id column="ap_id" property="apId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="credit_apply_id" property="creditApplyId" jdbcType="INTEGER" />
+		<result column="audit_person_id" property="auditPersonId" jdbcType="INTEGER" />
+		<result column="audit_person_name" property="auditPersonName" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-07 18:44:32. -->
+	<sql id="Base_Column_List" >
+		ap_id, loan_record_id, credit_apply_id, audit_person_id, audit_person_name, createdon, 
+		remark
+	</sql>
+
+	<!-- 按主键查询 2017-04-07 18:44:32. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from audit_person
+		where ap_id = #{apId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-04-07 18:44:32. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from audit_person
+		where ap_id = #{apId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-07 18:44:32. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.AuditPerson" >
+		<selectKey resultType="java.lang.Integer" keyProperty="apId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into audit_person (loan_record_id, credit_apply_id, audit_person_id, 
+			audit_person_name, createdon, remark
+			)
+		values (#{loanRecordId,jdbcType=INTEGER}, #{creditApplyId,jdbcType=INTEGER}, #{auditPersonId,jdbcType=INTEGER}, 
+			#{auditPersonName,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-07 18:44:32. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.AuditPerson" >
+		<selectKey resultType="java.lang.Integer" keyProperty="apId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into audit_person
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				loan_record_id,
+			</if>
+			<if test="creditApplyId != null" >
+				credit_apply_id,
+			</if>
+			<if test="auditPersonId != null" >
+				audit_person_id,
+			</if>
+			<if test="auditPersonName != null" >
+				audit_person_name,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				#{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="creditApplyId != null" >
+				#{creditApplyId,jdbcType=INTEGER},
+			</if>
+			<if test="auditPersonId != null" >
+				#{auditPersonId,jdbcType=INTEGER},
+			</if>
+			<if test="auditPersonName != null" >
+				#{auditPersonName,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-07 18:44:32. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.AuditPerson" >
+		update audit_person
+		<set >
+			<if test="loanRecordId != null" >
+				loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="creditApplyId != null" >
+				credit_apply_id = #{creditApplyId,jdbcType=INTEGER},
+			</if>
+			<if test="auditPersonId != null" >
+				audit_person_id = #{auditPersonId,jdbcType=INTEGER},
+			</if>
+			<if test="auditPersonName != null" >
+				audit_person_name = #{auditPersonName,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ap_id = #{apId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-07 18:44:32. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.AuditPerson" >
+		update audit_person
+		set loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			credit_apply_id = #{creditApplyId,jdbcType=INTEGER},
+			audit_person_id = #{auditPersonId,jdbcType=INTEGER},
+			audit_person_name = #{auditPersonName,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR}
+		where ap_id = #{apId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-07 18:44:32. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from audit_person
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

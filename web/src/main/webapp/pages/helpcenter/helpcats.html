@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,minimal-ui" />
+    <meta http-equiv="Window-target" content="_top" />
+    <!-- uc强制竖屏 -->
+    <meta name="screen-orientation" content="portrait">
+    <!-- QQ强制竖屏 -->
+    <meta name="x5-orientation" content="portrait" />
+    <meta name="apple-mobile-web-app-title" content="车飞贷">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>帮助中心-分类</title>
+    <link href="../../content/Css/layer.css" type="text/css" rel="styleSheet">
+    <link href="../../content/Css/index.css?v=@CssJsVersionConfig.CssConfig" type="text/css" rel="styleSheet">
+</head>
+<body>
+<div id="loading" class="posFix layui-m-layer2"><div class="layCon layui-m-layercont h100p"><div class="layCel taCen verM"><i></i><i class="layui-m-layerload"></i><i></i></div></div></div>
+<div class="layCon height100p">
+    <div class="layRow">
+        <div class="layCon height100p" style="overflow:hidden;">
+            <div id="wrapper" class="posAbs" style="overflow:hidden;">
+                <div id="scroller">
+                    <div class="bgW" id="loadHtml">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../content/Js/jquery.min.js"></script>
+<script src="../../content/Js/fastclick.min.js"></script>
+<script src="../../content/Js/layer.js"></script>
+<script src="../../content/Js/iscroll-probe.min.js"></script>
+<script src="../../content/Js/iSlider.min.js"></script>
+<script src="../../content/Js/iSlider.plugin.dot.js"></script>
+<script src="../../content/Js/jquery.qrcode.min.js"></script>
+<script src="../../content/Js/jquery.cookie.js"></script>
+<script src="../../content/Js/jquery.common.js"></script>
+<script>
+        var dts;
+        $(function () {
+            getData();
+        })
+        function getData() {
+            $.post('../../config/catissues', function (d) {
+                if (d.code == 0) {
+                    dts = d.data;
+                    var htm = '';
+                    $.each(dts, function (i, v) {
+                        if (v.list.length >0)
+                        {
+                        htm += '<div class="orderDet"><div class="layCon bgF0" onclick="helpCel(' + v.id + ',\'' + v.title + '\')"><div class="layCel">' + v.title + '</div>' +
+        '<div class="layCel"><i class="iconfont">&#xe620;</i></div>' +
+    '</div>';
+                        $.each(v.list.slice(0, 2), function (j, obj) {
+                            htm += '<div class="layCon"><div class="layCel textLft"  onclick="helpDet(' + i + ',' + j + ')" >' + obj.title + '</div></div>';
+                        })
+                        htm += '</div>';
+                        }
+                    })
+                    $('#loadHtml').html(htm);
+                } else {
+                    Pub.msgTip(d.Msg);
+                }
+            })
+        }
+        function helpCel(i,n) {
+            var tt = {id:i,name:n}
+            location.href = '../../pages/helpcenter/helplist.html#' + encodeURI(JSON.stringify(tt));
+        }
+        function helpDet(i,j) {
+            location.href = '../../pages/helpcenter/helpdetail.html#' + encodeURI(JSON.stringify(dts[i].list[j]));
+        }
+    </script>
+</body>
+
+</html>
+

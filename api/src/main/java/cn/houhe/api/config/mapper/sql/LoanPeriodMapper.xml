@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.LoanPeriodMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 10:04:06. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.config.entity.LoanPeriod" >
+		<id column="lp_id" property="lpId" jdbcType="SMALLINT" />
+		<result column="type" property="type" jdbcType="TINYINT" />
+		<result column="time" property="time" jdbcType="SMALLINT" />
+		<result column="createdby" property="createdby" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="modifiedby" property="modifiedby" jdbcType="VARCHAR" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 10:04:06. -->
+	<sql id="Base_Column_List" >
+		lp_id, type, time, createdby, createdon, modifiedby, modifiedon
+	</sql>
+
+	<!-- 按主键查询 2017-03-30 10:04:06. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+		select 
+		<include refid="Base_Column_List" />
+		from loan_period
+		where lp_id = #{lpId,jdbcType=SMALLINT}
+	</select>
+
+	<!-- 按主键删除 2017-03-30 10:04:06. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+		delete from loan_period
+		where lp_id = #{lpId,jdbcType=SMALLINT}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-03-30 10:04:06. -->
+	<insert id="insert" parameterType="cn.houhe.api.config.entity.LoanPeriod" >
+		<selectKey resultType="java.lang.Short" keyProperty="lpId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into loan_period (type, time, createdby, 
+			createdon, modifiedby, modifiedon
+			)
+		values (#{type,jdbcType=TINYINT}, #{time,jdbcType=SMALLINT}, #{createdby,jdbcType=VARCHAR}, 
+			#{createdon,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=VARCHAR}, #{modifiedon,jdbcType=TIMESTAMP}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-03-30 10:04:06. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.config.entity.LoanPeriod" >
+		<selectKey resultType="java.lang.Short" keyProperty="lpId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into loan_period
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="time != null" >
+				time,
+			</if>
+			<if test="createdby != null" >
+				createdby,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="type != null" >
+				#{type,jdbcType=TINYINT},
+			</if>
+			<if test="time != null" >
+				#{time,jdbcType=SMALLINT},
+			</if>
+			<if test="createdby != null" >
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				#{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-03-30 10:04:06. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.config.entity.LoanPeriod" >
+		update loan_period
+		<set >
+			<if test="type != null" >
+				type = #{type,jdbcType=TINYINT},
+			</if>
+			<if test="time != null" >
+				time = #{time,jdbcType=SMALLINT},
+			</if>
+			<if test="createdby != null" >
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where lp_id = #{lpId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-03-30 10:04:06. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.config.entity.LoanPeriod" >
+		update loan_period
+		set type = #{type,jdbcType=TINYINT},
+			time = #{time,jdbcType=SMALLINT},
+			createdby = #{createdby,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP}
+		where lp_id = #{lpId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-03-30 10:04:06. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from loan_period
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

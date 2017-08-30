@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.log.mapper.MemberPositioningMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-10 11:10:03. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.log.entity.MemberPositioning" >
+		<id column="memposid" property="memposid" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="latitude" property="latitude" jdbcType="DOUBLE" />
+		<result column="longitude" property="longitude" jdbcType="DOUBLE" />
+		<result column="detailaddr" property="detailaddr" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-10 11:10:03. -->
+	<sql id="Base_Column_List" >
+		memposid, member_id, latitude, longitude, detailaddr, createdon
+	</sql>
+
+	<!-- 按主键查询 2017-04-10 11:10:03. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from member_positioning
+		where memposid = #{memposid,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-04-10 11:10:03. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from member_positioning
+		where memposid = #{memposid,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-10 11:10:03. -->
+	<insert id="insert" parameterType="cn.houhe.api.log.entity.MemberPositioning" >
+		<selectKey resultType="java.lang.Integer" keyProperty="memposid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into member_positioning (member_id, latitude, longitude, 
+			detailaddr, createdon)
+		values (#{memberId,jdbcType=INTEGER}, #{latitude,jdbcType=DOUBLE}, #{longitude,jdbcType=DOUBLE}, 
+			#{detailaddr,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-10 11:10:03. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.log.entity.MemberPositioning" >
+		<selectKey resultType="java.lang.Integer" keyProperty="memposid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into member_positioning
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="latitude != null" >
+				latitude,
+			</if>
+			<if test="longitude != null" >
+				longitude,
+			</if>
+			<if test="detailaddr != null" >
+				detailaddr,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="latitude != null" >
+				#{latitude,jdbcType=DOUBLE},
+			</if>
+			<if test="longitude != null" >
+				#{longitude,jdbcType=DOUBLE},
+			</if>
+			<if test="detailaddr != null" >
+				#{detailaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-10 11:10:03. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.log.entity.MemberPositioning" >
+		update member_positioning
+		<set >
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="latitude != null" >
+				latitude = #{latitude,jdbcType=DOUBLE},
+			</if>
+			<if test="longitude != null" >
+				longitude = #{longitude,jdbcType=DOUBLE},
+			</if>
+			<if test="detailaddr != null" >
+				detailaddr = #{detailaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where memposid = #{memposid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-10 11:10:03. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.log.entity.MemberPositioning" >
+		update member_positioning
+		set member_id = #{memberId,jdbcType=INTEGER},
+			latitude = #{latitude,jdbcType=DOUBLE},
+			longitude = #{longitude,jdbcType=DOUBLE},
+			detailaddr = #{detailaddr,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP}
+		where memposid = #{memposid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-10 11:10:03. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from member_positioning
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

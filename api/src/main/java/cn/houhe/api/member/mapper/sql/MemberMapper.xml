@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.member.mapper.MemberMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-11 19:05:33. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.member.entity.Member" >
+		<id column="memid" property="memid" jdbcType="INTEGER" />
+		<result column="level_id" property="levelId" jdbcType="SMALLINT" />
+		<result column="pdl_level_id" property="pdlLevelId" jdbcType="SMALLINT" />
+		<result column="realname" property="realname" jdbcType="VARCHAR" />
+		<result column="mobileno" property="mobileno" jdbcType="VARCHAR" />
+		<result column="loginpsw" property="loginpsw" jdbcType="VARCHAR" />
+		<result column="bqs_open_id" property="bqsOpenId" jdbcType="VARCHAR" />
+		<result column="tradingpsw" property="tradingpsw" jdbcType="VARCHAR" />
+		<result column="invitecode" property="invitecode" jdbcType="VARCHAR" />
+		<result column="my_invitecode" property="myInvitecode" jdbcType="VARCHAR" />
+		<result column="idcardno" property="idcardno" jdbcType="VARCHAR" />
+		<result column="longtimecity" property="longtimecity" jdbcType="VARCHAR" />
+		<result column="detailaddr" property="detailaddr" jdbcType="VARCHAR" />
+		<result column="leveleducation" property="leveleducation" jdbcType="VARCHAR" />
+		<result column="familyincome" property="familyincome" jdbcType="DECIMAL" />
+		<result column="unitnature" property="unitnature" jdbcType="VARCHAR" />
+		<result column="unitname" property="unitname" jdbcType="VARCHAR" />
+		<result column="position" property="position" jdbcType="VARCHAR" />
+		<result column="nation" property="nation" jdbcType="VARCHAR" />
+		<result column="havejobtime" property="havejobtime" jdbcType="TIMESTAMP" />
+		<result column="nowunitinductiontime" property="nowunitinductiontime" jdbcType="TIMESTAMP" />
+		<result column="maritalstatus" property="maritalstatus" jdbcType="TINYINT" />
+		<result column="sex" property="sex" jdbcType="TINYINT" />
+		<result column="birthday" property="birthday" jdbcType="DATE" />
+		<result column="origin_palce" property="originPalce" jdbcType="VARCHAR" />
+		<result column="is_enable" property="isEnable" jdbcType="TINYINT" />
+		<result column="childrennumber" property="childrennumber" jdbcType="SMALLINT" />
+		<result column="mobilephonebrand" property="mobilephonebrand" jdbcType="VARCHAR" />
+		<result column="linkman" property="linkman" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="linkphone" property="linkphone" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-11 19:05:33. -->
+	<sql id="Base_Column_List" >
+		memid, level_id, pdl_level_id, realname, mobileno, loginpsw, bqs_open_id, tradingpsw, 
+		invitecode, my_invitecode, idcardno, longtimecity, detailaddr, leveleducation, familyincome, 
+		unitnature, unitname, position, nation, havejobtime, nowunitinductiontime, maritalstatus, 
+		sex, birthday, origin_palce, is_enable, childrennumber, mobilephonebrand, linkman, 
+		remark, linkphone, createdon, modifiedon
+	</sql>
+
+	<!-- 按主键查询 2017-05-11 19:05:33. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from member
+		where memid = #{memid,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-11 19:05:33. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from member
+		where memid = #{memid,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-11 19:05:33. -->
+	<insert id="insert" parameterType="cn.houhe.api.member.entity.Member" >
+		<selectKey resultType="java.lang.Integer" keyProperty="memid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into member (level_id, pdl_level_id, realname, 
+			mobileno, loginpsw, bqs_open_id, 
+			tradingpsw, invitecode, my_invitecode, 
+			idcardno, longtimecity, detailaddr, 
+			leveleducation, familyincome, unitnature, 
+			unitname, position, nation, 
+			havejobtime, nowunitinductiontime, maritalstatus, 
+			sex, birthday, origin_palce, 
+			is_enable, childrennumber, mobilephonebrand, 
+			linkman, remark, linkphone, 
+			createdon, modifiedon)
+		values (#{levelId,jdbcType=SMALLINT}, #{pdlLevelId,jdbcType=SMALLINT}, #{realname,jdbcType=VARCHAR}, 
+			#{mobileno,jdbcType=VARCHAR}, #{loginpsw,jdbcType=VARCHAR}, #{bqsOpenId,jdbcType=VARCHAR}, 
+			#{tradingpsw,jdbcType=VARCHAR}, #{invitecode,jdbcType=VARCHAR}, #{myInvitecode,jdbcType=VARCHAR}, 
+			#{idcardno,jdbcType=VARCHAR}, #{longtimecity,jdbcType=VARCHAR}, #{detailaddr,jdbcType=VARCHAR}, 
+			#{leveleducation,jdbcType=VARCHAR}, #{familyincome,jdbcType=DECIMAL}, #{unitnature,jdbcType=VARCHAR}, 
+			#{unitname,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{nation,jdbcType=VARCHAR}, 
+			#{havejobtime,jdbcType=TIMESTAMP}, #{nowunitinductiontime,jdbcType=TIMESTAMP}, #{maritalstatus,jdbcType=TINYINT}, 
+			#{sex,jdbcType=TINYINT}, #{birthday,jdbcType=DATE}, #{originPalce,jdbcType=VARCHAR}, 
+			#{isEnable,jdbcType=TINYINT}, #{childrennumber,jdbcType=SMALLINT}, #{mobilephonebrand,jdbcType=VARCHAR}, 
+			#{linkman,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{linkphone,jdbcType=VARCHAR}, 
+			#{createdon,jdbcType=TIMESTAMP}, #{modifiedon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-11 19:05:33. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.member.entity.Member" >
+		<selectKey resultType="java.lang.Integer" keyProperty="memid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into member
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="levelId != null" >
+				level_id,
+			</if>
+			<if test="pdlLevelId != null" >
+				pdl_level_id,
+			</if>
+			<if test="realname != null" >
+				realname,
+			</if>
+			<if test="mobileno != null" >
+				mobileno,
+			</if>
+			<if test="loginpsw != null" >
+				loginpsw,
+			</if>
+			<if test="bqsOpenId != null" >
+				bqs_open_id,
+			</if>
+			<if test="tradingpsw != null" >
+				tradingpsw,
+			</if>
+			<if test="invitecode != null" >
+				invitecode,
+			</if>
+			<if test="myInvitecode != null" >
+				my_invitecode,
+			</if>
+			<if test="idcardno != null" >
+				idcardno,
+			</if>
+			<if test="longtimecity != null" >
+				longtimecity,
+			</if>
+			<if test="detailaddr != null" >
+				detailaddr,
+			</if>
+			<if test="leveleducation != null" >
+				leveleducation,
+			</if>
+			<if test="familyincome != null" >
+				familyincome,
+			</if>
+			<if test="unitnature != null" >
+				unitnature,
+			</if>
+			<if test="unitname != null" >
+				unitname,
+			</if>
+			<if test="position != null" >
+				position,
+			</if>
+			<if test="nation != null" >
+				nation,
+			</if>
+			<if test="havejobtime != null" >
+				havejobtime,
+			</if>
+			<if test="nowunitinductiontime != null" >
+				nowunitinductiontime,
+			</if>
+			<if test="maritalstatus != null" >
+				maritalstatus,
+			</if>
+			<if test="sex != null" >
+				sex,
+			</if>
+			<if test="birthday != null" >
+				birthday,
+			</if>
+			<if test="originPalce != null" >
+				origin_palce,
+			</if>
+			<if test="isEnable != null" >
+				is_enable,
+			</if>
+			<if test="childrennumber != null" >
+				childrennumber,
+			</if>
+			<if test="mobilephonebrand != null" >
+				mobilephonebrand,
+			</if>
+			<if test="linkman != null" >
+				linkman,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="linkphone != null" >
+				linkphone,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="levelId != null" >
+				#{levelId,jdbcType=SMALLINT},
+			</if>
+			<if test="pdlLevelId != null" >
+				#{pdlLevelId,jdbcType=SMALLINT},
+			</if>
+			<if test="realname != null" >
+				#{realname,jdbcType=VARCHAR},
+			</if>
+			<if test="mobileno != null" >
+				#{mobileno,jdbcType=VARCHAR},
+			</if>
+			<if test="loginpsw != null" >
+				#{loginpsw,jdbcType=VARCHAR},
+			</if>
+			<if test="bqsOpenId != null" >
+				#{bqsOpenId,jdbcType=VARCHAR},
+			</if>
+			<if test="tradingpsw != null" >
+				#{tradingpsw,jdbcType=VARCHAR},
+			</if>
+			<if test="invitecode != null" >
+				#{invitecode,jdbcType=VARCHAR},
+			</if>
+			<if test="myInvitecode != null" >
+				#{myInvitecode,jdbcType=VARCHAR},
+			</if>
+			<if test="idcardno != null" >
+				#{idcardno,jdbcType=VARCHAR},
+			</if>
+			<if test="longtimecity != null" >
+				#{longtimecity,jdbcType=VARCHAR},
+			</if>
+			<if test="detailaddr != null" >
+				#{detailaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="leveleducation != null" >
+				#{leveleducation,jdbcType=VARCHAR},
+			</if>
+			<if test="familyincome != null" >
+				#{familyincome,jdbcType=DECIMAL},
+			</if>
+			<if test="unitnature != null" >
+				#{unitnature,jdbcType=VARCHAR},
+			</if>
+			<if test="unitname != null" >
+				#{unitname,jdbcType=VARCHAR},
+			</if>
+			<if test="position != null" >
+				#{position,jdbcType=VARCHAR},
+			</if>
+			<if test="nation != null" >
+				#{nation,jdbcType=VARCHAR},
+			</if>
+			<if test="havejobtime != null" >
+				#{havejobtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="nowunitinductiontime != null" >
+				#{nowunitinductiontime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="maritalstatus != null" >
+				#{maritalstatus,jdbcType=TINYINT},
+			</if>
+			<if test="sex != null" >
+				#{sex,jdbcType=TINYINT},
+			</if>
+			<if test="birthday != null" >
+				#{birthday,jdbcType=DATE},
+			</if>
+			<if test="originPalce != null" >
+				#{originPalce,jdbcType=VARCHAR},
+			</if>
+			<if test="isEnable != null" >
+				#{isEnable,jdbcType=TINYINT},
+			</if>
+			<if test="childrennumber != null" >
+				#{childrennumber,jdbcType=SMALLINT},
+			</if>
+			<if test="mobilephonebrand != null" >
+				#{mobilephonebrand,jdbcType=VARCHAR},
+			</if>
+			<if test="linkman != null" >
+				#{linkman,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="linkphone != null" >
+				#{linkphone,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-11 19:05:33. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.member.entity.Member" >
+		update member
+		<set >
+			<if test="levelId != null" >
+				level_id = #{levelId,jdbcType=SMALLINT},
+			</if>
+			<if test="pdlLevelId != null" >
+				pdl_level_id = #{pdlLevelId,jdbcType=SMALLINT},
+			</if>
+			<if test="realname != null" >
+				realname = #{realname,jdbcType=VARCHAR},
+			</if>
+			<if test="mobileno != null" >
+				mobileno = #{mobileno,jdbcType=VARCHAR},
+			</if>
+			<if test="loginpsw != null" >
+				loginpsw = #{loginpsw,jdbcType=VARCHAR},
+			</if>
+			<if test="bqsOpenId != null" >
+				bqs_open_id = #{bqsOpenId,jdbcType=VARCHAR},
+			</if>
+			<if test="tradingpsw != null" >
+				tradingpsw = #{tradingpsw,jdbcType=VARCHAR},
+			</if>
+			<if test="invitecode != null" >
+				invitecode = #{invitecode,jdbcType=VARCHAR},
+			</if>
+			<if test="myInvitecode != null" >
+				my_invitecode = #{myInvitecode,jdbcType=VARCHAR},
+			</if>
+			<if test="idcardno != null" >
+				idcardno = #{idcardno,jdbcType=VARCHAR},
+			</if>
+			<if test="longtimecity != null" >
+				longtimecity = #{longtimecity,jdbcType=VARCHAR},
+			</if>
+			<if test="detailaddr != null" >
+				detailaddr = #{detailaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="leveleducation != null" >
+				leveleducation = #{leveleducation,jdbcType=VARCHAR},
+			</if>
+			<if test="familyincome != null" >
+				familyincome = #{familyincome,jdbcType=DECIMAL},
+			</if>
+			<if test="unitnature != null" >
+				unitnature = #{unitnature,jdbcType=VARCHAR},
+			</if>
+			<if test="unitname != null" >
+				unitname = #{unitname,jdbcType=VARCHAR},
+			</if>
+			<if test="position != null" >
+				position = #{position,jdbcType=VARCHAR},
+			</if>
+			<if test="nation != null" >
+				nation = #{nation,jdbcType=VARCHAR},
+			</if>
+			<if test="havejobtime != null" >
+				havejobtime = #{havejobtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="nowunitinductiontime != null" >
+				nowunitinductiontime = #{nowunitinductiontime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="maritalstatus != null" >
+				maritalstatus = #{maritalstatus,jdbcType=TINYINT},
+			</if>
+			<if test="sex != null" >
+				sex = #{sex,jdbcType=TINYINT},
+			</if>
+			<if test="birthday != null" >
+				birthday = #{birthday,jdbcType=DATE},
+			</if>
+			<if test="originPalce != null" >
+				origin_palce = #{originPalce,jdbcType=VARCHAR},
+			</if>
+			<if test="isEnable != null" >
+				is_enable = #{isEnable,jdbcType=TINYINT},
+			</if>
+			<if test="childrennumber != null" >
+				childrennumber = #{childrennumber,jdbcType=SMALLINT},
+			</if>
+			<if test="mobilephonebrand != null" >
+				mobilephonebrand = #{mobilephonebrand,jdbcType=VARCHAR},
+			</if>
+			<if test="linkman != null" >
+				linkman = #{linkman,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="linkphone != null" >
+				linkphone = #{linkphone,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where memid = #{memid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-11 19:05:33. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.member.entity.Member" >
+		update member
+		set level_id = #{levelId,jdbcType=SMALLINT},
+			pdl_level_id = #{pdlLevelId,jdbcType=SMALLINT},
+			realname = #{realname,jdbcType=VARCHAR},
+			mobileno = #{mobileno,jdbcType=VARCHAR},
+			loginpsw = #{loginpsw,jdbcType=VARCHAR},
+			bqs_open_id = #{bqsOpenId,jdbcType=VARCHAR},
+			tradingpsw = #{tradingpsw,jdbcType=VARCHAR},
+			invitecode = #{invitecode,jdbcType=VARCHAR},
+			my_invitecode = #{myInvitecode,jdbcType=VARCHAR},
+			idcardno = #{idcardno,jdbcType=VARCHAR},
+			longtimecity = #{longtimecity,jdbcType=VARCHAR},
+			detailaddr = #{detailaddr,jdbcType=VARCHAR},
+			leveleducation = #{leveleducation,jdbcType=VARCHAR},
+			familyincome = #{familyincome,jdbcType=DECIMAL},
+			unitnature = #{unitnature,jdbcType=VARCHAR},
+			unitname = #{unitname,jdbcType=VARCHAR},
+			position = #{position,jdbcType=VARCHAR},
+			nation = #{nation,jdbcType=VARCHAR},
+			havejobtime = #{havejobtime,jdbcType=TIMESTAMP},
+			nowunitinductiontime = #{nowunitinductiontime,jdbcType=TIMESTAMP},
+			maritalstatus = #{maritalstatus,jdbcType=TINYINT},
+			sex = #{sex,jdbcType=TINYINT},
+			birthday = #{birthday,jdbcType=DATE},
+			origin_palce = #{originPalce,jdbcType=VARCHAR},
+			is_enable = #{isEnable,jdbcType=TINYINT},
+			childrennumber = #{childrennumber,jdbcType=SMALLINT},
+			mobilephonebrand = #{mobilephonebrand,jdbcType=VARCHAR},
+			linkman = #{linkman,jdbcType=VARCHAR},
+			remark = #{remark,jdbcType=VARCHAR},
+			linkphone = #{linkphone,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP}
+		where memid = #{memid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-11 19:05:33. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from member
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

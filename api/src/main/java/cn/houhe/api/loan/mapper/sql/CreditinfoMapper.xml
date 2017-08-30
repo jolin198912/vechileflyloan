@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.CreditinfoMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-20 16:30:33. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.Creditinfo" >
+		<id column="cd_id" property="cdId" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="loan_limit_used" property="loanLimitUsed" jdbcType="INTEGER" />
+		<result column="loan_limit_total" property="loanLimitTotal" jdbcType="INTEGER" />
+		<result column="pdl_loan_limit_used" property="pdlLoanLimitUsed" jdbcType="INTEGER" />
+		<result column="pdl_loan_limit_total" property="pdlLoanLimitTotal" jdbcType="INTEGER" />
+		<result column="system_limit_total" property="systemLimitTotal" jdbcType="INTEGER" />
+		<result column="credit_rating" property="creditRating" jdbcType="VARCHAR" />
+		<result column="loan_apply_times" property="loanApplyTimes" jdbcType="TINYINT" />
+		<result column="delay_debit_times" property="delayDebitTimes" jdbcType="SMALLINT" />
+		<result column="loan_limit_applying" property="loanLimitApplying" jdbcType="INTEGER" />
+		<result column="pdl_loan_limit_applying" property="pdlLoanLimitApplying" jdbcType="INTEGER" />
+		<result column="loan_limit_left" property="loanLimitLeft" jdbcType="INTEGER" />
+		<result column="pdl_loan_limit_left" property="pdlLoanLimitLeft" jdbcType="INTEGER" />
+		<result column="total_scores" property="totalScores" jdbcType="INTEGER" />
+		<result column="assessment_day" property="assessmentDay" jdbcType="TIMESTAMP" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-20 16:30:33. -->
+	<sql id="Base_Column_List" >
+		cd_id, member_id, loan_limit_used, loan_limit_total, pdl_loan_limit_used, pdl_loan_limit_total, 
+		system_limit_total, credit_rating, loan_apply_times, delay_debit_times, loan_limit_applying, 
+		pdl_loan_limit_applying, loan_limit_left, pdl_loan_limit_left, total_scores, assessment_day, 
+		createdon, remark
+	</sql>
+
+	<!-- 按主键查询 2017-04-20 16:30:33. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from creditinfo
+		where cd_id = #{cdId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-04-20 16:30:33. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from creditinfo
+		where cd_id = #{cdId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-20 16:30:33. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.Creditinfo" >
+		<selectKey resultType="java.lang.Integer" keyProperty="cdId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into creditinfo (member_id, loan_limit_used, loan_limit_total, 
+			pdl_loan_limit_used, pdl_loan_limit_total, system_limit_total, 
+			credit_rating, loan_apply_times, delay_debit_times, 
+			loan_limit_applying, pdl_loan_limit_applying, 
+			loan_limit_left, pdl_loan_limit_left, total_scores, 
+			assessment_day, createdon, remark
+			)
+		values (#{memberId,jdbcType=INTEGER}, #{loanLimitUsed,jdbcType=INTEGER}, #{loanLimitTotal,jdbcType=INTEGER}, 
+			#{pdlLoanLimitUsed,jdbcType=INTEGER}, #{pdlLoanLimitTotal,jdbcType=INTEGER}, #{systemLimitTotal,jdbcType=INTEGER}, 
+			#{creditRating,jdbcType=VARCHAR}, #{loanApplyTimes,jdbcType=TINYINT}, #{delayDebitTimes,jdbcType=SMALLINT}, 
+			#{loanLimitApplying,jdbcType=INTEGER}, #{pdlLoanLimitApplying,jdbcType=INTEGER}, 
+			#{loanLimitLeft,jdbcType=INTEGER}, #{pdlLoanLimitLeft,jdbcType=INTEGER}, #{totalScores,jdbcType=INTEGER}, 
+			#{assessmentDay,jdbcType=TIMESTAMP}, #{createdon,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-20 16:30:33. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.Creditinfo" >
+		<selectKey resultType="java.lang.Integer" keyProperty="cdId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into creditinfo
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="loanLimitUsed != null" >
+				loan_limit_used,
+			</if>
+			<if test="loanLimitTotal != null" >
+				loan_limit_total,
+			</if>
+			<if test="pdlLoanLimitUsed != null" >
+				pdl_loan_limit_used,
+			</if>
+			<if test="pdlLoanLimitTotal != null" >
+				pdl_loan_limit_total,
+			</if>
+			<if test="systemLimitTotal != null" >
+				system_limit_total,
+			</if>
+			<if test="creditRating != null" >
+				credit_rating,
+			</if>
+			<if test="loanApplyTimes != null" >
+				loan_apply_times,
+			</if>
+			<if test="delayDebitTimes != null" >
+				delay_debit_times,
+			</if>
+			<if test="loanLimitApplying != null" >
+				loan_limit_applying,
+			</if>
+			<if test="pdlLoanLimitApplying != null" >
+				pdl_loan_limit_applying,
+			</if>
+			<if test="loanLimitLeft != null" >
+				loan_limit_left,
+			</if>
+			<if test="pdlLoanLimitLeft != null" >
+				pdl_loan_limit_left,
+			</if>
+			<if test="totalScores != null" >
+				total_scores,
+			</if>
+			<if test="assessmentDay != null" >
+				assessment_day,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="loanLimitUsed != null" >
+				#{loanLimitUsed,jdbcType=INTEGER},
+			</if>
+			<if test="loanLimitTotal != null" >
+				#{loanLimitTotal,jdbcType=INTEGER},
+			</if>
+			<if test="pdlLoanLimitUsed != null" >
+				#{pdlLoanLimitUsed,jdbcType=INTEGER},
+			</if>
+			<if test="pdlLoanLimitTotal != null" >
+				#{pdlLoanLimitTotal,jdbcType=INTEGER},
+			</if>
+			<if test="systemLimitTotal != null" >
+				#{systemLimitTotal,jdbcType=INTEGER},
+			</if>
+			<if test="creditRating != null" >
+				#{creditRating,jdbcType=VARCHAR},
+			</if>
+			<if test="loanApplyTimes != null" >
+				#{loanApplyTimes,jdbcType=TINYINT},
+			</if>
+			<if test="delayDebitTimes != null" >
+				#{delayDebitTimes,jdbcType=SMALLINT},
+			</if>
+			<if test="loanLimitApplying != null" >
+				#{loanLimitApplying,jdbcType=INTEGER},
+			</if>
+			<if test="pdlLoanLimitApplying != null" >
+				#{pdlLoanLimitApplying,jdbcType=INTEGER},
+			</if>
+			<if test="loanLimitLeft != null" >
+				#{loanLimitLeft,jdbcType=INTEGER},
+			</if>
+			<if test="pdlLoanLimitLeft != null" >
+				#{pdlLoanLimitLeft,jdbcType=INTEGER},
+			</if>
+			<if test="totalScores != null" >
+				#{totalScores,jdbcType=INTEGER},
+			</if>
+			<if test="assessmentDay != null" >
+				#{assessmentDay,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-20 16:30:33. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.Creditinfo" >
+		update creditinfo
+		<set >
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="loanLimitUsed != null" >
+				loan_limit_used = #{loanLimitUsed,jdbcType=INTEGER},
+			</if>
+			<if test="loanLimitTotal != null" >
+				loan_limit_total = #{loanLimitTotal,jdbcType=INTEGER},
+			</if>
+			<if test="pdlLoanLimitUsed != null" >
+				pdl_loan_limit_used = #{pdlLoanLimitUsed,jdbcType=INTEGER},
+			</if>
+			<if test="pdlLoanLimitTotal != null" >
+				pdl_loan_limit_total = #{pdlLoanLimitTotal,jdbcType=INTEGER},
+			</if>
+			<if test="systemLimitTotal != null" >
+				system_limit_total = #{systemLimitTotal,jdbcType=INTEGER},
+			</if>
+			<if test="creditRating != null" >
+				credit_rating = #{creditRating,jdbcType=VARCHAR},
+			</if>
+			<if test="loanApplyTimes != null" >
+				loan_apply_times = #{loanApplyTimes,jdbcType=TINYINT},
+			</if>
+			<if test="delayDebitTimes != null" >
+				delay_debit_times = #{delayDebitTimes,jdbcType=SMALLINT},
+			</if>
+			<if test="loanLimitApplying != null" >
+				loan_limit_applying = #{loanLimitApplying,jdbcType=INTEGER},
+			</if>
+			<if test="pdlLoanLimitApplying != null" >
+				pdl_loan_limit_applying = #{pdlLoanLimitApplying,jdbcType=INTEGER},
+			</if>
+			<if test="loanLimitLeft != null" >
+				loan_limit_left = #{loanLimitLeft,jdbcType=INTEGER},
+			</if>
+			<if test="pdlLoanLimitLeft != null" >
+				pdl_loan_limit_left = #{pdlLoanLimitLeft,jdbcType=INTEGER},
+			</if>
+			<if test="totalScores != null" >
+				total_scores = #{totalScores,jdbcType=INTEGER},
+			</if>
+			<if test="assessmentDay != null" >
+				assessment_day = #{assessmentDay,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where cd_id = #{cdId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-20 16:30:33. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.Creditinfo" >
+		update creditinfo
+		set member_id = #{memberId,jdbcType=INTEGER},
+			loan_limit_used = #{loanLimitUsed,jdbcType=INTEGER},
+			loan_limit_total = #{loanLimitTotal,jdbcType=INTEGER},
+			pdl_loan_limit_used = #{pdlLoanLimitUsed,jdbcType=INTEGER},
+			pdl_loan_limit_total = #{pdlLoanLimitTotal,jdbcType=INTEGER},
+			system_limit_total = #{systemLimitTotal,jdbcType=INTEGER},
+			credit_rating = #{creditRating,jdbcType=VARCHAR},
+			loan_apply_times = #{loanApplyTimes,jdbcType=TINYINT},
+			delay_debit_times = #{delayDebitTimes,jdbcType=SMALLINT},
+			loan_limit_applying = #{loanLimitApplying,jdbcType=INTEGER},
+			pdl_loan_limit_applying = #{pdlLoanLimitApplying,jdbcType=INTEGER},
+			loan_limit_left = #{loanLimitLeft,jdbcType=INTEGER},
+			pdl_loan_limit_left = #{pdlLoanLimitLeft,jdbcType=INTEGER},
+			total_scores = #{totalScores,jdbcType=INTEGER},
+			assessment_day = #{assessmentDay,jdbcType=TIMESTAMP},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR}
+		where cd_id = #{cdId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-20 16:30:33. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from creditinfo
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

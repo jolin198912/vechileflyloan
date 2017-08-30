@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true" scan="true">
+
+    <contextName>HOUHE</contextName>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%contextName] [%-5p] %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="LOG.INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy
+             class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} %logger - %msg%n</pattern>
+            </layout>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    
+    <appender name="LOG.DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/debug.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy
+             class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} %logger - %msg%n</pattern>
+            </layout>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="LOG.ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy
+             class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} %logger - %msg%n</pattern>
+            </layout>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <appender name="LOG.TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/trace.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy
+             class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} %logger - %msg%n</pattern>
+            </layout>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!--<appender name="stash" class="net.logstash.logback.appender.LoggingEventAsyncDisruptorAppender">
+        <appender class="net.logstash.logback.appender.LogstashSocketAppender">
+            <host>120.25.125.76</host>
+            &lt;!&ndash; port is optional (default value shown) &ndash;&gt;
+            <port>514</port>
+        </appender>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>-->
+
+    <property name="THIRD_PART_LIB_LEVEL" value="ERROR" />
+    <property name="THIRD_PART_LIB_LEVEL1" value="DEBUG" />
+
+    <logger name="cn.com.serp.common.mybatis" level="${THIRD_PART_LIB_LEVEL}" />
+    <logger name="net.sf.ehcache" level="${THIRD_PART_LIB_LEVEL}" />
+    <logger name="org.apache.mina" level="${THIRD_PART_LIB_LEVEL}" />
+    <logger name="org.mybatis" level="${THIRD_PART_LIB_LEVEL}" />
+    <logger name="org.springframework" level="${THIRD_PART_LIB_LEVEL1}" />
+    <logger name="com.espertech" level="${THIRD_PART_LIB_LEVEL}"/>
+    <logger name="org.apache.cxf" level="${THIRD_PART_LIB_LEVEL}"/>
+    <logger name="org.apache.commons" level="${THIRD_PART_LIB_LEVEL}"/>
+    <logger name="org.atmosphere" level="${THIRD_PART_LIB_LEVEL}"/>
+    <logger name="org.hibernate" level="${THIRD_PART_LIB_LEVEL}"/>
+    <logger name="org.apache.ibatis" level="${THIRD_PART_LIB_LEVEL}"/>
+    <logger name="ch.qos.logback" level="${THIRD_PART_LIB_LEVEL}"/>
+    <logger name="com.alibaba.druid" level="${THIRD_PART_LIB_LEVEL}"/>
+    <logger name="druid.sql" level="${THIRD_PART_LIB_LEVEL}"/>
+    <logger name="druid.sql.Statement" level="${THIRD_PART_LIB_LEVEL1}"/>
+    <logger name="druid.sql.ResultSet" level="${THIRD_PART_LIB_LEVEL1}"/>
+    <logger name="com.tenpay" level="${THIRD_PART_LIB_LEVEL1}"/>
+    <logger name="com.alipay" level="${THIRD_PART_LIB_LEVEL1}"/>
+    <logger name="logging.level.com.atomikos" level="${THIRD_PART_LIB_LEVEL}"/>
+    <logger name="org.springframework.aop.interceptor.JamonPerformanceMonitorInterceptor" level="TRACE"/>
+    <logger name="cn.com.iotrust.common.mvc.LogFilter" level="TRACE"/>
+
+    <root>
+        <level value="DEBUG"/>
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="LOG.DEBUG"/>
+        <appender-ref ref="LOG.ERROR"/>
+        <appender-ref ref="LOG.INFO"/>
+        <appender-ref ref="LOG.TRACE"/>
+    </root>
+
+</configuration>

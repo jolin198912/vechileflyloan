@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.RemainderPlanMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-24 18:33:37. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.RemainderPlan" >
+		<id column="rp_id" property="rpId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="repayments_plan_id" property="repaymentsPlanId" jdbcType="INTEGER" />
+		<result column="remainder_id" property="remainderId" jdbcType="INTEGER" />
+		<result column="remainder" property="remainder" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-24 18:33:37. -->
+	<sql id="Base_Column_List" >
+		rp_id, loan_record_id, repayments_plan_id, remainder_id, remainder, remark, createdon
+	</sql>
+
+	<!-- 按主键查询 2017-05-24 18:33:37. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from remainder_plan
+		where rp_id = #{rpId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-24 18:33:37. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from remainder_plan
+		where rp_id = #{rpId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-24 18:33:37. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.RemainderPlan" >
+		<selectKey resultType="java.lang.Integer" keyProperty="rpId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into remainder_plan (loan_record_id, repayments_plan_id, remainder_id, 
+			remainder, remark, createdon
+			)
+		values (#{loanRecordId,jdbcType=INTEGER}, #{repaymentsPlanId,jdbcType=INTEGER}, #{remainderId,jdbcType=INTEGER}, 
+			#{remainder,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-24 18:33:37. -->
+	<insert id="insertSelective">
+		insert into remainder_plan
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				loan_record_id,
+			</if>
+			<if test="repaymentsPlanId != null" >
+				repayments_plan_id,
+			</if>
+			<if test="remainderId != null" >
+				remainder_id,
+			</if>
+			<if test="remainder != null" >
+				remainder,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				#{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="repaymentsPlanId != null" >
+				#{repaymentsPlanId,jdbcType=INTEGER},
+			</if>
+			<if test="remainderId != null" >
+				#{remainderId,jdbcType=INTEGER},
+			</if>
+			<if test="remainder != null" >
+				#{remainder,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-24 18:33:37. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.RemainderPlan" >
+		update remainder_plan
+		<set >
+			<if test="loanRecordId != null" >
+				loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="repaymentsPlanId != null" >
+				repayments_plan_id = #{repaymentsPlanId,jdbcType=INTEGER},
+			</if>
+			<if test="remainderId != null" >
+				remainder_id = #{remainderId,jdbcType=INTEGER},
+			</if>
+			<if test="remainder != null" >
+				remainder = #{remainder,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where rp_id = #{rpId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-24 18:33:37. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.RemainderPlan" >
+		update remainder_plan
+		set loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			repayments_plan_id = #{repaymentsPlanId,jdbcType=INTEGER},
+			remainder_id = #{remainderId,jdbcType=INTEGER},
+			remainder = #{remainder,jdbcType=VARCHAR},
+			remark = #{remark,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP}
+		where rp_id = #{rpId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-24 18:33:37. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from remainder_plan
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

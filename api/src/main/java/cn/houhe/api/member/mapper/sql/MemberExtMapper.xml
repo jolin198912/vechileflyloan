@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.member.mapper.MemberExtMapper">
+    <!-- 实体类 - 数据库映射 2017-03-30 10:12:39. -->
+    <resultMap id="BaseResultExtMap" type="cn.houhe.api.member.entity.MemberExt">
+        <id column="memid" property="memid" jdbcType="INTEGER"/>
+        <result column="level_id" property="levelId" jdbcType="SMALLINT"/>
+        <result column="apply_state" property="applyState" jdbcType="TINYINT"/>
+        <result column="realname" property="realname" jdbcType="VARCHAR"/>
+        <result column="mobileno" property="mobileno" jdbcType="VARCHAR"/>
+        <result column="loginpsw" property="loginpsw" jdbcType="VARCHAR"/>
+        <result column="tradingpsw" property="tradingpsw" jdbcType="VARCHAR"/>
+        <result column="invitecode" property="invitecode" jdbcType="VARCHAR"/>
+        <result column="idcardno" property="idcardno" jdbcType="VARCHAR"/>
+        <result column="longtimecity" property="longtimecity" jdbcType="VARCHAR"/>
+        <result column="detailaddr" property="detailaddr" jdbcType="VARCHAR"/>
+        <result column="leveleducation" property="leveleducation" jdbcType="VARCHAR"/>
+        <result column="familyincome" property="familyincome" jdbcType="DECIMAL"/>
+        <result column="unitnature" property="unitnature" jdbcType="VARCHAR"/>
+        <result column="unitname" property="unitname" jdbcType="VARCHAR"/>
+        <result column="position" property="position" jdbcType="VARCHAR"/>
+        <result column="havejobtime" property="havejobtime" jdbcType="TIMESTAMP"/>
+        <result column="nowunitinductiontime" property="nowunitinductiontime" jdbcType="TIMESTAMP"/>
+        <result column="maritalstatus" property="maritalstatus" jdbcType="TINYINT"/>
+        <result column="childrennumber" property="childrennumber" jdbcType="SMALLINT"/>
+        <result column="createdon" property="createdon" jdbcType="TIMESTAMP"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="BaseResultMemLoanInfoExtMap" type="cn.houhe.api.member.entity.MemLoanInfoExt">
+        <id column="memid" property="memid" jdbcType="INTEGER"/>
+        <result column="apply_state" property="applyState" jdbcType="TINYINT"/>
+        <result column="apply_state" property="loanState" jdbcType="TINYINT"/>
+        <result column="status" property="overdueStatus" jdbcType="TINYINT"/>
+		<result column="loan_type" property="loanType" jdbcType="TINYINT"/>
+        <result column="loan_limit_used" property="loanLimitUsed" jdbcType="INTEGER"/>
+        <result column="loan_limit_total" property="loanLimitTotal" jdbcType="INTEGER"/>
+        <result column="loan_limit_applying" property="loanLimitApplying" jdbcType="INTEGER"/>
+        <result column="loan_limit_left" property="loanLimitLeft" jdbcType="INTEGER"/>
+		<result column="pdl_loan_limit_used" property="loanLimitUsed" jdbcType="INTEGER"/>
+		<result column="pdl_loan_limit_total" property="loanLimitTotal" jdbcType="INTEGER"/>
+		<result column="pdl_loan_limit_applying" property="loanLimitApplying" jdbcType="INTEGER"/>
+		<result column="pdl_loan_limit_left" property="loanLimitLeft" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="BaseResultIsMemExtMap" type="cn.houhe.api.member.entity.Member">
+        <id column="memid" property="memid" jdbcType="INTEGER"/>
+        <result column="level_id" property="levelId" jdbcType="SMALLINT"/>
+        <result column="realname" property="realname" jdbcType="VARCHAR"/>
+        <result column="mobileno" property="mobileno" jdbcType="VARCHAR"/>
+        <result column="loginpsw" property="loginpsw" jdbcType="VARCHAR"/>
+        <result column="tradingpsw" property="tradingpsw" jdbcType="VARCHAR"/>
+        <result column="invitecode" property="invitecode" jdbcType="VARCHAR"/>
+        <result column="idcardno" property="idcardno" jdbcType="VARCHAR"/>
+        <result column="longtimecity" property="longtimecity" jdbcType="VARCHAR"/>
+        <result column="detailaddr" property="detailaddr" jdbcType="VARCHAR"/>
+        <result column="leveleducation" property="leveleducation" jdbcType="VARCHAR"/>
+        <result column="familyincome" property="familyincome" jdbcType="DECIMAL"/>
+        <result column="unitnature" property="unitnature" jdbcType="VARCHAR"/>
+        <result column="unitname" property="unitname" jdbcType="VARCHAR"/>
+        <result column="position" property="position" jdbcType="VARCHAR"/>
+        <result column="havejobtime" property="havejobtime" jdbcType="TIMESTAMP"/>
+        <result column="nowunitinductiontime" property="nowunitinductiontime" jdbcType="TIMESTAMP"/>
+        <result column="maritalstatus" property="maritalstatus" jdbcType="TINYINT"/>
+        <result column="childrennumber" property="childrennumber" jdbcType="SMALLINT"/>
+        <result column="mobilephonebrand" property="mobilephonebrand" jdbcType="VARCHAR"/>
+        <result column="linkman" property="linkman" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="linkphone" property="linkphone" jdbcType="VARCHAR"/>
+        <result column="createdon" property="createdon" jdbcType="TIMESTAMP"/>
+        <result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <resultMap id="BaseResultLoanRatesExtMap" type="cn.houhe.api.member.entity.LoanRatesExt">
+        <id column="memid" property="memid" jdbcType="INTEGER"/>
+		<!--<id column="level_id" property="levelId" jdbcType="SMALLINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>-->
+        <result column="max_limit" property="maxLimit" jdbcType="DECIMAL"/>
+        <result column="min_limit" property="minLimit" jdbcType="DECIMAL"/>
+        <result column="installment_max_limit" property="maxLimit" jdbcType="DECIMAL"/>
+        <result column="installment_min_limit" property="minLimit" jdbcType="DECIMAL"/>
+        <!--<result column="rate" property="rate" jdbcType="DECIMAL"/>
+		<result column="loan_pay_rate" property="loanPayRate" jdbcType="DECIMAL"/>
+		<result column="account_manage_rate" property="accountManageRate" jdbcType="DECIMAL"/>
+		<result column="consultation_rate" property="consultationRate" jdbcType="DECIMAL"/>-->
+		<result column="quota_manage_rate" property="quotaManageRate" jdbcType="DECIMAL"/>
+		<result column="withdrawals_rate" property="withdrawalsRate" jdbcType="DECIMAL"/>
+        <result column="first_loan_rate" property="firstLoanRate" jdbcType="DECIMAL"/>
+        <!--<result column="least_loan_rate" property="leastLoanRate" jdbcType="DECIMAL"/>-->
+        <result column="type" property="type" jdbcType="TINYINT"/>
+        <result column="time" property="time" jdbcType="SMALLINT"/>
+    </resultMap>
+
+    <resultMap id="MemListMap" type="cn.houhe.api.member.entity.MemberListExt">
+        <id column="memid" property="memid" jdbcType="INTEGER"/>
+        <result column="level_id" property="levelId" jdbcType="SMALLINT"/>
+        <result column="realname" property="realname" jdbcType="VARCHAR"/>
+        <result column="mobileno" property="mobileno" jdbcType="VARCHAR"/>
+        <result column="apply_state" property="applyState" jdbcType="TINYINT"/>
+        <result column="apply_state" property="loanState" jdbcType="TINYINT"/>
+        <result column="createdon" property="createdon" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!-- 用于 SELECT 语句的所有字段  2017-03-30 10:12:39. -->
+    <sql id="Base_Column_Ext_List">
+		memid, level_id, realname, mobileno, loginpsw, tradingpsw, invitecode, idcardno,
+		longtimecity, detailaddr, leveleducation, familyincome, unitnature, unitname, position, 
+		havejobtime, nowunitinductiontime, maritalstatus, childrennumber, mobilephonebrand, 
+		linkman, remark, linkphone, createdon, modifiedon
+	</sql>
+
+    <!-- 按手机号查询 2017-03-30 10:12:39. -->
+    <select id="selectByMobile" resultMap="BaseResultExtMap" parameterType="java.lang.String">
+		select 
+		m.memid,
+		m.level_id,
+		IFNULL(c_a.apply_state, 0) apply_state,
+		IFNULL(m.realname, '') realname,
+		IFNULL(m.mobileno, '') mobileno,
+		IFNULL(m.loginpsw, '') loginpsw,
+		IFNULL(m.tradingpsw, '') tradingpsw,
+		IFNULL(m.invitecode, '') invitecode,
+		IFNULL(m.idcardno, '') idcardno,
+		IFNULL(m.longtimecity, '') longtimecity,
+		IFNULL(m.detailaddr, '') detailaddr,
+		IFNULL(m.leveleducation, '') leveleducation,
+		m.familyincome,
+		IFNULL(m.unitnature, '') unitnature,
+		IFNULL(m.unitname, '') unitname,
+		IFNULL(m.position, '') position,
+		m.havejobtime,
+		m.nowunitinductiontime,
+		m.maritalstatus,
+		m.childrennumber,
+		m.createdon,
+		IFNULL(p.url, '') url
+		from houhe_member.member m
+		left join houhe_member.member_pic_resources p
+		on m.memid = p.member_id and p.pictype = 0 and p.object_type = 0
+		left join houhe_loan.credit_apply c_a
+		on m.memid = c_a.member_id
+		where m.mobileno = #{mobileno,jdbcType=VARCHAR}
+	</select>
+
+    <!-- 查询联系人列表 -->
+    <select id="selectPhoneContact" resultType="cn.houhe.api.member.entity.PhoneContact" parameterType="java.lang.Integer">
+		select
+		relation,
+		name,
+		mobile
+		from houhe_member.phone_contact
+		where member_id = #{memid,jdbcType=INTEGER}
+		order by createdon desc
+	</select>
+
+    <!-- 按手机号查询 2017-03-30 10:12:39. -->
+    <select id="selectMemLoanInfoByMobile" resultMap="BaseResultMemLoanInfoExtMap">
+		select
+		m.memid,
+		IFNULL(c_a.apply_state, 0) as applystate,
+		IFNULL(l_r.apply_state, 0) as loanstate,
+		r_p.pay_date,
+		r_p.real_pay_date,
+		case when (r_p.delay_days>0 and r_p.`status`=0) then 1
+		else 0 end as overduestatus,
+		l_r.loan_type,
+		IFNULL(c.loan_limit_used, 0) + IFNULL(c.pdl_loan_limit_used, 0) as loan_limit_used,
+		IFNULL(c.loan_limit_total, 0) as loan_limit_total,
+		IFNULL(c.loan_limit_applying, 0) + IFNULL(c.pdl_loan_limit_applying, 0) as loan_limit_applying,
+		case when IFNULL(c.loan_limit_left, 0) > IFNULL(c.pdl_loan_limit_left, 0) then IFNULL(c.loan_limit_left, 0)
+		else IFNULL(c.pdl_loan_limit_left, 0) end as loan_limit_left
+-- 		case when l_r.loan_type = 1 then IFNULL(c.loan_limit_used, 0)
+-- 		when l_r.loan_type = 0 then IFNULL(c.pdl_loan_limit_used, 0)
+-- 		else IFNULL(c.loan_limit_used, 0) end as loan_limit_used,
+-- 		case when l_r.loan_type = 1 then IFNULL(c.loan_limit_total, 0)
+-- 		when l_r.loan_type = 0 then IFNULL(c.pdl_loan_limit_total, 0)
+-- 		else IFNULL(c.loan_limit_total, 0) end as loan_limit_total,
+-- 		case when l_r.loan_type = 1 then IFNULL(c.loan_limit_applying, 0)
+-- 		when l_r.loan_type = 0 then IFNULL(c.pdl_loan_limit_applying, 0)
+-- 		else IFNULL(c.loan_limit_applying, 0) end as loan_limit_applying,
+-- 		case when l_r.loan_type = 1 then IFNULL(c.loan_limit_left, 0)
+-- 		when l_r.loan_type = 0 then IFNULL(c.pdl_loan_limit_left, 0)
+-- 		else IFNULL(c.loan_limit_left, 0) end as loan_limit_left
+		from houhe_member.member m
+		left join houhe_loan.credit_apply c_a
+		on m.memid = c_a.member_id
+		left join houhe_loan.creditinfo c
+		on m.memid = c.member_id
+		left join houhe_loan.repayments_plan r_p
+		on m.memid = r_p.member_id
+		left join houhe_loan.loan_record l_r
+		on m.memid = l_r.member_id
+		where m.mobileno = #{mobileno,jdbcType=VARCHAR} || m.memid = #{memid,jdbcType=INTEGER}
+		order by l_r.apply_time desc
+		limit 1
+	</select>
+
+    <select id="selectMemInfoByMobile" resultMap="BaseResultIsMemExtMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_Ext_List"/>
+        from houhe_member.member
+        where mobileno = #{mobileno,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectLoanRates" resultMap="BaseResultLoanRatesExtMap">
+        select
+        m.memid,
+        <if test="type == 0">
+			1000 as min_limit,
+            IFNULL(c.pdl_loan_limit_left, l.max_limit) as max_limit,
+        </if>
+        <if test="type == 1">
+			2000 as min_limit,
+            IFNULL(c.loan_limit_left, l.installment_max_limit) as max_limit,
+        </if>
+		r.quota_manage_rate as quotaManageRate,
+		r.withdrawals_rate as withdrawalsRate,
+        r.first_loan_rate as firstLoanRate,
+        l_p.`type`,
+        l_p.time
+        from houhe_member.member m
+        <if test="type == 0">
+            left join houhe_config.`level` l
+            on l.level_id = m.pdl_level_id
+            left join houhe_config.rates r
+            on r.level_id = m.pdl_level_id
+        </if>
+        <if test="type == 1">
+            left join houhe_config.`level` l
+            on l.level_id = m.level_id
+            left join houhe_config.rates r
+            on r.level_id = m.level_id
+        </if>
+        left join houhe_config.loan_period l_p
+		on l_p.`type` = r.`type`
+		left join houhe_loan.creditinfo c
+		on m.memid = c.member_id
+        where m.memid = #{memid,jdbcType=INTEGER} and l_p.`type` = #{type,jdbcType=TINYINT}
+    </select>
+
+    <select id="selectLoanRatesByNOLogin" resultMap="BaseResultLoanRatesExtMap">
+        select
+        <if test="type == 0">
+			1000 as min_limit,
+            l.max_limit,
+        </if>
+        <if test="type == 1">
+			2000 as min_limit,
+            l.installment_max_limit as max_limit,
+        </if>
+		r.quota_manage_rate as quotaManageRate,
+		r.withdrawals_rate as withdrawalsRate,
+        r.first_loan_rate as firstLoanRate,
+        l_p.`type`,
+        l_p.time
+        from houhe_config.`level` l
+        left join houhe_config.rates r
+        on r.level_id = l.level_id
+        left join houhe_config.loan_period l_p
+        on l_p.`type` = r.`type`
+        where l.level_id = #{level_id,jdbcType=INTEGER} and l_p.`type` = #{type,jdbcType=TINYINT}
+    </select>
+
+    <!-- 获取会员列表(后台) -->
+    <select id="findPageData" resultMap="MemListMap" parameterType="cn.houhe.api.member.entity.MemberListExt">
+        select
+        m.memid,
+        m.level_id,
+        m.realname,
+        m.mobileno,
+        m.createdon,
+        case when tmp_c_a.cnt = 0 then 0
+        when tmp_c_a.cnt > 0 then 1
+        else 0 end as applystate,
+        case when tmp_l_r.cnt = 0 then 0
+        when tmp_l_r.cnt > 0 then 1
+        else 0 end as loanstate
+        from houhe_member.member m
+        left join
+        (select count(1) cnt,c_a.member_id,c_a.apply_state from houhe_loan.credit_apply c_a where c_a.apply_state = 2 or c_a.apply_state = 3 or c_a.apply_state = 4 or c_a.apply_state = 5 or c_a.apply_state
+        = 6 or c_a.apply_state = 7 group by c_a.member_id) tmp_c_a
+        on m.memid = tmp_c_a.member_id
+        /*left join
+        (select count(1) cnt,c_a.member_id,c_a.apply_state from houhe_loan.credit_apply c_a where c_a.apply_state = 0 or c_a.apply_state = 1 group by c_a.member_id) tmp_c_a_2
+        on m.memid = tmp_c_a_2.member_id*/
+        left join
+        (select count(1) cnt,l_r.member_id,l_r.apply_state from houhe_loan.loan_record l_r where l_r.apply_state = 2 or l_r.apply_state = 3 or l_r.apply_state = 4 or l_r.apply_state = 5 or l_r.apply_state
+        = 6 or l_r.apply_state = 7 group by l_r.member_id) tmp_l_r
+        on m.memid = tmp_l_r.member_id
+        /*left join
+        (select count(1) cnt,l_r.member_id,l_r.apply_state from houhe_loan.loan_record l_r where l_r.apply_state = 0 or l_r.apply_state = 1 group by l_r.member_id) tmp_l_r_2
+        on m.memid = tmp_l_r_2.member_id*/
+        where m.is_enable = 0
+        <if test="mobileno != ''">
+            AND m.mobileno = #{mobileno,jdbcType=VARCHAR}
+        </if>
+        <!--<if test="applyState == 0">
+            AND tmp_c_a_2.apply_state = 0 or tmp_c_a_2.apply_state = 1
+        </if>
+		<if test="applyState == 1">
+			AND tmp_c_a.apply_state = 2 or tmp_c_a.apply_state = 3 or tmp_c_a.apply_state = 4 or tmp_c_a.apply_state = 5 or tmp_c_a.apply_state
+			= 6 or tmp_c_a.apply_state = 7
+		</if>
+        <if test="loanState == 0">
+            AND tmp_l_r_2.apply_state = 0 or tmp_l_r_2.apply_state = 1
+        </if>
+		<if test="loanState == 1">
+			AND tmp_l_r.apply_state = 2 or tmp_l_r.apply_state = 3 or tmp_l_r.apply_state = 4 or tmp_l_r.apply_state = 5 or tmp_l_r.apply_state
+			= 6 or tmp_l_r.apply_state = 7
+		</if>-->
+        order by m.createdon desc
+        limit #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+    </select>
+
+    <select id="getCount" resultType="java.lang.Integer" parameterType="cn.houhe.api.member.entity.MemberListExt">
+        select count(1)
+        from houhe_member.member m
+        left join
+        (select count(1) cnt,c_a.member_id,c_a.apply_state from houhe_loan.credit_apply c_a where c_a.apply_state = 2 or c_a.apply_state = 3 or c_a.apply_state = 4 or c_a.apply_state = 5 or c_a.apply_state
+        = 6 or c_a.apply_state = 7 group by c_a.member_id) tmp_c_a
+        on m.memid = tmp_c_a.member_id
+        /*left join
+        (select count(1) cnt,c_a.member_id,c_a.apply_state from houhe_loan.credit_apply c_a where c_a.apply_state = 0 or c_a.apply_state = 1 group by c_a.member_id) tmp_c_a_2
+        on m.memid = tmp_c_a_2.member_id*/
+        left join
+        (select count(1) cnt,l_r.member_id,l_r.apply_state from houhe_loan.loan_record l_r where l_r.apply_state = 2 or l_r.apply_state = 3 or l_r.apply_state = 4 or l_r.apply_state = 5 or l_r.apply_state
+        = 6 or l_r.apply_state = 7 group by l_r.member_id) tmp_l_r
+        on m.memid = tmp_l_r.member_id
+        /*left join
+        (select count(1) cnt,l_r.member_id,l_r.apply_state from houhe_loan.loan_record l_r where l_r.apply_state = 0 or l_r.apply_state = 1 group by l_r.member_id) tmp_l_r_2
+        on m.memid = tmp_l_r_2.member_id*/
+        where m.is_enable = 0
+        <if test="mobileno != ''">
+            AND m.mobileno = #{mobileno,jdbcType=VARCHAR}
+        </if>
+        <!--<if test="applyState == 0">
+            AND tmp_c_a_2.apply_state = 0 or tmp_c_a_2.apply_state = 1
+        </if>
+        <if test="applyState == 1">
+            AND tmp_c_a.apply_state = 2 or tmp_c_a.apply_state = 3 or tmp_c_a.apply_state = 4 or tmp_c_a.apply_state = 5 or tmp_c_a.apply_state
+            = 6 or tmp_c_a.apply_state = 7
+        </if>
+        <if test="loanState == 0">
+            AND tmp_l_r_2.apply_state = 0 or tmp_l_r_2.apply_state = 1
+        </if>
+        <if test="loanState == 1">
+            AND tmp_l_r.apply_state = 2 or tmp_l_r.apply_state = 3 or tmp_l_r.apply_state = 4 or tmp_l_r.apply_state = 5 or tmp_l_r.apply_state
+            = 6 or tmp_l_r.apply_state = 7
+        </if>-->
+        order by m.createdon desc
+    </select>
+
+    <!-- 获取会员详细信息(后台) -->
+    <select id="getMemberDetailInfo" resultType="cn.houhe.api.member.entity.MemberDetailInfoExt">
+		select
+		m.memid as memId,
+		IFNULL(m.realname, '') as realName,
+		IFNULL(m.idcardno, '') as idCardNo,
+		IFNULL(m.mobileno, '') as mobileNo,
+		IFNULL(m.my_invitecode, '') as myInvitecode,
+		IFNULL(m.mobilephonebrand, '') as mobilePhoneBrand,
+		IFNULL(m.linkman, '') as linkMan,
+		IFNULL(m.linkphone, '') as linkPhone,
+		IFNULL(m_r_s.zm_credit_score, 0) as zmScores,
+		IFNULL(c.total_scores, 0) as totalScores,
+		c.assessment_day as assessmentDay,
+		IFNULL(c.loan_limit_total, 0) as loanLimitTotal,
+		IFNULL(c.loan_limit_used, 0) + IFNULL(c.pdl_loan_limit_used, 0) as loanLimitUsed,
+		case when IFNULL(c.loan_limit_left, 0) > IFNULL(c.pdl_loan_limit_left, 0) then IFNULL(c.loan_limit_left, 0)
+		else IFNULL(c.pdl_loan_limit_left, 0) end as loanLimitLeft,
+		IFNULL(c.loan_limit_applying, 0) + IFNULL(c.pdl_loan_limit_applying, 0) as loanLimitApplying,
+		IFNULL(c.loan_apply_times, 0) as loanApplyTimes,
+		IFNULL(c.delay_debit_times, 0) as delayDebitTimes,
+		IFNULL(m_p_r_1.url, '') as idCardFrontPic,
+		IFNULL(m_p_r_2.url, '') as idCardReversePic,
+		IFNULL(m_p_r_3.url, '') as faceRecognitionPic,
+		IFNULL(m_p_r_6.url, '') as runFrontPic,
+		IFNULL(m_p_r_7.url, '') as runReversePic,
+		IFNULL(l_b_c.receive_bank, '') as receiveBank,
+		IFNULL(l_b_c.receive_bank_cardno, '') as receiveBankCardNo,
+		IFNULL(l_b_c.repay_bank, '') as repayBank,
+		IFNULL(l_b_c.repay_bank_cardno, '') as repayBankCardNo,
+		IFNULL(l.name, '') as levelName,
+		(select IFNULL(le.name, '') from houhe_config.`level` le where le.level_id = m.pdl_level_id) as pdlLevelName,
+		c_a.nation,
+		c_a.sex,
+		c_a.birthday,
+		IFNULL(c_a.address, '') as originPalce,
+		IFNULL(c_a.domicile_detail, '') as detailAddr,
+		IFNULL(c_a.education, 0) as levelEducation,
+		IFNULL(c_a.marriage, 0) as maritalStatus,
+		IFNULL(c_a.child_amount, 0) as childreNnumber,
+	    IFNULL(c_a.company_name, '') as unitName,
+		IFNULL(c_a.job, 0) as positionName,
+		IFNULL(c_a.couple_card, '') as coupleCard,
+		IFNULL(c_a.couple_mobile, '') as coupleMobile,
+		IFNULL(c_a.couple_name, '') as coupleName,
+		IFNULL(c_a.couple_education, -1) as coupleEducation,
+		IFNULL(c_a.couple_job, -1) as coupleJob,
+		IFNULL(c_a.origin_type, -1) as originType,
+		IFNULL(c_a.domicile_detail, '') as domicileDetail,
+		IFNULL(c_a.domicile_time, -1) as domicileTime,
+		c_a.high_edu_starttime as highEduStarttime,
+		c_a.high_edu_endtime as highEduEndtime,
+		IFNULL(c_a.com_bus_time_length, 0) as comBusTimeLength,
+		IFNULL(c_a.is_company_fivehun, 0) as isCompanyFivehun,
+		IFNULL(c_a.is_allow_contact, 0) as isAllowContact,
+		IFNULL(c_a.is_allow_record, 0) as isAllowRecord,
+		IFNULL(c_a.is_allow_message, 0) as isAllowMessage,
+		IFNULL(c_a.is_allow_location, 0) as isAllowLocation,
+		IFNULL(c_a.industry, '') as industry,
+		IFNULL(c_a.work_place, '') as workPlace,
+		IFNULL(c_a.work_experience, '') as workExperience,
+		IFNULL(c_a.wanted_limit, 0) as wantedLimit,
+		IFNULL(c_a.wanted_period, 0) as wantedPeriod,
+		IFNULL(c_a.wanted_repay_day, 0) as wantedRepayDay,
+		IFNULL(c_a.family_amount, 0) as familyAmount,
+		c_a.apply_time as applyTime,
+		IFNULL(c_a.year_pay, 0.00) as yearPay,
+		IFNULL(c_a.qq, '') as qq,
+		IFNULL(c_a.qq_age, 0) as qqAge,
+		IFNULL(c_a.wx_age, 0) as wxAge,
+		IFNULL(c_a.wx, '') as wx,
+		IFNULL(c_a.buy_type, -1) as buyType,
+		IFNULL(c_a.house_type, -1) as houseType,
+		IFNULL(c_a.house_caty, -1) as houseCaty,
+		IFNULL(c_a.house_big, 0) as houseBig,
+		IFNULL(c_a.loan_amount, 0.00) as loanAmount,
+		IFNULL(c_a.city, '') as city,
+		IFNULL(c_a.area, '') as area,
+		IFNULL(c_a.income, 0) as income,
+		IFNULL(c_a.social_security, 0) as socialSecurity,
+		IFNULL(c_a.accumulation_fund, 0) as accumulationFund,
+		IFNULL(c_a.jingdong_quto, 0) as jingdongQuto,
+		IFNULL(c_a.mayijieb_quto, 0) as mayijiebQuto,
+		IFNULL(c_a.huabei_quto, 0) as huabeiQuto,
+		IFNULL(c_a.debit, 0.00) as debit,
+		IFNULL(c_a.car_number, '') as carNumber,
+		IFNULL(c_a.car_brand, '') as carBrand,
+		IFNULL(c_a.car_lisence, '') as carLisence,
+		IFNULL(c_a.car_property, -1) as carProperty,
+		IFNULL(c_a.car_driven, 0) as carDriven,
+		IFNULL(c_a.car_owner, '') as carOwner,
+		IFNULL(c_a.car_code, '') as carCode,
+		c_a.buy_date as buyDate,
+		IFNULL(c_a.counts, -1) as counts,
+		IFNULL(c_a.price, 0.00) as price,
+		IFNULL(c_a.car_insurance_amount, 0.00) as carInsuranceAmount
+		from houhe_member.member m
+		left join houhe_loan.model_reapyability_scores m_r_s
+		on m.memid = m_r_s.member_id
+		left join houhe_config.`level` l
+		on l.level_id = m.level_id
+		left join houhe_loan.creditinfo c
+		on m.memid = c.member_id
+		left join houhe_loan.credit_apply c_a
+		on m.memid = c_a.member_id
+		left join houhe_member.member_pic_resources m_p_r_1
+		on m.memid = m_p_r_1.member_id and m_p_r_1.pictype = 1 and m_p_r_1.object_type = 2 and m_p_r_1.object_id = c_a.ca_id
+		left join houhe_member.member_pic_resources m_p_r_2
+		on m.memid = m_p_r_2.member_id and m_p_r_2.pictype = 2 and m_p_r_2.object_type = 2 and m_p_r_2.object_id = c_a.ca_id
+		left join houhe_member.member_pic_resources m_p_r_3
+		on m.memid = m_p_r_3.member_id and m_p_r_3.pictype = 3 and m_p_r_3.object_type = 2 and m_p_r_3.object_id = c_a.ca_id
+		left join houhe_member.member_pic_resources m_p_r_6
+		on m.memid = m_p_r_6.member_id and m_p_r_6.pictype = 6 and m_p_r_6.object_type = 2 and m_p_r_6.object_id = c_a.ca_id
+		left join houhe_member.member_pic_resources m_p_r_7
+		on m.memid = m_p_r_7.member_id and m_p_r_7.pictype = 7 and m_p_r_7.object_type = 2 and m_p_r_7.object_id = c_a.ca_id
+		left join houhe_loan.loan_record l_r
+		on m.memid = l_r.member_id
+		left join houhe_loan.loan_bank_card l_b_c
+		on l_r.loan_id = l_b_c.loan_record_id
+		where m.memid = #{memid}
+		limit 1
+	</select>
+
+	<!-- 获取会员授信合同(后台) -->
+	<select id="getCreditContractFile" resultType="cn.houhe.api.member.entity.LoanContractExt">
+		select
+		l_c.lc_id as lcId,
+		l_c.loan_record_id as loanRecordId,
+		l_c.creditinfo_id as creditinfoId,
+		l_c.contract_name as contractName,
+		l_c.contract_file_url as contractFileUrl
+		from houhe_loan.loan_contract l_c
+		left join houhe_loan.credit_apply c_a
+		on c_a.ca_id = l_c.creditinfo_id
+		left join houhe_member.member m
+		on c_a.member_id = m.memid
+		where m.memid = #{memid}
+	</select>
+
+    <!-- 获取会员贷款记录(后台) -->
+    <select id="getLoanRecordList" resultType="cn.houhe.api.member.entity.LoanRecordListExt">
+		select
+		m.memid as memId,
+		l_r.loan_id as loanId,
+		IFNULL(l_r.loan_limit, 0.00) as loanLimit,
+		IFNULL(l_r.loan_type, 0) as loanType,
+		IFNULL(l_r.time, 0) as stagingTime,
+		l_r.start_time as startTime,
+		l_r.end_time as endTime,
+		IFNULL(l_r.rate, 0.00000000) as rate,
+		IFNULL(l_p.amount, 0.00) as amount,
+		l_p.paytime as payTime,
+		IFNULL(l_p.pay_platform, '') as payPlatform,
+		IFNULL(l_b_c.receive_bank, '') as receiveBank,
+		IFNULL(l_b_c.receive_bank_cardno, '') as receiveBankCardNo,
+		l_r.apply_time as applyTime
+		from houhe_loan.loan_record l_r
+	    left join houhe_member.member m
+	    on l_r.member_id = m.memid
+		left join houhe_loan.loan_pay l_p
+		on l_r.loan_id = l_p.loan_record_id
+		left join houhe_loan.loan_bank_card l_b_c
+		on l_r.loan_id = l_b_c.loan_record_id
+		where l_r.member_id = #{memid} and l_r.apply_state = 4
+		order by l_r.apply_time desc
+	</select>
+
+	<!-- 获取会员贷款合同(后台) -->
+	<select id="getLoanCreditContractFile" resultType="cn.houhe.api.member.entity.LoanContractExt">
+		select
+		l_c.lc_id as lcId,
+		l_c.loan_record_id as loanRecordId,
+		l_c.creditinfo_id as creditinfoId,
+		l_c.contract_name as contractName,
+		l_c.contract_file_url as contractFileUrl
+		from houhe_loan.loan_contract l_c
+		left join houhe_loan.loan_record l_r
+		on l_c.loan_record_id = l_r.loan_id
+		left join houhe_loan.loan_pay l_p
+		on l_r.loan_id = l_p.loan_record_id
+		where l_c.loan_record_id = #{loanrecordid}
+	</select>
+
+    <!-- 获取会员还款记录(后台) -->
+    <select id="findDebitRecordPageData" resultType="cn.houhe.api.member.entity.DebitRecordListExt">
+        select
+		d_r.number as loanNumber,
+		IFNULL(l_r.loan_limit, 0.00) as loanLimit,
+		r_p.pay_date as planPayTime,
+		d_r.createdon,
+		d_r.repay_type as repayType,
+		IFNULL(l_r.time, 0) as stagingTimes,
+		IFNULL(l_r.loan_type, 0) as loanType,
+		r_p.current_term as currentTerm,
+		r_p.principal,
+		d_r.interest,
+		case when r_p.delay_days is not null then r_p.delay_days else
+		(select sum(ifnull(r.delay_days,0)) from houhe_loan.repayments_plan r where r.loan_record_id=d_r.loan_record_id and r.`status` = 4) end
+		 as delayDays,
+		d_r.late_fee as lateFee,
+		d_r.advance_repay_fee as liquidatedDamages,
+		d_r.amount as realPay
+		from houhe_loan.debit_rcd d_r
+		left join houhe_loan.loan_record l_r
+		on d_r.loan_record_id = l_r.loan_id
+		left join houhe_loan.repayments_plan r_p
+		on d_r.repayments_plan_id = r_p.rpt_id
+		where d_r.member_id = #{memId,jdbcType=INTEGER} and d_r.`status` = 1
+		order by d_r.createdon desc
+        limit #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+    </select>
+
+    <select id="getDebitRecordCount" resultType="java.lang.Integer" parameterType="cn.houhe.api.member.entity.DebitRecordListExt">
+        select count(1)
+        from houhe_loan.debit_rcd d_r
+		left join houhe_loan.loan_record l_r
+		on d_r.loan_record_id = l_r.loan_id
+		left join houhe_loan.repayments_plan r_p
+		on d_r.repayments_plan_id = r_p.rpt_id
+		where d_r.member_id = #{memId,jdbcType=INTEGER} and d_r.`status` = 1
+		order by d_r.createdon desc
+    </select>
+
+    <!-- 获取逾期还款记录(后台) -->
+    <select id="getOverdueRecordList" resultType="cn.houhe.api.member.entity.OverdueRecordListExt">
+		select
+		m.memid as memId,
+		r_p.rpt_id as rptId,
+		IFNULL(l_r.loan_limit, 0.00) as loanLimit,
+		IFNULL(l_r.loan_type, 0) as loanType,
+		IFNULL(l_r.time, 0) as stagingTime,
+		l_r.start_time as startTime,
+		l_r.end_time as endTime,
+		r_p.total_pay as totalPay,
+		r_p.current_term as currentTerm,
+		r_p.pay_date as payDate,
+		r_p.delay_days as delayDays,
+		r_p.late_fee as lateFee,
+		r_p.remind_fee as remindFee,
+		r_p.real_total_pay as realPay,
+		r_p.real_pay_date as realPayDate,
+		r_p.`status`
+		from houhe_loan.loan_record l_r
+		left join houhe_member.member m
+		on l_r.member_id = m.memid
+		left join houhe_loan.repayments_plan r_p
+		on l_r.loan_id = r_p.loan_record_id
+		where l_r.member_id = #{memid} and l_r.apply_state = 4 and r_p.delay_days > 0
+		order by r_p.pay_date desc
+	</select>
+
+    <!-- 获取催收记录 2017-04-14 11:59:03. -->
+    <select id="findRemainderRecoadPageData" resultType="cn.houhe.api.member.entity.RemainderRecoadListExt">
+        select
+		m.memid as memId,
+		r_p.rpt_id as rptId,
+		r.createdon,
+		r.remainder,
+		r.remaind_object as remaindObject,
+		r.call_state as callState,
+		r.remaind_name as remaindName,
+		r.attitude,
+		r.link_attitude as linkAttitude,
+		r.contact_truth as contactTruth,
+		r.debit_desire as debitDesire,
+		r.promise_debit_date as promiseDebitDate,
+		r.reason,
+		r.remark
+		from houhe_loan.remainder r
+	    left join houhe_member.member m
+	    on r.member_id = m.memid
+	    left join houhe_loan.repayments_plan r_p
+	   on r.repayments_plan_id = r_p.loan_record_id
+		where r.member_id = #{memId,jdbcType=INTEGER} and r.repayments_plan_id = #{rptId,jdbcType=INTEGER}
+		order by r.createdon desc
+        limit #{page,jdbcType=INTEGER},#{rows,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRemainderRecoadCount" resultType="java.lang.Integer" parameterType="cn.houhe.api.member.entity.RemainderRecoadListExt">
+        select count(1)
+        from houhe_loan.remainder r
+	    left join houhe_member.member m
+	    on r.member_id = m.memid
+	    left join houhe_loan.repayments_plan r_p
+	    on r_p.rpt_id = r.repayments_plan_id
+		where r.member_id = #{memId,jdbcType=INTEGER} and r.repayments_plan_id = #{rptId,jdbcType=INTEGER}
+		order by r.createdon asc
+    </select>
+
+    <!-- 获取会员邀请记录(后台) -->
+    <select id="findInviteRecordPageData" resultType="cn.houhe.api.member.entity.MemberListExt">
+		select
+		m.memid,
+		m.level_id,
+		m.realname,
+		m.mobileno,
+		m.createdon,
+		m.invitecode,
+		case when c_a.apply_state = 0 or c_a.apply_state = 1 then 0
+		when c_a.apply_state = 2 or c_a.apply_state = 3 or c_a.apply_state = 4 or c_a.apply_state = 5 or c_a.apply_state = 6 or c_a.apply_state = 7 then 1
+		else 0 end applystate,
+		case when l_r.apply_state = 0 or l_r.apply_state = 1 then 0
+		when l_r.apply_state = 2 or l_r.apply_state = 3 or l_r.apply_state = 4 or l_r.apply_state = 5 or l_r.apply_state = 6 or l_r.apply_state = 7 then 1
+		else 0 end loanstate
+		from houhe_member.member m
+		left join houhe_loan.credit_apply c_a
+		on m.memid = c_a.member_id
+		left join houhe_loan.loan_record l_r
+		on m.memid = l_r.member_id
+		where m.is_enable = 0 and m.invitecode != "" and m.invitecode = #{invitecode,jdbcType=VARCHAR}
+		order by m.createdon desc
+	</select>
+
+    <select id="getInviteRecordCount" resultType="java.lang.Integer" parameterType="cn.houhe.api.member.entity.MemberListExt">
+		select count(1)
+		from houhe_member.member m
+		left join houhe_loan.credit_apply c_a
+		on m.memid = c_a.member_id
+		left join houhe_loan.loan_record l_r
+		on m.memid = l_r.member_id
+		where m.is_enable = 0 and m.invitecode != "" and m.invitecode  = #{invitecode,jdbcType=VARCHAR}
+		order by m.createdon desc
+	</select>
+
+    <select id="getMemberPressDetail" resultType="cn.houhe.api.member.entity.MemberPressDetailExt">
+		select a.memid as memId,a.realname as realName,a.mobileno as mobileNo,a.idcardno as idCardNo,a.longtimecity as longTimeCity,a.detailaddr as detailAddr,a.linkman as linkMan,a.linkphone as linkPhone,
+        (select url from member_pic_resources b WHERE b.member_id = a.memid AND b.object_type=2 AND b.pictype = 1 limit 1) as idCardFrontPic,
+        (select url from member_pic_resources b WHERE b.member_id = a.memid AND b.object_type=2 AND b.pictype = 2 limit 1) as idCardReversePic,
+        (select url from member_pic_resources b WHERE b.member_id = a.memid AND b.object_type=2 AND b.pictype = 3 limit 1) as faceRecognitionPic
+         from member a where a.memid=#{memid}
+	</select>
+	<select id="getUserNameByMemId" resultType="java.lang.String">
+		select a.name from houhe_loan.credit_apply a where a.member_id=#{memid}
+	</select>
+</mapper>

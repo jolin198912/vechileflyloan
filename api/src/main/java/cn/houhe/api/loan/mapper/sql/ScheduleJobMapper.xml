@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.ScheduleJobMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-27 16:27:05. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.ScheduleJob" >
+		<id column="job_id" property="jobId" jdbcType="INTEGER" />
+		<result column="class_path" property="classPath" jdbcType="VARCHAR" />
+		<result column="job_name" property="jobName" jdbcType="VARCHAR" />
+		<result column="job_group" property="jobGroup" jdbcType="VARCHAR" />
+		<result column="job_status" property="jobStatus" jdbcType="TINYINT" />
+		<result column="run_status" property="runStatus" jdbcType="TINYINT" />
+		<result column="cron_expression" property="cronExpression" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="execute_param" property="executeParam" jdbcType="VARCHAR" />
+		<result column="is_repeat" property="isRepeat" jdbcType="BIT" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-27 16:27:05. -->
+	<sql id="Base_Column_List" >
+		job_id, class_path, job_name, job_group, job_status, run_status, cron_expression, 
+		description, createdon, execute_param, is_repeat
+	</sql>
+
+	<!-- 按主键查询 2017-04-27 16:27:05. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from schedule_job
+		where job_id = #{jobId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-04-27 16:27:05. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from schedule_job
+		where job_id = #{jobId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-27 16:27:05. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.ScheduleJob" >
+		<selectKey resultType="java.lang.Integer" keyProperty="jobId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into schedule_job (class_path, job_name, job_group, 
+			job_status, run_status, cron_expression, 
+			description, createdon, execute_param, 
+			is_repeat)
+		values (#{classPath,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR}, #{jobGroup,jdbcType=VARCHAR}, 
+			#{jobStatus,jdbcType=TINYINT}, #{runStatus,jdbcType=TINYINT}, #{cronExpression,jdbcType=VARCHAR}, 
+			#{description,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}, #{executeParam,jdbcType=VARCHAR}, 
+			#{isRepeat,jdbcType=BIT})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-27 16:27:05. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.ScheduleJob" >
+		<selectKey resultType="java.lang.Integer" keyProperty="jobId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into schedule_job
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="classPath != null" >
+				class_path,
+			</if>
+			<if test="jobName != null" >
+				job_name,
+			</if>
+			<if test="jobGroup != null" >
+				job_group,
+			</if>
+			<if test="jobStatus != null" >
+				job_status,
+			</if>
+			<if test="runStatus != null" >
+				run_status,
+			</if>
+			<if test="cronExpression != null" >
+				cron_expression,
+			</if>
+			<if test="description != null" >
+				description,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="executeParam != null" >
+				execute_param,
+			</if>
+			<if test="isRepeat != null" >
+				is_repeat,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="classPath != null" >
+				#{classPath,jdbcType=VARCHAR},
+			</if>
+			<if test="jobName != null" >
+				#{jobName,jdbcType=VARCHAR},
+			</if>
+			<if test="jobGroup != null" >
+				#{jobGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="jobStatus != null" >
+				#{jobStatus,jdbcType=TINYINT},
+			</if>
+			<if test="runStatus != null" >
+				#{runStatus,jdbcType=TINYINT},
+			</if>
+			<if test="cronExpression != null" >
+				#{cronExpression,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null" >
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="executeParam != null" >
+				#{executeParam,jdbcType=VARCHAR},
+			</if>
+			<if test="isRepeat != null" >
+				#{isRepeat,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-27 16:27:05. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.ScheduleJob" >
+		update schedule_job
+		<set >
+			<if test="classPath != null" >
+				class_path = #{classPath,jdbcType=VARCHAR},
+			</if>
+			<if test="jobName != null" >
+				job_name = #{jobName,jdbcType=VARCHAR},
+			</if>
+			<if test="jobGroup != null" >
+				job_group = #{jobGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="jobStatus != null" >
+				job_status = #{jobStatus,jdbcType=TINYINT},
+			</if>
+			<if test="runStatus != null" >
+				run_status = #{runStatus,jdbcType=TINYINT},
+			</if>
+			<if test="cronExpression != null" >
+				cron_expression = #{cronExpression,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null" >
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="executeParam != null" >
+				execute_param = #{executeParam,jdbcType=VARCHAR},
+			</if>
+			<if test="isRepeat != null" >
+				is_repeat = #{isRepeat,jdbcType=BIT},
+			</if>
+		</set>
+		where job_id = #{jobId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-27 16:27:05. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.ScheduleJob" >
+		update schedule_job
+		set class_path = #{classPath,jdbcType=VARCHAR},
+			job_name = #{jobName,jdbcType=VARCHAR},
+			job_group = #{jobGroup,jdbcType=VARCHAR},
+			job_status = #{jobStatus,jdbcType=TINYINT},
+			run_status = #{runStatus,jdbcType=TINYINT},
+			cron_expression = #{cronExpression,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			execute_param = #{executeParam,jdbcType=VARCHAR},
+			is_repeat = #{isRepeat,jdbcType=BIT}
+		where job_id = #{jobId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-27 16:27:05. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from schedule_job
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

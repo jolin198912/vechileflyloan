@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.RepaymentsPlanMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-15 14:49:54. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.RepaymentsPlan" >
+		<id column="rpt_id" property="rptId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="user_mobile" property="userMobile" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="repay_number" property="repayNumber" jdbcType="VARCHAR" />
+		<result column="principal" property="principal" jdbcType="DECIMAL" />
+		<result column="total_pay" property="totalPay" jdbcType="DECIMAL" />
+		<result column="real_total_pay" property="realTotalPay" jdbcType="DECIMAL" />
+		<result column="arrears" property="arrears" jdbcType="DECIMAL" />
+		<result column="current_term" property="currentTerm" jdbcType="SMALLINT" />
+		<result column="interest" property="interest" jdbcType="DECIMAL" />
+		<result column="real_pay" property="realPay" jdbcType="DECIMAL" />
+		<result column="liquidated_damages" property="liquidatedDamages" jdbcType="DECIMAL" />
+		<result column="late_fee" property="lateFee" jdbcType="DECIMAL" />
+		<result column="late_interest" property="lateInterest" jdbcType="DECIMAL" />
+		<result column="remind_fee" property="remindFee" jdbcType="DECIMAL" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="delay_days" property="delayDays" jdbcType="SMALLINT" />
+		<result column="pay_date" property="payDate" jdbcType="DATE" />
+		<result column="delay_date" property="delayDate" jdbcType="DATE" />
+		<result column="bad_day" property="badDay" jdbcType="TIMESTAMP" />
+		<result column="is_bad" property="isBad" jdbcType="TINYINT" />
+		<result column="real_pay_date" property="realPayDate" jdbcType="TIMESTAMP" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="gather_status" property="gatherStatus" jdbcType="TINYINT" />
+		<result column="gather_result" property="gatherResult" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-15 14:49:54. -->
+	<sql id="Base_Column_List" >
+		rpt_id, loan_record_id, user_mobile, username, member_id, repay_number, principal, 
+		total_pay, real_total_pay, arrears, current_term, interest, real_pay, liquidated_damages, 
+		late_fee, late_interest, remind_fee, status, delay_days, pay_date, delay_date, bad_day, 
+		is_bad, real_pay_date, createdon, remark, gather_status, gather_result
+	</sql>
+
+	<!-- 按主键查询 2017-05-15 14:49:54. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from repayments_plan
+		where rpt_id = #{rptId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-15 14:49:54. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from repayments_plan
+		where rpt_id = #{rptId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-15 14:49:54. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.RepaymentsPlan" >
+		<selectKey resultType="java.lang.Integer" keyProperty="rptId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into repayments_plan (loan_record_id, user_mobile, username, 
+			member_id, repay_number, principal, 
+			total_pay, real_total_pay, arrears, 
+			current_term, interest, real_pay, 
+			liquidated_damages, late_fee, late_interest, 
+			remind_fee, status, delay_days, 
+			pay_date, delay_date, bad_day, 
+			is_bad, real_pay_date, createdon, 
+			remark, gather_status, gather_result
+			)
+		values (#{loanRecordId,jdbcType=INTEGER}, #{userMobile,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+			#{memberId,jdbcType=INTEGER}, #{repayNumber,jdbcType=VARCHAR}, #{principal,jdbcType=DECIMAL}, 
+			#{totalPay,jdbcType=DECIMAL}, #{realTotalPay,jdbcType=DECIMAL}, #{arrears,jdbcType=DECIMAL}, 
+			#{currentTerm,jdbcType=SMALLINT}, #{interest,jdbcType=DECIMAL}, #{realPay,jdbcType=DECIMAL}, 
+			#{liquidatedDamages,jdbcType=DECIMAL}, #{lateFee,jdbcType=DECIMAL}, #{lateInterest,jdbcType=DECIMAL}, 
+			#{remindFee,jdbcType=DECIMAL}, #{status,jdbcType=TINYINT}, #{delayDays,jdbcType=SMALLINT}, 
+			#{payDate,jdbcType=DATE}, #{delayDate,jdbcType=DATE}, #{badDay,jdbcType=TIMESTAMP}, 
+			#{isBad,jdbcType=TINYINT}, #{realPayDate,jdbcType=TIMESTAMP}, #{createdon,jdbcType=TIMESTAMP}, 
+			#{remark,jdbcType=VARCHAR}, #{gatherStatus,jdbcType=TINYINT}, #{gatherResult,jdbcType=VARCHAR}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-15 14:49:54. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.RepaymentsPlan" >
+		<selectKey resultType="java.lang.Integer" keyProperty="rptId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into repayments_plan
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				loan_record_id,
+			</if>
+			<if test="userMobile != null" >
+				user_mobile,
+			</if>
+			<if test="username != null" >
+				username,
+			</if>
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="repayNumber != null" >
+				repay_number,
+			</if>
+			<if test="principal != null" >
+				principal,
+			</if>
+			<if test="totalPay != null" >
+				total_pay,
+			</if>
+			<if test="realTotalPay != null" >
+				real_total_pay,
+			</if>
+			<if test="arrears != null" >
+				arrears,
+			</if>
+			<if test="currentTerm != null" >
+				current_term,
+			</if>
+			<if test="interest != null" >
+				interest,
+			</if>
+			<if test="realPay != null" >
+				real_pay,
+			</if>
+			<if test="liquidatedDamages != null" >
+				liquidated_damages,
+			</if>
+			<if test="lateFee != null" >
+				late_fee,
+			</if>
+			<if test="lateInterest != null" >
+				late_interest,
+			</if>
+			<if test="remindFee != null" >
+				remind_fee,
+			</if>
+			<if test="status != null" >
+				status,
+			</if>
+			<if test="delayDays != null" >
+				delay_days,
+			</if>
+			<if test="payDate != null" >
+				pay_date,
+			</if>
+			<if test="delayDate != null" >
+				delay_date,
+			</if>
+			<if test="badDay != null" >
+				bad_day,
+			</if>
+			<if test="isBad != null" >
+				is_bad,
+			</if>
+			<if test="realPayDate != null" >
+				real_pay_date,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+			<if test="gatherStatus != null" >
+				gather_status,
+			</if>
+			<if test="gatherResult != null" >
+				gather_result,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				#{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="userMobile != null" >
+				#{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null" >
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="repayNumber != null" >
+				#{repayNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="principal != null" >
+				#{principal,jdbcType=DECIMAL},
+			</if>
+			<if test="totalPay != null" >
+				#{totalPay,jdbcType=DECIMAL},
+			</if>
+			<if test="realTotalPay != null" >
+				#{realTotalPay,jdbcType=DECIMAL},
+			</if>
+			<if test="arrears != null" >
+				#{arrears,jdbcType=DECIMAL},
+			</if>
+			<if test="currentTerm != null" >
+				#{currentTerm,jdbcType=SMALLINT},
+			</if>
+			<if test="interest != null" >
+				#{interest,jdbcType=DECIMAL},
+			</if>
+			<if test="realPay != null" >
+				#{realPay,jdbcType=DECIMAL},
+			</if>
+			<if test="liquidatedDamages != null" >
+				#{liquidatedDamages,jdbcType=DECIMAL},
+			</if>
+			<if test="lateFee != null" >
+				#{lateFee,jdbcType=DECIMAL},
+			</if>
+			<if test="lateInterest != null" >
+				#{lateInterest,jdbcType=DECIMAL},
+			</if>
+			<if test="remindFee != null" >
+				#{remindFee,jdbcType=DECIMAL},
+			</if>
+			<if test="status != null" >
+				#{status,jdbcType=TINYINT},
+			</if>
+			<if test="delayDays != null" >
+				#{delayDays,jdbcType=SMALLINT},
+			</if>
+			<if test="payDate != null" >
+				#{payDate,jdbcType=DATE},
+			</if>
+			<if test="delayDate != null" >
+				#{delayDate,jdbcType=DATE},
+			</if>
+			<if test="badDay != null" >
+				#{badDay,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isBad != null" >
+				#{isBad,jdbcType=TINYINT},
+			</if>
+			<if test="realPayDate != null" >
+				#{realPayDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="gatherStatus != null" >
+				#{gatherStatus,jdbcType=TINYINT},
+			</if>
+			<if test="gatherResult != null" >
+				#{gatherResult,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-15 14:49:54. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.RepaymentsPlan" >
+		update repayments_plan
+		<set >
+			<if test="loanRecordId != null" >
+				loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="userMobile != null" >
+				user_mobile = #{userMobile,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null" >
+				username = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="repayNumber != null" >
+				repay_number = #{repayNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="principal != null" >
+				principal = #{principal,jdbcType=DECIMAL},
+			</if>
+			<if test="totalPay != null" >
+				total_pay = #{totalPay,jdbcType=DECIMAL},
+			</if>
+			<if test="realTotalPay != null" >
+				real_total_pay = #{realTotalPay,jdbcType=DECIMAL},
+			</if>
+			<if test="arrears != null" >
+				arrears = #{arrears,jdbcType=DECIMAL},
+			</if>
+			<if test="currentTerm != null" >
+				current_term = #{currentTerm,jdbcType=SMALLINT},
+			</if>
+			<if test="interest != null" >
+				interest = #{interest,jdbcType=DECIMAL},
+			</if>
+			<if test="realPay != null" >
+				real_pay = #{realPay,jdbcType=DECIMAL},
+			</if>
+			<if test="liquidatedDamages != null" >
+				liquidated_damages = #{liquidatedDamages,jdbcType=DECIMAL},
+			</if>
+			<if test="lateFee != null" >
+				late_fee = #{lateFee,jdbcType=DECIMAL},
+			</if>
+			<if test="lateInterest != null" >
+				late_interest = #{lateInterest,jdbcType=DECIMAL},
+			</if>
+			<if test="remindFee != null" >
+				remind_fee = #{remindFee,jdbcType=DECIMAL},
+			</if>
+			<if test="status != null" >
+				status = #{status,jdbcType=TINYINT},
+			</if>
+			<if test="delayDays != null" >
+				delay_days = #{delayDays,jdbcType=SMALLINT},
+			</if>
+			<if test="payDate != null" >
+				pay_date = #{payDate,jdbcType=DATE},
+			</if>
+			<if test="delayDate != null" >
+				delay_date = #{delayDate,jdbcType=DATE},
+			</if>
+			<if test="badDay != null" >
+				bad_day = #{badDay,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isBad != null" >
+				is_bad = #{isBad,jdbcType=TINYINT},
+			</if>
+			<if test="realPayDate != null" >
+				real_pay_date = #{realPayDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="gatherStatus != null" >
+				gather_status = #{gatherStatus,jdbcType=TINYINT},
+			</if>
+			<if test="gatherResult != null" >
+				gather_result = #{gatherResult,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where rpt_id = #{rptId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-15 14:49:54. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.RepaymentsPlan" >
+		update repayments_plan
+		set loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			user_mobile = #{userMobile,jdbcType=VARCHAR},
+			username = #{username,jdbcType=VARCHAR},
+			member_id = #{memberId,jdbcType=INTEGER},
+			repay_number = #{repayNumber,jdbcType=VARCHAR},
+			principal = #{principal,jdbcType=DECIMAL},
+			total_pay = #{totalPay,jdbcType=DECIMAL},
+			real_total_pay = #{realTotalPay,jdbcType=DECIMAL},
+			arrears = #{arrears,jdbcType=DECIMAL},
+			current_term = #{currentTerm,jdbcType=SMALLINT},
+			interest = #{interest,jdbcType=DECIMAL},
+			real_pay = #{realPay,jdbcType=DECIMAL},
+			liquidated_damages = #{liquidatedDamages,jdbcType=DECIMAL},
+			late_fee = #{lateFee,jdbcType=DECIMAL},
+			late_interest = #{lateInterest,jdbcType=DECIMAL},
+			remind_fee = #{remindFee,jdbcType=DECIMAL},
+			status = #{status,jdbcType=TINYINT},
+			delay_days = #{delayDays,jdbcType=SMALLINT},
+			pay_date = #{payDate,jdbcType=DATE},
+			delay_date = #{delayDate,jdbcType=DATE},
+			bad_day = #{badDay,jdbcType=TIMESTAMP},
+			is_bad = #{isBad,jdbcType=TINYINT},
+			real_pay_date = #{realPayDate,jdbcType=TIMESTAMP},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR},
+			gather_status = #{gatherStatus,jdbcType=TINYINT},
+			gather_result = #{gatherResult,jdbcType=VARCHAR}
+		where rpt_id = #{rptId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-15 14:49:54. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from repayments_plan
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

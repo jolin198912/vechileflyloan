@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.log.mapper.MessageExtMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-06 15:11:19. -->
+	<resultMap id="BaseResultMapExt" type="cn.houhe.api.log.entity.MessageExt" >
+		<id column="mid" property="mid" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="msg_type" property="msgType" jdbcType="TINYINT" />
+		<result column="msg_content_type" property="msgContentType" jdbcType="TINYINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="is_send" property="isSend" jdbcType="TINYINT" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-06 15:11:19. -->
+	<sql id="Base_Column_List_Ext" >
+		mid, member_id, msg_type, msg_content_type, title, is_send, content, createdon
+	</sql>
+
+	<!-- 获取通知消息列表 -->
+	<select id="selectMessageList" resultMap="BaseResultMapExt">
+		select
+		<include refid="Base_Column_List_Ext" />
+		from message where is_send = 0 and member_id = #{memberId,jdbcType=INTEGER}
+	</select>
+</mapper>

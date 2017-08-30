@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.config.mapper.ContractTemplateMapper" >
+	<!-- 实体类 - 数据库映射 2017-03-30 10:04:06. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.config.entity.ContractTemplate" >
+		<id column="ct_id" property="ctId" jdbcType="SMALLINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="path" property="path" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="TINYINT" />
+		<result column="createdby" property="createdby" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="modifiedby" property="modifiedby" jdbcType="VARCHAR" />
+		<result column="modifiedon" property="modifiedon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-03-30 10:04:06. -->
+	<sql id="Base_Column_List" >
+		ct_id, name, path, type, createdby, createdon, modifiedby, modifiedon
+	</sql>
+
+	<!-- 按主键查询 2017-03-30 10:04:06. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+		select 
+		<include refid="Base_Column_List" />
+		from contract_template
+		where ct_id = #{ctId,jdbcType=SMALLINT}
+	</select>
+
+	<!-- 按主键删除 2017-03-30 10:04:06. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+		delete from contract_template
+		where ct_id = #{ctId,jdbcType=SMALLINT}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-03-30 10:04:06. -->
+	<insert id="insert" parameterType="cn.houhe.api.config.entity.ContractTemplate" >
+		<selectKey resultType="java.lang.Short" keyProperty="ctId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into contract_template (name, path, type, 
+			createdby, createdon, modifiedby, 
+			modifiedon)
+		values (#{name,jdbcType=VARCHAR}, #{path,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+			#{createdby,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}, #{modifiedby,jdbcType=VARCHAR}, 
+			#{modifiedon,jdbcType=TIMESTAMP})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-03-30 10:04:06. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.config.entity.ContractTemplate" >
+		<selectKey resultType="java.lang.Short" keyProperty="ctId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into contract_template
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="name != null" >
+				name,
+			</if>
+			<if test="path != null" >
+				path,
+			</if>
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="createdby != null" >
+				createdby,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby,
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="name != null" >
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="path != null" >
+				#{path,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null" >
+				#{type,jdbcType=TINYINT},
+			</if>
+			<if test="createdby != null" >
+				#{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				#{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				#{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-03-30 10:04:06. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.config.entity.ContractTemplate" >
+		update contract_template
+		<set >
+			<if test="name != null" >
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="path != null" >
+				path = #{path,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null" >
+				type = #{type,jdbcType=TINYINT},
+			</if>
+			<if test="createdby != null" >
+				createdby = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifiedby != null" >
+				modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			</if>
+			<if test="modifiedon != null" >
+				modifiedon = #{modifiedon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where ct_id = #{ctId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-03-30 10:04:06. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.config.entity.ContractTemplate" >
+		update contract_template
+		set name = #{name,jdbcType=VARCHAR},
+			path = #{path,jdbcType=VARCHAR},
+			type = #{type,jdbcType=TINYINT},
+			createdby = #{createdby,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			modifiedby = #{modifiedby,jdbcType=VARCHAR},
+			modifiedon = #{modifiedon,jdbcType=TIMESTAMP}
+		where ct_id = #{ctId,jdbcType=SMALLINT}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-03-30 10:04:06. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from contract_template
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

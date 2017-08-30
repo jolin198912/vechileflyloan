@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.VerifyInfoExtMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-23 11:06:38. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.VerifyInfo" >
+		<id column="vfi_id" property="vfiId" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="credit_apply_id" property="creditApplyId" jdbcType="INTEGER" />
+		<result column="education_state" property="educationState" jdbcType="TINYINT" />
+		<result column="education_time_state" property="educationTimeState" jdbcType="TINYINT" />
+		<result column="couple_name_state" property="coupleNameState" jdbcType="TINYINT" />
+		<result column="couple_mobile_state" property="coupleMobileState" jdbcType="TINYINT" />
+		<result column="couple_idcard_state" property="coupleIdcardState" jdbcType="TINYINT" />
+		<result column="couple_edu_state" property="coupleEduState" jdbcType="TINYINT" />
+		<result column="address_state" property="addressState" jdbcType="TINYINT" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-23 11:06:38. -->
+	<sql id="Base_Column_List" >
+		vfi_id, member_id, credit_apply_id, education_state, education_time_state, couple_name_state, 
+		couple_mobile_state, couple_idcard_state, couple_edu_state, address_state, createdon
+	</sql>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-23 11:06:38. -->
+	<update id="updateByCaId" parameterType="cn.houhe.api.loan.entity.VerifyInfo" >
+		update verify_info
+		<set >
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="creditApplyId != null" >
+				credit_apply_id = #{creditApplyId,jdbcType=INTEGER},
+			</if>
+			<if test="educationState != null" >
+				education_state = #{educationState,jdbcType=TINYINT},
+			</if>
+			<if test="educationTimeState != null" >
+				education_time_state = #{educationTimeState,jdbcType=TINYINT},
+			</if>
+			<if test="coupleNameState != null" >
+				couple_name_state = #{coupleNameState,jdbcType=TINYINT},
+			</if>
+			<if test="coupleMobileState != null" >
+				couple_mobile_state = #{coupleMobileState,jdbcType=TINYINT},
+			</if>
+			<if test="coupleIdcardState != null" >
+				couple_idcard_state = #{coupleIdcardState,jdbcType=TINYINT},
+			</if>
+			<if test="coupleEduState != null" >
+				couple_edu_state = #{coupleEduState,jdbcType=TINYINT},
+			</if>
+			<if test="addressState != null" >
+				address_state = #{addressState,jdbcType=TINYINT},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where credit_apply_id = #{creditApplyId,jdbcType=INTEGER}
+	</update>
+
+</mapper>

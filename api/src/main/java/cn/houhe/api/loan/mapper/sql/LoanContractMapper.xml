@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.loan.mapper.LoanContractMapper" >
+	<!-- 实体类 - 数据库映射 2017-05-10 12:16:19. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.loan.entity.LoanContract" >
+		<id column="lc_id" property="lcId" jdbcType="INTEGER" />
+		<result column="loan_record_id" property="loanRecordId" jdbcType="INTEGER" />
+		<result column="creditinfo_id" property="creditinfoId" jdbcType="INTEGER" />
+		<result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+		<result column="type" property="type" jdbcType="TINYINT" />
+		<result column="contract_number" property="contractNumber" jdbcType="VARCHAR" />
+		<result column="contract_preview_url" property="contractPreviewUrl" jdbcType="VARCHAR" />
+		<result column="contract_file_url" property="contractFileUrl" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-05-10 12:16:19. -->
+	<sql id="Base_Column_List" >
+		lc_id, loan_record_id, creditinfo_id, contract_name, type, contract_number, contract_preview_url, 
+		contract_file_url, createdon, remark
+	</sql>
+
+	<!-- 按主键查询 2017-05-10 12:16:19. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from loan_contract
+		where lc_id = #{lcId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-05-10 12:16:19. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from loan_contract
+		where lc_id = #{lcId,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-05-10 12:16:19. -->
+	<insert id="insert" parameterType="cn.houhe.api.loan.entity.LoanContract" >
+		<selectKey resultType="java.lang.Integer" keyProperty="lcId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into loan_contract (loan_record_id, creditinfo_id, contract_name, 
+			type, contract_number, contract_preview_url, 
+			contract_file_url, createdon, remark
+			)
+		values (#{loanRecordId,jdbcType=INTEGER}, #{creditinfoId,jdbcType=INTEGER}, #{contractName,jdbcType=VARCHAR}, 
+			#{type,jdbcType=TINYINT}, #{contractNumber,jdbcType=VARCHAR}, #{contractPreviewUrl,jdbcType=VARCHAR}, 
+			#{contractFileUrl,jdbcType=VARCHAR}, #{createdon,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+			)
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-05-10 12:16:19. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.loan.entity.LoanContract" >
+		<selectKey resultType="java.lang.Integer" keyProperty="lcId" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into loan_contract
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				loan_record_id,
+			</if>
+			<if test="creditinfoId != null" >
+				creditinfo_id,
+			</if>
+			<if test="contractName != null" >
+				contract_name,
+			</if>
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="contractNumber != null" >
+				contract_number,
+			</if>
+			<if test="contractPreviewUrl != null" >
+				contract_preview_url,
+			</if>
+			<if test="contractFileUrl != null" >
+				contract_file_url,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="loanRecordId != null" >
+				#{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="creditinfoId != null" >
+				#{creditinfoId,jdbcType=INTEGER},
+			</if>
+			<if test="contractName != null" >
+				#{contractName,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null" >
+				#{type,jdbcType=TINYINT},
+			</if>
+			<if test="contractNumber != null" >
+				#{contractNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="contractPreviewUrl != null" >
+				#{contractPreviewUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="contractFileUrl != null" >
+				#{contractFileUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-05-10 12:16:19. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.loan.entity.LoanContract" >
+		update loan_contract
+		<set >
+			<if test="loanRecordId != null" >
+				loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			</if>
+			<if test="creditinfoId != null" >
+				creditinfo_id = #{creditinfoId,jdbcType=INTEGER},
+			</if>
+			<if test="contractName != null" >
+				contract_name = #{contractName,jdbcType=VARCHAR},
+			</if>
+			<if test="type != null" >
+				type = #{type,jdbcType=TINYINT},
+			</if>
+			<if test="contractNumber != null" >
+				contract_number = #{contractNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="contractPreviewUrl != null" >
+				contract_preview_url = #{contractPreviewUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="contractFileUrl != null" >
+				contract_file_url = #{contractFileUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where lc_id = #{lcId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-05-10 12:16:19. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.loan.entity.LoanContract" >
+		update loan_contract
+		set loan_record_id = #{loanRecordId,jdbcType=INTEGER},
+			creditinfo_id = #{creditinfoId,jdbcType=INTEGER},
+			contract_name = #{contractName,jdbcType=VARCHAR},
+			type = #{type,jdbcType=TINYINT},
+			contract_number = #{contractNumber,jdbcType=VARCHAR},
+			contract_preview_url = #{contractPreviewUrl,jdbcType=VARCHAR},
+			contract_file_url = #{contractFileUrl,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR}
+		where lc_id = #{lcId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-05-10 12:16:19. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from loan_contract
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>

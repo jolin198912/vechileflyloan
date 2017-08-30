@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.houhe.api.log.mapper.MessageMapper" >
+	<!-- 实体类 - 数据库映射 2017-04-10 11:10:03. -->
+	<resultMap id="BaseResultMap" type="cn.houhe.api.log.entity.Message" >
+		<id column="mid" property="mid" jdbcType="INTEGER" />
+		<result column="member_id" property="memberId" jdbcType="INTEGER" />
+		<result column="msg_type" property="msgType" jdbcType="TINYINT" />
+		<result column="msg_content_type" property="msgContentType" jdbcType="TINYINT" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="is_send" property="isSend" jdbcType="TINYINT" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="createdon" property="createdon" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 用于 SELECT 语句的所有字段  2017-04-10 11:10:03. -->
+	<sql id="Base_Column_List" >
+		mid, member_id, msg_type, msg_content_type, title, is_send, content, createdon, remark
+	</sql>
+
+	<!-- 按主键查询 2017-04-10 11:10:03. -->
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+		select 
+		<include refid="Base_Column_List" />
+		from message
+		where mid = #{mid,jdbcType=INTEGER}
+	</select>
+
+	<!-- 按主键删除 2017-04-10 11:10:03. -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		delete from message
+		where mid = #{mid,jdbcType=INTEGER}
+	</delete>
+
+	<!-- 插入 - 全字段保存 2017-04-10 11:10:03. -->
+	<insert id="insert" parameterType="cn.houhe.api.log.entity.Message" >
+		<selectKey resultType="java.lang.Integer" keyProperty="mid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into message (member_id, msg_type, msg_content_type, 
+			title, is_send, content, 
+			createdon, remark)
+		values (#{memberId,jdbcType=INTEGER}, #{msgType,jdbcType=TINYINT}, #{msgContentType,jdbcType=TINYINT}, 
+			#{title,jdbcType=VARCHAR}, #{isSend,jdbcType=TINYINT}, #{content,jdbcType=VARCHAR}, 
+			#{createdon,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 插入 - 仅保存给定实体类中非null的字段 2017-04-10 11:10:03. -->
+	<insert id="insertSelective" parameterType="cn.houhe.api.log.entity.Message" >
+		<selectKey resultType="java.lang.Integer" keyProperty="mid" order="AFTER" >
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert into message
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				member_id,
+			</if>
+			<if test="msgType != null" >
+				msg_type,
+			</if>
+			<if test="msgContentType != null" >
+				msg_content_type,
+			</if>
+			<if test="title != null" >
+				title,
+			</if>
+			<if test="isSend != null" >
+				is_send,
+			</if>
+			<if test="content != null" >
+				content,
+			</if>
+			<if test="createdon != null" >
+				createdon,
+			</if>
+			<if test="remark != null" >
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="memberId != null" >
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="msgType != null" >
+				#{msgType,jdbcType=TINYINT},
+			</if>
+			<if test="msgContentType != null" >
+				#{msgContentType,jdbcType=TINYINT},
+			</if>
+			<if test="title != null" >
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="isSend != null" >
+				#{isSend,jdbcType=TINYINT},
+			</if>
+			<if test="content != null" >
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				#{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 按主键更新 - 仅更新给定实体类中非null的字段 2017-04-10 11:10:03. -->
+	<update id="updateByPrimaryKeySelective" parameterType="cn.houhe.api.log.entity.Message" >
+		update message
+		<set >
+			<if test="memberId != null" >
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="msgType != null" >
+				msg_type = #{msgType,jdbcType=TINYINT},
+			</if>
+			<if test="msgContentType != null" >
+				msg_content_type = #{msgContentType,jdbcType=TINYINT},
+			</if>
+			<if test="title != null" >
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="isSend != null" >
+				is_send = #{isSend,jdbcType=TINYINT},
+			</if>
+			<if test="content != null" >
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="createdon != null" >
+				createdon = #{createdon,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null" >
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where mid = #{mid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按主键更新 - 全更新 2017-04-10 11:10:03. -->
+	<update id="updateByPrimaryKey" parameterType="cn.houhe.api.log.entity.Message" >
+		update message
+		set member_id = #{memberId,jdbcType=INTEGER},
+			msg_type = #{msgType,jdbcType=TINYINT},
+			msg_content_type = #{msgContentType,jdbcType=TINYINT},
+			title = #{title,jdbcType=VARCHAR},
+			is_send = #{isSend,jdbcType=TINYINT},
+			content = #{content,jdbcType=VARCHAR},
+			createdon = #{createdon,jdbcType=TIMESTAMP},
+			remark = #{remark,jdbcType=VARCHAR}
+		where mid = #{mid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 按 Criteria 条件查询, 支持分页 2017-04-10 11:10:03. -->
+	<select id="selectByCriteria" resultMap="BaseResultMap" parameterType="Criteria" >
+		select
+		<include refid="Base_Column_List" />
+		from message
+		<where >
+			<include refid="Criteria.Filter" />
+		</where>
+		<include refid="Criteria.Order" />
+	</select>
+
+</mapper>
