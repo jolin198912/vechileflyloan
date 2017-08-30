@@ -12,7 +12,7 @@
         <module>web</module>
     </modules>
     <packaging>pom</packaging>
-
+	<!--添加一行注释 -->
 
     <properties>
         <argLine>-Dfile.encoding=UTF-8</argLine>
